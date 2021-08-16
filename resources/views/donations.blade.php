@@ -1,3 +1,3 @@
 <x-base-layout>
-    <h1>Hi from donations again!</h1>
+    @livewire('donate')
 </x-base-layout>
