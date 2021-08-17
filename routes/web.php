@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 Route::get('/donaciones', function () {
-    return view('donations');
+    return view('giving');
 });
 
 Route::get('/dashboard', function () {
