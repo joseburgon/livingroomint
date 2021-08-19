@@ -16,22 +16,22 @@ class PaymentGatewaySeeder extends Seeder
     {
         PaymentGateway::create([
             'name' => 'PayU Latam',
-            'status' => 1
+            'active' => 1
         ]);
 
         PaymentGateway::create([
             'name' => 'PayPal',
-            'status' => 1
+            'active' => 1
         ]);
 
         PaymentGateway::create([
             'name' => 'Wompi',
-            'status' => 0
+            'active' => 0
         ]);
 
         PaymentGateway::create([
             'name' => 'MercadoPago',
-            'status' => 0
+            'active' => 0
         ]);
     }
 }

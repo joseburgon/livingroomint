@@ -13,8 +13,8 @@
     });
 
     function handleAmountInputChange(e) {
-        const minSize = 5;
-        const maxSize = 13;
+        const minSize = 4;
+        const maxSize = 15;
 
         const amountInput = e.target;
 
@@ -40,6 +40,14 @@
 
         if (updatedLength > newSize) {
             newSize = updatedLength;
+
+            if (newSize >= 10) {
+                amountInput.classList.remove('text-5xl');
+                amountInput.classList.add('text-4xl', 'py-4');
+            } else {
+                amountInput.classList.remove('text-4xl', 'py-4');
+                amountInput.classList.add('text-5xl');
+            }
 
             if (newSize > maxSize) {
                 newSize = maxSize;

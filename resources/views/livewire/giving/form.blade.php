@@ -4,21 +4,31 @@
             <form wire:submit.prevent="donate">
                 <div class="text-center">
                     <div class="">
+                        {{--CURRENCY--}}
                         <div class="my-3">
                             <div class="mb-2">
                                 <label for="type" class="text-gray-700">Moneda</label>
                             </div>
-                            <div class="flex justify-center">
-                                <label class="flex radio p-2 cursor-pointer">
-                                    <input class="my-auto" type="radio" name="currency" />
-                                    <span class="title px-2">COP</span>
-                                </label>
-                                <label class="flex radio p-2 cursor-pointer">
-                                    <input class="my-auto" type="radio" name="currency" />
-                                    <span class="title px-2">USD</span>
-                                </label>
+                            <div class="w-full bg-gray-200 text-sm text-gray-500 leading-none border-2 border-gray-200 rounded inline-flex">
+                                <button
+                                    @click="currency='COP'"
+                                    type="button"
+                                    :class="{ 'bg-white' : currency === 'COP' }"
+                                    class="w-full inline-flex justify-center items-center transition-colors duration-300 ease-in focus:outline-none hover:text-black focus:text-black rounded-l p-4"
+                                    id="COP">
+                                    <span>Peso Colombiano (COP)</span>
+                                </button>
+                                <button
+                                    @click="currency='USD'"
+                                    type="button"
+                                    :class="{ 'bg-white' : currency === 'USD' }"
+                                    class="w-full inline-flex justify-center items-center transition-colors duration-300 ease-in focus:outline-none hover:text-black focus:text-black rounded-r px-4 py-2"
+                                    id="USD">
+                                    <span>Dólar Americano (USD)</span>
+                                </button>
                             </div>
                         </div>
+                        {{--TYPE--}}
                         <div class="my-3">
                             <div class="mb-2">
                                 <label for="type" class="text-gray-700">Tipo de donación</label>
@@ -42,6 +52,7 @@
                                 <option value="12">12</option>
                             </select>
                         </div>
+                        {{--PERSONAL DATA--}}
                         <div class="my-3 flex flex-col">
                             <div class="mb-2">
                                 <label for="" class="text-gray-700">Tus datos</label>
@@ -65,6 +76,7 @@
                                 />
                             </div>
                         </div>
+                        {{--EMAIL--}}
                         <div class="my-3">
                             <input
                                 type="email"
@@ -74,6 +86,7 @@
                                 placeholder="Correo Electrónico"
                             />
                         </div>
+                        {{--PHONE--}}
                         <div class="my-3">
                             <input
                                 type="text"
@@ -83,6 +96,7 @@
                                 placeholder="Teléfono / Celular"
                             />
                         </div>
+                        {{--COUNTRY--}}
                         <div class="flex flex-wrap items-stretch my-3">
                             <div class="flex">
 									<span
@@ -102,6 +116,8 @@
                                 <option value="ES">España</option>
                             </select>
                         </div>
+                        <input x-model="country" type="hidden" name="country">
+                        <input x-model="currency" type="hidden" name="currency">
                     </div>
                 </div>
             </form>

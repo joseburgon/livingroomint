@@ -1,5 +1,5 @@
 <x-base-layout>
-    <div x-data="{ country: 'CO' }" class="flex flex-col justify-center items-center w-full h-full">
+    <div x-data="{ amount: 0, country: 'CO', currency: 'COP' }" class="flex flex-col justify-center items-center w-full h-full">
         <nav id="nav" class="fixed inset-x-0 top-0 flex flex-row justify-center z-10 text-white bg-transparent">
             <div class="p-4">
                 <a href="#">
@@ -18,9 +18,11 @@
                     </h1>
                     <div class="mb-4">
                         <div class="flex flex-col items-center relative">
-                            <input @keyup="handleAmountInputChange" type="text" id="amount" name="amount" size="5"
-                                   class="text-5xl lg:text-6xl text-center text-white border-white border-0 border-b-2 focus:border-current focus:shadow-none focus:ring-0 relative pb-3 bg-transparent"
-                                   value="0.00">
+                            <input
+                                x-model="amount"
+                                @keyup="handleAmountInputChange" type="text" id="amount" name="amount" size="4"
+                                class="text-5xl lg:text-6xl w-3/4 text-center text-white border-white border-0 border-b-2 focus:border-current focus:shadow-none focus:ring-0 relative px-0 pb-3 bg-transparent"
+                            >
                         </div>
                     </div>
                 </div>
