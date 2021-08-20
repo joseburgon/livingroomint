@@ -21,6 +21,7 @@ class CreateGivingsTable extends Migration
             $table->string('description');
             $table->tinyInteger('status');
             $table->unsignedBigInteger('giver_id');
+            $table->unsignedBigInteger('giving_type_id');
             $table->unsignedBigInteger('payment_gateway_id');
             $table->unsignedBigInteger('payment_method_id');
             $table->string('extra_info')->nullable();

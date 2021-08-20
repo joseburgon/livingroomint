@@ -13,7 +13,7 @@
                                 <button
                                     @click="currency='COP'"
                                     type="button"
-                                    :class="{ 'bg-white' : currency === 'COP' }"
+                                    :class="{ 'bg-white text-black' : currency === 'COP' }"
                                     class="w-full inline-flex justify-center items-center transition-colors duration-300 ease-in focus:outline-none hover:text-black focus:text-black rounded-l p-4"
                                     id="COP">
                                     <span>Peso Colombiano (COP)</span>
@@ -21,7 +21,7 @@
                                 <button
                                     @click="currency='USD'"
                                     type="button"
-                                    :class="{ 'bg-white' : currency === 'USD' }"
+                                    :class="{ 'bg-white text-black' : currency === 'USD' }"
                                     class="w-full inline-flex justify-center items-center transition-colors duration-300 ease-in focus:outline-none hover:text-black focus:text-black rounded-r px-4 py-2"
                                     id="USD">
                                     <span>Dólar Americano (USD)</span>
@@ -76,6 +76,28 @@
                                 />
                             </div>
                         </div>
+                        {{--DOCUMENT--}}
+                        <div class="my-3 flex">
+                            <div class="grid lg:grid-cols-2 gap-2 w-full">
+                                <select
+                                    name="document_type_id"
+                                    id="document_type"
+                                    class="form-select appearance-none flex-shrink flex-grow flex-auto px-5 py-2 border-gray-200 rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
+                                >
+                                    <option value="CC">CÉDULA DE CIUDADANÍA</option>
+                                    <option value="CE">CÉDULA DE EXTRANJERÍA</option>
+                                    <option value="PP">PASAPORTE</option>
+                                </select>
+                                <input
+                                    type="text"
+                                    name="document"
+                                    id="document"
+                                    class="block w-full px-5 py-2 border-gray-200 rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
+                                    placeholder="Documento de Identidad"
+                                    maxlength="50"
+                                />
+                            </div>
+                        </div>
                         {{--EMAIL--}}
                         <div class="my-3">
                             <input
@@ -97,27 +119,39 @@
                             />
                         </div>
                         {{--COUNTRY--}}
-                        <div class="flex flex-wrap items-stretch my-3">
-                            <div class="flex">
+                        <div class="my-3 flex flex-col">
+                            <div class="mb-2">
+                                <label for="type" class="text-gray-700">¿Desde donde estás donando?</label>
+                            </div>
+                            <div class="flex flex-wrap items-stretch">
+                                <div class="flex">
 									<span
                                         class="flex items-center leading-normal bg-grey-lighter border-1 rounded-r-none shadow-lg border border-r-0 border-gray-100 px-3 whitespace-no-wrap text-grey-dark text-sm w-12 h-10 bg-gray-100 justify-center items-center text-xl rounded-lg text-white">
                                     <img :src="'https://flagcdn.com/' + country.toLowerCase() + '.svg'" class="w-8" alt="Selected Country Flag">
                                    </span>
+                                </div>
+                                <select
+                                    x-model="country"
+                                    name="country"
+                                    id="country"
+                                    class="form-select appearance-none flex-shrink flex-grow flex-auto px-5 py-2 border-gray-200 border-l-0 rounded-lg rounded-l-none bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
+                                >
+                                    <option value="CO">Colombia</option>
+                                    <option value="US">Estados Unidos</option>
+                                    <option value="ES">España</option>
+                                </select>
                             </div>
-                            <select
-                                @change="updateFlag"
-                                name="country"
-                                id="country"
-                                class="form-select appearance-none flex-shrink flex-grow flex-auto px-5 py-2 border-gray-200 border-l-0 rounded-lg rounded-l-none bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
-                            >
-                                <option value="" selected disabled>País</option>
-                                <option value="CO">Colombia</option>
-                                <option value="US">Estados Unidos</option>
-                                <option value="ES">España</option>
-                            </select>
                         </div>
-                        <input x-model="country" type="hidden" name="country">
+
                         <input x-model="currency" type="hidden" name="currency">
+
+                        <div class="mt-6">
+                            <button
+                                class="px-4 py-3 rounded bg-black text-gray-200 hover:bg-gray-700 focus:ring focus:outline-none w-full text-xl font-semibold transition-colors"
+                            >
+                                Donar En Línea
+                            </button>
+                        </div>
                     </div>
                 </div>
             </form>

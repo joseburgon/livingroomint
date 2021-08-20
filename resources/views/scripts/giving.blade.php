@@ -57,12 +57,6 @@
         amountInput.setAttribute('size', newSize);
     }
 
-    function updateFlag(e) {
-        console.log(e.target.value);
-
-        this.country = e.target.value;
-    }
-
     function parseCurrency(currency) {
         return Number(currency.replace(/[^0-9.-]+/g, ""));
     }

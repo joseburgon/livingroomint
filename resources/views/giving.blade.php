@@ -14,7 +14,7 @@
                  style="background:rgba(0,0,0,0.5);">
                 <div class="mx-2 text-center">
                     <h1 class="text-gray-100 text-xl lg:text-3xl mb-4">
-                        Donar
+                        Donar en línea
                     </h1>
                     <div class="mb-4">
                         <div class="flex flex-col items-center relative">
