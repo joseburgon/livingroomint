@@ -17,7 +17,7 @@ class CreateCountriesTable extends Migration
             $table->id();
             $table->string('code', 2)->index();
             $table->string('name', 100);
-            $table->boolean('featured')->default(false);
+            $table->smallInteger('order')->default(10);
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

@@ -9,7 +9,8 @@
                             <div class="mb-2">
                                 <label for="type" class="text-gray-700">Moneda</label>
                             </div>
-                            <div class="w-full bg-gray-200 text-sm text-gray-500 leading-none border-2 border-gray-200 rounded inline-flex">
+                            <div
+                                class="w-full bg-gray-200 text-sm text-gray-500 leading-none border-2 border-gray-200 rounded inline-flex">
                                 <button
                                     @click="currency='COP'"
                                     type="button"
@@ -38,18 +39,9 @@
                                 id="type"
                                 class="form-select appearance-none block w-full px-5 py-2 border-gray-200 rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
                             >
-                                <option value="01">01</option>
-                                <option value="02">02</option>
-                                <option value="03">03</option>
-                                <option value="04">04</option>
-                                <option value="05">05</option>
-                                <option value="06">06</option>
-                                <option value="07">07</option>
-                                <option value="08">08</option>
-                                <option value="09">09</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
+                                @foreach($givingTypes as $givingTypeId => $givingTypeName)
+                                    <option value="{{ $givingTypeId }}">{{ $givingTypeName }}</option>
+                                @endforeach
                             </select>
                         </div>
                         {{--PERSONAL DATA--}}
@@ -84,9 +76,9 @@
                                     id="document_type"
                                     class="form-select appearance-none flex-shrink flex-grow flex-auto px-5 py-2 border-gray-200 rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
                                 >
-                                    <option value="CC">CÉDULA DE CIUDADANÍA</option>
-                                    <option value="CE">CÉDULA DE EXTRANJERÍA</option>
-                                    <option value="PP">PASAPORTE</option>
+                                    @foreach($documentTypes as $documentTypeId => $documentTypeName)
+                                        <option value="{{ $documentTypeId }}">{{ $documentTypeName }}</option>
+                                    @endforeach
                                 </select>
                                 <input
                                     type="text"
@@ -127,7 +119,8 @@
                                 <div class="flex">
 									<span
                                         class="flex items-center leading-normal bg-grey-lighter border-1 rounded-r-none shadow-lg border border-r-0 border-gray-100 px-3 whitespace-no-wrap text-grey-dark text-sm w-12 h-10 bg-gray-100 justify-center items-center text-xl rounded-lg text-white">
-                                    <img :src="'https://flagcdn.com/' + country.toLowerCase() + '.svg'" class="w-8" alt="Selected Country Flag">
+                                    <img :src="'https://flagcdn.com/' + country.toLowerCase() + '.svg'" class="w-8"
+                                         alt="Selected Country Flag">
                                    </span>
                                 </div>
                                 <select
@@ -136,9 +129,12 @@
                                     id="country"
                                     class="form-select appearance-none flex-shrink flex-grow flex-auto px-5 py-2 border-gray-200 border-l-0 rounded-lg rounded-l-none bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
                                 >
-                                    <option value="CO">Colombia</option>
-                                    <option value="US">Estados Unidos</option>
-                                    <option value="ES">España</option>
+                                    @foreach($countries as $code => $name)
+                                        <option value="{{ $code }}">{{ $name }}</option>
+                                        @if($loop->index === 8)
+                                            <option value="" disabled>------------------------</option>
+                                        @endif
+                                    @endforeach
                                 </select>
                             </div>
                         </div>

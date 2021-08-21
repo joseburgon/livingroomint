@@ -9,26 +9,32 @@
 
         amountInput.focus();
 
-        amountInput.setSelectionRange(2, 2);
+        amountInput.setSelectionRange(1, 1);
     });
+
+    const isMobile = detectDevice();
+
+    console.log(`isMobile`, isMobile);
 
     function handleAmountInputChange(e) {
         const minSize = 4;
-        const maxSize = 15;
+        const maxSize = 17;
 
         const amountInput = e.target;
 
         const originalLength = amountInput.value.length;
 
-        let currentAmount = parseCurrency(amountInput.value);
-
         let caretPosition = amountInput.selectionStart;
+
+        console.log(`before`, amountInput.value);
+        let currentAmount = parseCurrency(amountInput.value);
+        console.log(`after`, currentAmount);
 
         if (isNaN(currentAmount)) {
             currentAmount = 0;
         }
 
-        amountInput.value = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(currentAmount);
+        amountInput.value = new Intl.NumberFormat('en-US', {  style: 'currency', currency: 'USD' }).format(currentAmount);
 
         const updatedLength = amountInput.value.length;
 
@@ -38,14 +44,14 @@
 
         let newSize = minSize;
 
-        if (updatedLength > newSize) {
-            newSize = updatedLength;
+        if (updatedLength >= newSize) {
+            newSize = updatedLength + 1;
 
-            if (newSize >= 10) {
+            if (newSize >= 9 && isMobile) {
                 amountInput.classList.remove('text-5xl');
-                amountInput.classList.add('text-4xl', 'py-4');
+                amountInput.classList.add('text-4xl', 'py-5');
             } else {
-                amountInput.classList.remove('text-4xl', 'py-4');
+                amountInput.classList.remove('text-4xl', 'py-5');
                 amountInput.classList.add('text-5xl');
             }
 
@@ -59,5 +65,10 @@
 
     function parseCurrency(currency) {
         return Number(currency.replace(/[^0-9.-]+/g, ""));
+    }
+
+    function detectDevice() {
+        return (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ||
+            (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.platform)));
     }
 </script>

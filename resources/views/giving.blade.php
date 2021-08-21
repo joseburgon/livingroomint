@@ -12,7 +12,7 @@
             <!-- Overlay Background + Center Control -->
             <div class="h-72 lg:h-96 bg-opacity-50 bg-black flex items-center justify-center"
                  style="background:rgba(0,0,0,0.5);">
-                <div class="mx-2 text-center">
+                <div class="w-full mx-2 text-center">
                     <h1 class="text-gray-100 text-xl lg:text-3xl mb-4">
                         Donar en línea
                     </h1>
@@ -20,9 +20,10 @@
                         <div class="flex flex-col items-center relative">
                             <input
                                 x-model="amount"
-                                @keyup="handleAmountInputChange" type="text" id="amount" name="amount" size="4"
-                                class="text-5xl lg:text-6xl w-3/4 text-center text-white border-white border-0 border-b-2 focus:border-current focus:shadow-none focus:ring-0 relative px-0 pb-3 bg-transparent"
+                                @keyup="handleAmountInputChange" type="text" id="amount" name="amount" size="5"
+                                class="text-5xl lg:text-6xl max-w-full text-center text-white border-white border-0 focus:border-current focus:shadow-none focus:ring-0 relative px-0 pb-3 bg-transparent"
                             >
+                            <div class="w-1/4 border-t-2"></div>
                         </div>
                     </div>
                 </div>

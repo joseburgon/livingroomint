@@ -16,12 +16,12 @@ class DocumentTypesSeeder extends Seeder
     {
         DocumentType::create([
             'code' => 'CC',
-            'name' => 'CÉDULA DE CIUDADANÍA',
+            'name' => 'Cédula de Ciudadanía',
         ]);
 
         DocumentType::create([
             'code' => 'CE',
-            'name' => 'CÉDULA DE EXTRANJERÍA',
+            'name' => 'Cédula de Extranjería',
         ]);
 
         DocumentType::create([
@@ -31,17 +31,17 @@ class DocumentTypesSeeder extends Seeder
 
         DocumentType::create([
             'code' => 'PP',
-            'name' => 'PASAPORTE',
+            'name' => 'Pasaporte',
         ]);
 
         DocumentType::create([
             'code' => 'TI',
-            'name' => 'TARJETA DE IDENTIDAD',
+            'name' => 'Tarjeta de Identidad',
         ]);
 
         DocumentType::create([
             'code' => 'DE',
-            'name' => 'DOCUMENTO DE IDENTIFICACIÓN EXTRANJERO',
+            'name' => 'Documento de Identificación Extranjero',
         ]);
     }
 }

@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class GivingType extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
+
+    public const ACTIVE = 1;
+
+    public const INACTIVE = 0;
+
+    public function scopeActive($query)
+    {
+        return $query->where('active', self::ACTIVE);
+    }
 }

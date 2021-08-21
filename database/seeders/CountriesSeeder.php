@@ -60,7 +60,7 @@ class CountriesSeeder extends Seeder
             ['name' => 'Burundi', 'code' => 'BI', 'created_at' => $timestamp],
             ['name' => 'Cambodia', 'code' => 'KH', 'created_at' => $timestamp],
             ['name' => 'Cameroon', 'code' => 'CM', 'created_at' => $timestamp],
-            ['name' => 'Canada', 'code' => 'CA', 'created_at' => $timestamp],
+            ['name' => 'Canadá', 'code' => 'CA', 'created_at' => $timestamp],
             ['name' => 'Cape Verde', 'code' => 'CV', 'created_at' => $timestamp],
             ['name' => 'Cayman Islands', 'code' => 'KY', 'created_at' => $timestamp],
             ['name' => 'Central African Republic', 'code' => 'CF', 'created_at' => $timestamp],
@@ -164,7 +164,7 @@ class CountriesSeeder extends Seeder
             ['name' => 'Mauritania', 'code' => 'MR', 'created_at' => $timestamp],
             ['name' => 'Mauritius', 'code' => 'MU', 'created_at' => $timestamp],
             ['name' => 'Mayotte', 'code' => 'YT', 'created_at' => $timestamp],
-            ['name' => 'Mexico', 'code' => 'MX', 'created_at' => $timestamp],
+            ['name' => 'México', 'code' => 'MX', 'created_at' => $timestamp],
             ['name' => 'Micronesia, Federated States of', 'code' => 'FM', 'created_at' => $timestamp],
             ['name' => 'Moldova, Republic of', 'code' => 'MD', 'created_at' => $timestamp],
             ['name' => 'Monaco', 'code' => 'MC', 'created_at' => $timestamp],
@@ -191,7 +191,7 @@ class CountriesSeeder extends Seeder
             ['name' => 'Pakistan', 'code' => 'PK', 'created_at' => $timestamp],
             ['name' => 'Palau', 'code' => 'PW', 'created_at' => $timestamp],
             ['name' => 'Palestine, State of', 'code' => 'PS', 'created_at' => $timestamp],
-            ['name' => 'Panama', 'code' => 'PA', 'created_at' => $timestamp],
+            ['name' => 'Panamá', 'code' => 'PA', 'created_at' => $timestamp],
             ['name' => 'Papua New Guinea', 'code' => 'PG', 'created_at' => $timestamp],
             ['name' => 'Paraguay', 'code' => 'PY', 'created_at' => $timestamp],
             ['name' => 'Peru', 'code' => 'PE', 'created_at' => $timestamp],
@@ -229,7 +229,7 @@ class CountriesSeeder extends Seeder
             ['name' => 'South Africa', 'code' => 'ZA', 'created_at' => $timestamp],
             ['name' => 'South Georgia and the South Sandwich Islands', 'code' => 'GS', 'created_at' => $timestamp],
             ['name' => 'South Sudan', 'code' => 'SS', 'created_at' => $timestamp],
-            ['name' => 'Spain', 'code' => 'ES', 'created_at' => $timestamp],
+            ['name' => 'España', 'code' => 'ES', 'created_at' => $timestamp],
             ['name' => 'Sri Lanka', 'code' => 'LK', 'created_at' => $timestamp],
             ['name' => 'Sudan', 'code' => 'SD', 'created_at' => $timestamp],
             ['name' => 'Suriname', 'code' => 'SR', 'created_at' => $timestamp],
@@ -255,13 +255,13 @@ class CountriesSeeder extends Seeder
             ['name' => 'Uganda', 'code' => 'UG', 'created_at' => $timestamp],
             ['name' => 'Ukraine', 'code' => 'UA', 'created_at' => $timestamp],
             ['name' => 'United Arab Emirates', 'code' => 'AE', 'created_at' => $timestamp],
-            ['name' => 'United Kingdom', 'code' => 'GB', 'created_at' => $timestamp],
-            ['name' => 'United States', 'code' => 'US', 'created_at' => $timestamp],
+            ['name' => 'Reino Unido', 'code' => 'GB', 'created_at' => $timestamp],
+            ['name' => 'Estados Unidos', 'code' => 'US', 'created_at' => $timestamp],
             ['name' => 'United States Minor Outlying Islands', 'code' => 'UM', 'created_at' => $timestamp],
             ['name' => 'Uruguay', 'code' => 'UY', 'created_at' => $timestamp],
             ['name' => 'Uzbekistan', 'code' => 'UZ', 'created_at' => $timestamp],
             ['name' => 'Vanuatu', 'code' => 'VU', 'created_at' => $timestamp],
-            ['name' => 'Venezuela, Bolivarian Republic of', 'code' => 'VE', 'created_at' => $timestamp],
+            ['name' => 'Venezuela', 'code' => 'VE', 'created_at' => $timestamp],
             ['name' => 'Viet Nam', 'code' => 'VN', 'created_at' => $timestamp],
             ['name' => 'Virgin Islands, British', 'code' => 'VG', 'created_at' => $timestamp],
             ['name' => 'Virgin Islands, U.S.', 'code' => 'VI', 'created_at' => $timestamp],
@@ -279,13 +279,27 @@ class CountriesSeeder extends Seeder
             'US',
             'CA',
             'ES',
-            'MX',
+            'PA',
             'CL',
+            'MX',
             'AR',
+            'VE'
         ];
 
-        Country::whereIn('code', $featured)->get()->each(function ($country) {
-            $country->update(['featured' => true]);
+        $order = [
+            'CO' => 1,
+            'US' => 2,
+            'CA' => 3,
+            'ES' => 4,
+            'PA' => 5,
+            'MX' => 6,
+            'CL' => 7,
+            'AR' => 8,
+            'VE' => 9,
+        ];
+
+        Country::whereIn('code', $featured)->get()->each(function ($country) use ($order) {
+            $country->update(['order' => $order[$country->code]]);
         });
     }
 }
