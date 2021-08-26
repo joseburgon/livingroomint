@@ -3130,7 +3130,7 @@ var module_default = src_default;
   \*****************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // require('alpinejs');
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 /***/ }),
 
@@ -3143,9 +3143,13 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // requir
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
+/* harmony import */ var browser_dtector__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! browser-dtector */ "./node_modules/browser-dtector/browser-dtector.umd.min.js");
+/* harmony import */ var browser_dtector__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(browser_dtector__WEBPACK_IMPORTED_MODULE_1__);
+
 
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__.default;
 alpinejs__WEBPACK_IMPORTED_MODULE_0__.default.start();
+window.BrowserDetector = new (browser_dtector__WEBPACK_IMPORTED_MODULE_1___default())(window.navigator.userAgent);
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -3159,6 +3163,25 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__.default.start();
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./node_modules/browser-dtector/browser-dtector.umd.min.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/browser-dtector/browser-dtector.umd.min.js ***!
+  \*****************************************************************/
+/***/ (function(module) {
+
+/*!
+ * @module browser-dtector
+ * @description A Javascript library to detect browser, version and platform
+ * @version 3.1.2
+ * @link https://github.com/sibiraj-s/browser-dtector.git
+ * @licence MIT License, https://opensource.org/licenses/MIT
+ */
+!function(e,o){ true?module.exports=o():0}(this,(function(){"use strict";function e(e,o){for(var n=0;n<o.length;n++){var r=o[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}var o={chrome:"Google Chrome",brave:"Brave",crios:"Google Chrome",edge:"Microsoft Edge",edg:"Microsoft Edge",fennec:"Mozilla Firefox",jsdom:"JsDOM",mozilla:"Mozilla Firefox",msie:"Microsoft Internet Explorer",opera:"Opera",opios:"Opera",opr:"Opera",rv:"Microsoft Internet Explorer",safari:"Safari",samsungbrowser:"Samsung Browser"},n={android:"Android",androidTablet:"Android Tablet",cros:"Chrome OS",fennec:"Android Tablet",ipad:"IPad",iphone:"IPhone",jsdom:"JsDOM",linux:"Linux",mac:"Macintosh",tablet:"Android Tablet",win:"Windows","windows phone":"Windows Phone",xbox:"Microsoft Xbox"},r=function(e){var o=arguments.length>1&&void 0!==arguments[1]?arguments[1]:-1,n=new RegExp("^-?\\d+(?:.\\d{0,".concat(o,"})?")),r=Number(e).toString().match(n);return r?r[0]:null},i=function(){return"undefined"!=typeof window?window.navigator:null};return function(){function a(e){var o;!function(e,o){if(!(e instanceof o))throw new TypeError("Cannot call a class as a function")}(this,a),this.userAgent=e||(null===(o=i())||void 0===o?void 0:o.userAgent)||null}var t,s,l;return t=a,l=[{key:"VERSION",get:function(){return"3.1.2"}}],(s=[{key:"parseUserAgent",value:function(e){var a,t,s,l={},d=e||this.userAgent||"",c=d.toLowerCase().replace(/\s\s+/g," "),u=/(edge)\/([\w.]+)/.exec(c)||/(edg)[/]([\w.]+)/.exec(c)||/(opr)[/]([\w.]+)/.exec(c)||/(jsdom)[/]([\w.]+)/.exec(c)||/(samsungbrowser)[/]([\w.]+)/.exec(c)||/(chrome)[/]([\w.]+)/.exec(c)||/(crios)[/]([\w.]+)/.exec(c)||/(opios)[/]([\w.]+)/.exec(c)||/(version)(applewebkit)[/]([\w.]+).*(safari)[/]([\w.]+)/.exec(c)||/(webkit)[/]([\w.]+).*(version)[/]([\w.]+).*(safari)[/]([\w.]+)/.exec(c)||/(applewebkit)[/]([\w.]+).*(safari)[/]([\w.]+)/.exec(c)||/(webkit)[/]([\w.]+)/.exec(c)||/(opera)(?:.*version|)[/]([\w.]+)/.exec(c)||/(msie) ([\w.]+)/.exec(c)||/(fennec)[/]([\w.]+)/.exec(c)||c.indexOf("trident")>=0&&/(rv)(?::| )([\w.]+)/.exec(c)||c.indexOf("compatible")<0&&/(mozilla)(?:.*? rv:([\w.]+)|)/.exec(c)||[],f=/(ipad)/.exec(c)||/(ipod)/.exec(c)||/(iphone)/.exec(c)||/(jsdom)/.exec(c)||/(windows phone)/.exec(c)||/(xbox)/.exec(c)||/(win)/.exec(c)||/(tablet)/.exec(c)||/(android)/.test(c)&&!1===/(mobile)/.test(c)&&["androidTablet"]||/(android)/.exec(c)||/(mac)/.exec(c)||/(linux)/.exec(c)||/(cros)/.exec(c)||[],p=u[5]||u[3]||u[1]||null,w=f[0]||null,x=u[4]||u[2]||null,b=i();"function"==typeof(null==b||null===(a=b.brave)||void 0===a?void 0:a.isBrave)&&(p="brave"),p&&(l[p]=!0),w&&(l[w]=!0);var m=Boolean(l.tablet||l.android||l.androidTablet),v=Boolean(l.ipad||l.tablet||l.androidTablet),g=Boolean(l.android||l.androidTablet||l.tablet||l.ipad||l.ipod||l.iphone||l["windows phone"]),h=Boolean(l.cros||l.mac||l.linux||l.win),y=Boolean(l.brave||l.chrome||l.crios||l.opr||l.safari||l.edg),A=Boolean(l.msie||l.rv);return{name:null!==(t=o[p])&&void 0!==t?t:null,platform:null!==(s=n[w])&&void 0!==s?s:null,userAgent:d,version:x,shortVersion:x?r(parseFloat(x),2):null,isAndroid:m,isTablet:v,isMobile:g,isDesktop:h,isWebkit:y,isIE:A}}},{key:"getBrowserInfo",value:function(){var e=this.parseUserAgent();return{name:e.name,platform:e.platform,userAgent:e.userAgent,version:e.version,shortVersion:e.shortVersion}}}])&&e(t.prototype,s),l&&e(t,l),a}()}));
+//# sourceMappingURL=browser-dtector.umd.min.js.map
+
 
 /***/ }),
 
@@ -3195,7 +3218,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -3234,6 +3257,18 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
 /******/ 		};
 /******/ 	})();
 /******/ 	

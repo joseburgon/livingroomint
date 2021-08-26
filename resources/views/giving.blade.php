@@ -21,9 +21,9 @@
                             <input
                                 x-model="amount"
                                 @keyup="handleAmountInputChange" type="text" id="amount" name="amount" size="5"
-                                class="text-5xl lg:text-6xl max-w-full text-center text-white border-white border-0 focus:border-current focus:shadow-none focus:ring-0 relative px-0 pb-3 bg-transparent"
+                                class="appearance-none transition-all text-5xl lg:text-6xl max-w-full text-center text-white border-0 border-b-2 border-white focus:border-current focus:shadow-none focus:ring-0 relative px-0 pb-3 bg-transparent"
                             >
-                            <div class="w-1/4 border-t-2"></div>
+{{--                            <span class="w-40 text-transparent border-t-2" id="amountBorder"></span>--}}
                         </div>
                     </div>
                 </div>

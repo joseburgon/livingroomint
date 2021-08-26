@@ -1,8 +1,11 @@
 import Alpine from 'alpinejs';
+import BrowserDetector from 'browser-dtector';
 
 window.Alpine = Alpine;
 
 Alpine.start();
+
+window.BrowserDetector = new BrowserDetector(window.navigator.userAgent);
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

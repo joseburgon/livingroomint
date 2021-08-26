@@ -1,6 +1,10 @@
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let amountInput = document.getElementById('amount');
+    document.addEventListener("DOMContentLoaded", function () {
+        browserInfo = BrowserDetector.parseUserAgent();
+
+        isMobile = browserInfo.isMobile;
+
+        console.log(browserInfo);
 
         amountInput.value = new Intl.NumberFormat('en-US', {
             style: 'currency',
@@ -10,31 +14,47 @@
         amountInput.focus();
 
         amountInput.setSelectionRange(1, 1);
+
+        handleAmountInputChange();
     });
 
-    const isMobile = detectDevice();
+    let browserInfo = null;
 
-    console.log(`isMobile`, isMobile);
+    let isMobile = false;
 
-    function handleAmountInputChange(e) {
-        const minSize = 4;
-        const maxSize = 17;
+    const factors = {
+        'Google Chrome': 1,
+        'Mozilla Firefox': -4,
+        'Microsoft Edge': 1,
+        'Safari': 0,
+        'Brave Browser': 1,
+        'Samsung Browser': 1,
+        'Opera': 1,
+        'Other': 1
+    }
 
-        const amountInput = e.target;
+    const amountInput = document.getElementById('amount');
+
+    let amountFontSize = 60;
+
+    function handleAmountInputChange() {
+        const minSize = 5;
+        const maxSize = 19;
+        const factor = factors[browserInfo.name] ?? factors['Other'];
 
         const originalLength = amountInput.value.length;
 
         let caretPosition = amountInput.selectionStart;
 
-        console.log(`before`, amountInput.value);
+        // console.log(`before`, amountInput.value);
         let currentAmount = parseCurrency(amountInput.value);
-        console.log(`after`, currentAmount);
+        // console.log(`after`, currentAmount);
 
         if (isNaN(currentAmount)) {
             currentAmount = 0;
         }
 
-        amountInput.value = new Intl.NumberFormat('en-US', {  style: 'currency', currency: 'USD' }).format(currentAmount);
+        amountInput.value = new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(currentAmount);
 
         const updatedLength = amountInput.value.length;
 
@@ -45,30 +65,37 @@
         let newSize = minSize;
 
         if (updatedLength >= newSize) {
-            newSize = updatedLength + 1;
+            if (factor >= 0) {
+                newSize = (updatedLength + factor);
+            } else {
+                newSize = (updatedLength - Math.abs(factor));
+            }
+
+            newSize += (isMobile ? 1 : 0);
 
             if (newSize >= 9 && isMobile) {
-                amountInput.classList.remove('text-5xl');
-                amountInput.classList.add('text-4xl', 'py-5');
+                if (amountInput.classList.contains('text-5xl')) {
+                    amountInput.classList.remove('text-5xl');
+                    amountInput.classList.add('text-4xl', 'py-5');
+                }
             } else {
                 amountInput.classList.remove('text-4xl', 'py-5');
                 amountInput.classList.add('text-5xl');
             }
 
-            if (newSize > maxSize) {
-                newSize = maxSize;
+            if (newSize >= maxSize) {
+                return;
             }
         }
 
         amountInput.setAttribute('size', newSize);
     }
 
-    function parseCurrency(currency) {
-        return Number(currency.replace(/[^0-9.-]+/g, ""));
+    function setAmountFontSize() {
+        amountFontSize = parseFloat(window.getComputedStyle(document.getElementById('amount'), null).getPropertyValue('font-size'));
     }
 
-    function detectDevice() {
-        return (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ||
-            (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.platform)));
+    function parseCurrency(currency) {
+        return Number(currency.replace(/[^0-9.-]+/g, ""));
     }
 </script>
