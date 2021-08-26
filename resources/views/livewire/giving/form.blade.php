@@ -35,12 +35,14 @@
                                 <label for="type" class="text-gray-700">Tipo de donación</label>
                             </div>
                             <select
+                                wire:model="giving_type_id"
                                 name="type"
                                 id="type"
                                 class="form-select appearance-none block w-full px-5 py-2 border-gray-200 rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
                             >
                                 @foreach($givingTypes as $givingTypeId => $givingTypeName)
-                                    <option value="{{ $givingTypeId }}">{{ $givingTypeName }}</option>
+                                    <option
+                                        value="{{ $givingTypeId }}" {{ $givingTypeName === 'Campus Barranquilla' ? 'selected' : ''}}>{{ $givingTypeName }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -52,6 +54,7 @@
                             <div class="grid grid-cols-2 gap-2">
                                 <input
                                     type="text"
+                                    wire:model="first_name"
                                     name="first_name"
                                     id="first_name"
                                     class="block w-full px-5 py-2 border-gray-200 rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
@@ -60,6 +63,7 @@
                                 />
                                 <input
                                     type="text"
+                                    wire:model="last_name"
                                     name="last_name"
                                     id="last_name"
                                     class="block w-full px-5 py-2 border-gray-200 rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
@@ -73,6 +77,7 @@
                             <div class="grid lg:grid-cols-2 gap-2 w-full">
                                 <select
                                     name="document_type_id"
+                                    wire:mode="document_type_id"
                                     id="document_type"
                                     class="form-select appearance-none flex-shrink flex-grow flex-auto px-5 py-2 border-gray-200 rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
                                 >
@@ -82,6 +87,7 @@
                                 </select>
                                 <input
                                     type="text"
+                                    wire:model="document"
                                     name="document"
                                     id="document"
                                     class="block w-full px-5 py-2 border-gray-200 rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
@@ -94,6 +100,7 @@
                         <div class="my-3">
                             <input
                                 type="email"
+                                wire:model="email"
                                 name="email"
                                 id="email"
                                 class="block w-full px-5 py-2 border-gray-200 rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
@@ -104,6 +111,7 @@
                         <div class="my-3">
                             <input
                                 type="text"
+                                wire:model="phone"
                                 name="phone"
                                 id="phone"
                                 class="block w-full px-5 py-2 border-gray-200 rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
@@ -124,6 +132,7 @@
                                    </span>
                                 </div>
                                 <select
+                                    wire:model="country_id"
                                     x-model="country"
                                     name="country"
                                     id="country"
@@ -139,14 +148,38 @@
                             </div>
                         </div>
 
-                        <input x-model="currency" type="hidden" name="currency">
+                        <input wire:model="currency" x-model="currency" type="hidden" name="currency">
 
+                        {{--VALIDATION ERRORS--}}
+                        @if ($errors->any())
+                            <div class="flex justify-start mt-3 ml-4 p-1">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li class="flex items-center py-1">
+                                            <div class="bg-red-200 text-red-700 rounded-full p-1 fill-current">
+                                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                                                     stroke="currentColor">
+                                                    <path stroke-linecap="round"
+                                                          stroke-linejoin="round" stroke-width="2"
+                                                          d="M6 18L18 6M6 6l12 12"/>
+
+                                                </svg>
+                                            </div>
+                                            <span
+                                                class="text-red-700 font-medium text-sm ml-3">{{ $error }}</span>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        {{--GIVE BUTTON--}}
                         <div class="mt-6">
-                            <button
+                            <input
+                                type="submit"
                                 class="px-4 py-3 rounded bg-black text-gray-200 hover:bg-gray-700 focus:ring focus:outline-none w-full text-xl font-semibold transition-colors"
+                                value="Donar En Línea"
                             >
-                                Donar En Línea
-                            </button>
                         </div>
                     </div>
                 </div>

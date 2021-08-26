@@ -1,23 +1,4 @@
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        browserInfo = BrowserDetector.parseUserAgent();
-
-        isMobile = browserInfo.isMobile;
-
-        console.log(browserInfo);
-
-        amountInput.value = new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD'
-        }).format(parseFloat(amountInput.value));
-
-        amountInput.focus();
-
-        amountInput.setSelectionRange(1, 1);
-
-        handleAmountInputChange();
-    });
-
     let browserInfo = null;
 
     let isMobile = false;
@@ -34,8 +15,6 @@
     }
 
     const amountInput = document.getElementById('amount');
-
-    let amountFontSize = 60;
 
     function handleAmountInputChange() {
         const minSize = 5;
@@ -91,11 +70,26 @@
         amountInput.setAttribute('size', newSize);
     }
 
-    function setAmountFontSize() {
-        amountFontSize = parseFloat(window.getComputedStyle(document.getElementById('amount'), null).getPropertyValue('font-size'));
-    }
-
     function parseCurrency(currency) {
         return Number(currency.replace(/[^0-9.-]+/g, ""));
     }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        browserInfo = BrowserDetector.parseUserAgent();
+
+        isMobile = browserInfo.isMobile;
+
+        console.log(browserInfo);
+
+        amountInput.value = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        }).format(parseFloat(amountInput.value));
+
+        amountInput.focus();
+
+        amountInput.setSelectionRange(1, 1);
+
+        handleAmountInputChange();
+    });
 </script>

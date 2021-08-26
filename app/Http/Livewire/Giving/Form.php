@@ -10,10 +10,10 @@ use Livewire\Component;
 class Form extends Component
 {
     public $givingTypes;
-
     public $documentTypes;
-
     public $countries;
+
+    public $giving_type_id, $first_name, $last_name, $document_type_id, $document, $email, $phone, $country_id, $currency;
 
     public function mount()
     {
@@ -34,6 +34,10 @@ class Form extends Component
 
     public function donate()
     {
-        return "donating";
+        $data = $this->validate([
+           'first_name' => ['required', 'string'],
+           'last_name' => ['required', 'string'],
+           'email' => ['required', 'email'],
+        ]);
     }
 }
