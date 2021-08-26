@@ -10,4 +10,9 @@ class Giving extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public const STATUS_CREATED = 1;
+    public const STATUS_APPROVED = 2;
+    public const STATUS_DECLINED = 3;
+    public const STATUS_EXPIRED = 4;
 }

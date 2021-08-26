@@ -1,7 +1,7 @@
 <div class="bg-white w-full lg:w-5/12 -mt-8 lg:-mt-20 shadow-md rounded-lg overflow-hidden">
     <div class="items-center justify-between py-10 px-5 bg-white shadow-2xl rounded-lg mx-auto text-center">
         <div class="px-2 -mt-6">
-            <form wire:submit.prevent="donate">
+            <form wire:submit.prevent="give">
                 <div class="text-center">
                     <div class="">
                         {{--CURRENCY--}}
@@ -40,9 +40,8 @@
                                 id="type"
                                 class="form-select appearance-none block w-full px-5 py-2 border-gray-200 rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
                             >
-                                @foreach($givingTypes as $givingTypeId => $givingTypeName)
-                                    <option
-                                        value="{{ $givingTypeId }}" {{ $givingTypeName === 'Campus Barranquilla' ? 'selected' : ''}}>{{ $givingTypeName }}</option>
+                                @foreach($givingTypes->pluck('name', 'id') as $givingTypeId => $givingTypeName)
+                                    <option value="{{ $givingTypeId }}">{{ $givingTypeName }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -77,7 +76,7 @@
                             <div class="grid lg:grid-cols-2 gap-2 w-full">
                                 <select
                                     name="document_type_id"
-                                    wire:mode="document_type_id"
+                                    wire:model="document_type_id"
                                     id="document_type"
                                     class="form-select appearance-none flex-shrink flex-grow flex-auto px-5 py-2 border-gray-200 rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
                                 >
@@ -132,7 +131,7 @@
                                    </span>
                                 </div>
                                 <select
-                                    wire:model="country_id"
+                                    wire:model="country"
                                     x-model="country"
                                     name="country"
                                     id="country"
@@ -148,6 +147,7 @@
                             </div>
                         </div>
 
+                        <input wire:model="amount" x-model="amount" type="hidden" name="amount">
                         <input wire:model="currency" x-model="currency" type="hidden" name="currency">
 
                         {{--VALIDATION ERRORS--}}

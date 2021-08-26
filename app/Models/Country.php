@@ -19,4 +19,9 @@ class Country extends Model
     {
         return $query->where('active', self::ACTIVE);
     }
+
+    public function scopeCode($query, $code)
+    {
+        return $query->where('code', $code);
+    }
 }

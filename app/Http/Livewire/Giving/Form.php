@@ -4,7 +4,12 @@ namespace App\Http\Livewire\Giving;
 
 use App\Models\Country;
 use App\Models\DocumentType;
+use App\Models\Giver;
+use App\Models\Giving;
 use App\Models\GivingType;
+use App\Models\PaymentGateway;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Livewire\Component;
 
 class Form extends Component
@@ -13,11 +18,25 @@ class Form extends Component
     public $documentTypes;
     public $countries;
 
-    public $giving_type_id, $first_name, $last_name, $document_type_id, $document, $email, $phone, $country_id, $currency;
+    public $amount;
+    public $giver;
+    public $giving;
+    public $paymentGateway;
+
+    public $giving_type_id, $first_name, $last_name, $document_type_id, $document, $email, $phone, $country, $currency;
+
+    protected $rules = [
+        'first_name' => ['required', 'string'],
+        'last_name' => ['required', 'string'],
+        'document_type_id' => ['required', 'integer'],
+        'document' => ['required', 'string'],
+        'email' => ['required', 'email'],
+        'phone' => ['required', 'string'],
+    ];
 
     public function mount()
     {
-        $this->givingTypes = GivingType::active()->pluck('name', 'id');
+        $this->givingTypes = GivingType::active()->get();
 
         $this->documentTypes = DocumentType::active()->pluck('name', 'id');
 
@@ -25,6 +44,16 @@ class Form extends Component
             ->orderBy('order')
             ->get()
             ->pluck('name', 'code');
+
+        $this->giving_type_id = $this->givingTypes->firstWhere('name', 'Campus Barranquilla')->id;
+
+        $this->document_type_id = $this->documentTypes->keys()[0];
+
+        $this->country = $this->countries->keys()[0];
+
+        $this->amount = 0;
+
+        $this->currency = 'COP';
     }
 
     public function render()
@@ -32,12 +61,57 @@ class Form extends Component
         return view('livewire.giving.form');
     }
 
-    public function donate()
+    public function updated($propertyName)
     {
-        $data = $this->validate([
-           'first_name' => ['required', 'string'],
-           'last_name' => ['required', 'string'],
-           'email' => ['required', 'email'],
+        $this->validateOnly($propertyName);
+    }
+
+    public function give()
+    {
+        $this->giver = $this->storeGiver();
+
+        $this->setPaymentGateway();
+
+        $this->giving = $this->storeGivingRecord();
+
+        return redirect('/');
+    }
+
+    private function storeGivingRecord()
+    {
+        return Giving::create([
+            'reference' => Str::uuid(),
+            'amount' => $this->amount,
+            'currency' => $this->currency,
+            'description' => 'Creating giving record',
+            'status' => Giving::STATUS_CREATED,
+            'giver_id' => $this->giver->id,
+            'giving_type_id' => $this->giving_type_id,
+            'payment_gateway_id' => $this->paymentGateway->id,
         ]);
+    }
+
+    private function storeGiver()
+    {
+        $validatedData = $this->validate();
+
+        $validatedData['country_id'] = $this->getCountryId();
+
+        return Giver::updateOrCreate(
+            ['email' => $validatedData['email']],
+            Arr::except($validatedData, ['email'])
+        );
+    }
+
+    private function setPaymentGateway()
+    {
+        $this->paymentGateway = PaymentGateway::active()
+            ->where('name', 'PayU Latam')
+            ->first();
+    }
+
+    private function getCountryId()
+    {
+        return Country::code($this->country)->first()->id;
     }
 }

@@ -14,7 +14,7 @@
         'Other': 1
     }
 
-    const amountInput = document.getElementById('amount');
+    const amountInput = document.getElementById('amount_input');
 
     function handleAmountInputChange() {
         const minSize = 5;
