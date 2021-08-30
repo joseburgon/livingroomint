@@ -15,7 +15,7 @@ class PaymentGatewaySeeder extends Seeder
     public function run()
     {
         PaymentGateway::create([
-            'name' => 'PayU Latam',
+            'name' => 'PayU',
             'active' => 1
         ]);
 

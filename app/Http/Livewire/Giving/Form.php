@@ -18,12 +18,11 @@ class Form extends Component
     public $documentTypes;
     public $countries;
 
-    public $amount;
-    public $giver;
-    public $giving;
-    public $paymentGateway;
+    private $giver;
+    private $paymentGateway;
+    private $paymentService;
 
-    public $giving_type_id, $first_name, $last_name, $document_type_id, $document, $email, $phone, $country, $currency;
+    public $amount, $giving_type_id, $first_name, $last_name, $document_type_id, $document, $email, $phone, $country, $currency;
 
     protected $rules = [
         'first_name' => ['required', 'string'],
@@ -72,9 +71,13 @@ class Form extends Component
 
         $this->setPaymentGateway();
 
-        $this->giving = $this->storeGivingRecord();
+        $giving = $this->storeGivingRecord();
 
-        return redirect('/');
+        $this->setPaymentService();
+
+        $data = $this->paymentService->prepare($giving);
+
+        redirect()->away('https://www.google.com')->with($data);
     }
 
     private function storeGivingRecord()
@@ -106,8 +109,15 @@ class Form extends Component
     private function setPaymentGateway()
     {
         $this->paymentGateway = PaymentGateway::active()
-            ->where('name', 'PayU Latam')
+            ->where('name', 'PayU')
             ->first();
+    }
+
+    private function setPaymentService()
+    {
+        $gatewayRegistry = new PaymentGatewayRegistry;
+
+        $this->paymentService = $gatewayRegistry->get($this->paymentGateway->name);
     }
 
     private function getCountryId()

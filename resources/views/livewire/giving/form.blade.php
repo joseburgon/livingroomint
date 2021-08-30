@@ -177,7 +177,7 @@
                         <div class="mt-6">
                             <input
                                 type="submit"
-                                class="px-4 py-3 rounded bg-black text-gray-200 hover:bg-gray-700 focus:ring focus:outline-none w-full text-xl font-semibold transition-colors"
+                                class="px-4 py-3 rounded bg-black text-gray-200 hover:bg-gray-700 cursor-pointer focus:ring focus:outline-none w-full text-xl font-semibold transition-colors"
                                 value="Donar En Línea"
                             >
                         </div>
