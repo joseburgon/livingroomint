@@ -77,7 +77,7 @@ class Form extends Component
 
         $data = $this->paymentService->prepare($giving);
 
-        redirect()->away('https://www.google.com')->with($data);
+        redirect()->away($this->paymentService->getCheckoutUrl())->with($data);
     }
 
     private function storeGivingRecord()

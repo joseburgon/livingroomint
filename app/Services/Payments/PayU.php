@@ -7,18 +7,60 @@ use App\Models\Giving;
 
 class PayU implements PaymentGatewayInterface
 {
-    function pay() {
+    private $checkoutUrl;
+    private $apiKey;
+    private $merchantId;
+    private $accountId;
+    private $responseUrl;
+    private $confirmationUrl;
+
+    public function __construct()
+    {
+        $this->checkoutUrl = config('services.payu.url');
+        $this->apiKey = config('services.payu.key');
+        $this->merchantId = config('services.payu.merchant');
+        $this->accountId = config('services.payu.account');
+        $this->responseUrl = config('services.payu.response_url');
+        $this->confirmationUrl = config('services.payu.confirmation_url');
+    }
+
+    function pay()
+    {
         // TODO: Implement pay() method.
     }
 
-    function prepare(Giving $giving)
+    function prepare(Giving $giving): array
     {
-        // TODO: Implement prepare() method.
+        $giving->load('giver.documentType');
+
+        return [
+            'merchantId' => $this->merchantId,
+            'accountId' => $this->accountId,
+            'referenceCode' => $giving->reference,
+            'description' => $giving->description,
+            'amount' => $giving->amount,
+            'tax' => 0,
+            'taxReturnBase' => 0,
+            'signature' => $this->signature($giving),
+            'currency' => $giving->currency,
+            'buyerFullName' => $giving->giver->full_name,
+            'buyerEmail' => $giving->giver->email,
+            'mobilePhone' => $giving->giver->phone,
+            'buyerDocumentType' => $giving->giver->documentType->code,
+            'buyerDocument' => $giving->giver->document,
+            'responseUrl' => $this->responseUrl,
+            'confirmationUrl' => $this->confirmationUrl,
+        ];
     }
 
-    private function signature()
+    function getCheckoutUrl()
     {
+        return $this->checkoutUrl;
+    }
 
+    private function signature(Giving $giving): string
+    {
+        return md5($this->apiKey . '~' . $this->merchantId . '~' . $giving->reference . '~' . $giving->amount . '~' . $giving->currency);
     }
 
 }

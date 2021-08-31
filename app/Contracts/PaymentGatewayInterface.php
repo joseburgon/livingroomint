@@ -9,4 +9,6 @@ interface PaymentGatewayInterface
     function pay();
 
     function prepare(Giving $giving);
+
+    function getCheckoutUrl();
 }
