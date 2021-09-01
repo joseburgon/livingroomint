@@ -25,13 +25,13 @@
 
         let caretPosition = amountInput.selectionStart;
 
-        // console.log(`before`, amountInput.value);
         let currentAmount = parseCurrency(amountInput.value);
-        // console.log(`after`, currentAmount);
 
         if (isNaN(currentAmount)) {
             currentAmount = 0;
         }
+
+        Livewire.emit('amountChanged', currentAmount);
 
         amountInput.value = new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(currentAmount);
 

@@ -20,7 +20,6 @@ class Form extends Component
 
     private $giver;
     private $paymentGateway;
-    private $paymentService;
 
     public $amount, $giving_type_id, $first_name, $last_name, $document_type_id, $document, $email, $phone, $country, $currency;
 
@@ -32,6 +31,8 @@ class Form extends Component
         'email' => ['required', 'email'],
         'phone' => ['required', 'string'],
     ];
+
+    protected $listeners = ['amountChanged' => 'updateAmount'];
 
     public function mount()
     {
@@ -65,6 +66,16 @@ class Form extends Component
         $this->validateOnly($propertyName);
     }
 
+    public function updateAmount($value)
+    {
+        $this->amount = $value;
+    }
+
+    public function updateCurrency($value)
+    {
+        $this->currency = $value;
+    }
+
     public function give()
     {
         $this->giver = $this->storeGiver();
@@ -73,11 +84,7 @@ class Form extends Component
 
         $giving = $this->storeGivingRecord();
 
-        $this->setPaymentService();
-
-        $data = $this->paymentService->prepare($giving);
-
-        redirect()->away($this->paymentService->getCheckoutUrl())->with($data);
+        redirect()->route('donaciones.redirect', $giving);
     }
 
     private function storeGivingRecord()
@@ -111,13 +118,6 @@ class Form extends Component
         $this->paymentGateway = PaymentGateway::active()
             ->where('name', 'PayU')
             ->first();
-    }
-
-    private function setPaymentService()
-    {
-        $gatewayRegistry = new PaymentGatewayRegistry;
-
-        $this->paymentService = $gatewayRegistry->get($this->paymentGateway->name);
     }
 
     private function getCountryId()

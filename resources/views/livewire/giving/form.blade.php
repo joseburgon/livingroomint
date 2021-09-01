@@ -13,6 +13,7 @@
                                 class="w-full bg-gray-200 text-sm text-gray-500 leading-none border-2 border-gray-200 rounded inline-flex">
                                 <button
                                     @click="currency='COP'"
+                                    wire:click="updateCurrency('COP')"
                                     type="button"
                                     :class="{ 'bg-white text-black' : currency === 'COP' }"
                                     class="w-full inline-flex justify-center items-center transition-colors duration-300 ease-in focus:outline-none hover:text-black focus:text-black rounded-l p-4"
@@ -21,6 +22,7 @@
                                 </button>
                                 <button
                                     @click="currency='USD'"
+                                    wire:click="updateCurrency('USD')"
                                     type="button"
                                     :class="{ 'bg-white text-black' : currency === 'USD' }"
                                     class="w-full inline-flex justify-center items-center transition-colors duration-300 ease-in focus:outline-none hover:text-black focus:text-black rounded-r px-4 py-2"
@@ -147,7 +149,6 @@
                             </div>
                         </div>
 
-                        <input wire:model="amount" x-model="amount" type="hidden" name="amount">
                         <input wire:model="currency" x-model="currency" type="hidden" name="currency">
 
                         {{--VALIDATION ERRORS--}}

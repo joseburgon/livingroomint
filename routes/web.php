@@ -21,8 +21,13 @@ Route::get('/donaciones', function () {
     return view('giving');
 });
 
+Route::get(
+    '/donaciones/{giving}/redirect',
+    [\App\Http\Controllers\GivingController::class, 'redirect']
+)->name('donaciones.redirect');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

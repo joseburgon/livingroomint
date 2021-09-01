@@ -24,36 +24,40 @@ class PayU implements PaymentGatewayInterface
         $this->confirmationUrl = config('services.payu.confirmation_url');
     }
 
-    function pay()
+    public function pay()
     {
         // TODO: Implement pay() method.
     }
 
-    function prepare(Giving $giving): array
+    public function prepare(Giving $giving): array
     {
         $giving->load('giver.documentType');
 
         return [
-            'merchantId' => $this->merchantId,
-            'accountId' => $this->accountId,
-            'referenceCode' => $giving->reference,
-            'description' => $giving->description,
-            'amount' => $giving->amount,
-            'tax' => 0,
-            'taxReturnBase' => 0,
-            'signature' => $this->signature($giving),
-            'currency' => $giving->currency,
-            'buyerFullName' => $giving->giver->full_name,
-            'buyerEmail' => $giving->giver->email,
-            'mobilePhone' => $giving->giver->phone,
-            'buyerDocumentType' => $giving->giver->documentType->code,
-            'buyerDocument' => $giving->giver->document,
-            'responseUrl' => $this->responseUrl,
-            'confirmationUrl' => $this->confirmationUrl,
+            'params' => [
+                'merchantId' => $this->merchantId,
+                'accountId' => $this->accountId,
+                'referenceCode' => $giving->reference,
+                'description' => $giving->description,
+                'amount' => $giving->amount,
+                'tax' => 0,
+                'taxReturnBase' => 0,
+                'signature' => $this->signature($giving),
+                'currency' => $giving->currency,
+                'buyerFullName' => $giving->giver->full_name,
+                'buyerEmail' => $giving->giver->email,
+                'mobilePhone' => $giving->giver->phone,
+                'buyerDocumentType' => $giving->giver->documentType->code,
+                'buyerDocument' => $giving->giver->document,
+                'responseUrl' => $this->responseUrl,
+                'confirmationUrl' => $this->confirmationUrl,
+                'test' => 0,
+            ],
+            'checkoutUrl' => $this->getCheckoutUrl()
         ];
     }
 
-    function getCheckoutUrl()
+    public function getCheckoutUrl()
     {
         return $this->checkoutUrl;
     }
@@ -62,5 +66,4 @@ class PayU implements PaymentGatewayInterface
     {
         return md5($this->apiKey . '~' . $this->merchantId . '~' . $giving->reference . '~' . $giving->amount . '~' . $giving->currency);
     }
-
 }

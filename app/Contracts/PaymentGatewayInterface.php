@@ -6,9 +6,9 @@ use App\Models\Giving;
 
 interface PaymentGatewayInterface
 {
-    function pay();
+    public function pay();
 
-    function prepare(Giving $giving);
+    public function prepare(Giving $giving);
 
-    function getCheckoutUrl();
+    public function getCheckoutUrl();
 }
