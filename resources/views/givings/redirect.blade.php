@@ -8,7 +8,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // document.getElementById('redirect').submit();
+            document.getElementById('redirect').submit();
         });
     </script>
 </x-base-layout>

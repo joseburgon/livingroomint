@@ -1,8 +1,13 @@
 <x-base-layout>
-    <div x-data="{ amount: 0, country: 'CO', currency: 'COP' }" class="flex flex-col justify-center items-center w-full h-full">
+    @section('styles')
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@iconscout/unicons@3.0.6/css/line.css">
+    @endsection
+
+    <div x-data="{ amount: 0, country: 'CO', currency: 'COP' }"
+         class="flex flex-col justify-center items-center w-full h-full">
         <nav id="nav" class="fixed inset-x-0 top-0 flex flex-row justify-center z-10 text-white bg-transparent">
             <div class="p-4">
-                <a href="#">
+                <a href="https://www.livingroomint.org/">
                     <img class="w-40" src="{{ asset('img/logo-livingroom-blanco.svg') }}" alt="Logo Living Room">
                 </a>
             </div>
@@ -20,7 +25,8 @@
                         <div class="flex flex-col items-center relative">
                             <input
                                 x-model="amount"
-                                @keyup="handleAmountInputChange" type="text" id="amount_input" name="amount_input" size="5"
+                                @keyup="handleAmountInputChange" type="text" id="amount_input" name="amount_input"
+                                size="5"
                                 class="appearance-none transition-all text-5xl lg:text-6xl max-w-full text-center text-white border-0 border-b-2 border-white focus:border-current focus:shadow-none focus:ring-0 relative px-0 pb-3 bg-transparent"
                             >
                         </div>
@@ -34,5 +40,13 @@
         <!-- End Form -->
     </div>
 
-    @include('scripts.giving')
+    <div class="flex flex-col justify-center items-center w-full">
+        <div class="w-full lg:w-5/12 flex my-10">
+            <x-footer bgColor="bg-gray-100"/>
+        </div>
+    </div>
+
+    @section('scripts')
+        @include('scripts.giving')
+    @endsection
 </x-base-layout>

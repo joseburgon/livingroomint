@@ -32,7 +32,9 @@ class PayUController extends Controller
             return view('givings.error');
         }
 
-        $data['params'] = $request->query();
+        $data['currency'] = $request->currency;
+        $data['amount'] = $request->TX_VALUE;
+        $data['email'] = $request->buyerEmail;
 
         return view('givings.response', $data);
     }

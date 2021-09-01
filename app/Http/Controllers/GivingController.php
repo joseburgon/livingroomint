@@ -20,6 +20,6 @@ class GivingController extends Controller
 
         $serviceParams = $paymentService->prepare($giving);
 
-        return view('redirect', $serviceParams);
+        return view('givings.redirect', $serviceParams);
     }
 }

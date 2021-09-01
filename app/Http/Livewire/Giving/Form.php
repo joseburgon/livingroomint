@@ -93,12 +93,17 @@ class Form extends Component
             'reference' => Str::uuid(),
             'amount' => $this->amount,
             'currency' => $this->currency,
-            'description' => 'Creating giving record',
+            'description' => $this->description(),
             'status' => Giving::STATUS_CREATED,
             'giver_id' => $this->giver->id,
             'giving_type_id' => $this->giving_type_id,
             'payment_gateway_id' => $this->paymentGateway->id,
         ]);
+    }
+
+    private function description(): string
+    {
+        return "Donación: " . GivingType::find($this->giving_type_id)->name;
     }
 
     private function storeGiver()

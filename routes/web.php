@@ -19,9 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::name('donaciones')->group(function () {
+Route::prefix('donaciones')->name('donaciones.')->group(function () {
     Route::get('/', function () {
         return view('givings.index');
+    });
+
+    Route::get('/response', function () {
+        return view('givings.response');
     });
 
     Route::get('/{giving}/redirect', [GivingController::class, 'redirect'])

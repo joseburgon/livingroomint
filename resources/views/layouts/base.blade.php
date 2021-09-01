@@ -17,6 +17,8 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
 
         @livewireStyles
+
+        @yield('styles')
     </head>
     <body class="bg-gray-100">
         <div class="font-sans text-gray-900 antialiased">
@@ -24,5 +26,7 @@
         </div>
 
         @livewireScripts
+
+        @yield('scripts')
     </body>
 </html>
