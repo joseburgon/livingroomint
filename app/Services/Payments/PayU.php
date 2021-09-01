@@ -42,7 +42,7 @@ class PayU implements PaymentGatewayInterface
                 'amount' => $giving->amount,
                 'tax' => 0,
                 'taxReturnBase' => 0,
-                'signature' => $this->signature($giving),
+                'signature' => $this->signature($giving->reference, $giving->amount, $giving->currency),
                 'currency' => $giving->currency,
                 'buyerFullName' => $giving->giver->full_name,
                 'buyerEmail' => $giving->giver->email,
@@ -62,8 +62,8 @@ class PayU implements PaymentGatewayInterface
         return $this->checkoutUrl;
     }
 
-    private function signature(Giving $giving): string
+    public function signature($reference, $amount, $currency): string
     {
-        return md5($this->apiKey . '~' . $this->merchantId . '~' . $giving->reference . '~' . $giving->amount . '~' . $giving->currency);
+        return md5($this->apiKey . '~' . $this->merchantId . '~' . $reference . '~' . $amount . '~' . $currency);
     }
 }

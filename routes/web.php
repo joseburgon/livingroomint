@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Payment\PayUController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GivingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,14 +19,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/donaciones', function () {
-    return view('giving');
-});
+Route::name('donaciones')->group(function () {
+    Route::get('/', function () {
+        return view('givings.index');
+    });
 
-Route::get(
-    '/donaciones/{giving}/redirect',
-    [\App\Http\Controllers\GivingController::class, 'redirect']
-)->name('donaciones.redirect');
+    Route::get('/{giving}/redirect', [GivingController::class, 'redirect'])
+        ->name('redirect');
+
+    Route::get('/payu/response', [PayUController::class, 'response'])
+        ->name('payu.response');
+
+    Route::get('/payu/confirmation', [PayUController::class, 'confirmation'])
+        ->name('payu.confirmation');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
