@@ -34,7 +34,7 @@ Route::prefix('donaciones')->name('donaciones.')->group(function () {
     Route::get('/payu/response', [PayUController::class, 'response'])
         ->name('payu.response');
 
-    Route::get('/payu/confirmation', [PayUController::class, 'confirmation'])
+    Route::post('/payu/confirmation', [PayUController::class, 'confirmation'])
         ->name('payu.confirmation');
 });
 

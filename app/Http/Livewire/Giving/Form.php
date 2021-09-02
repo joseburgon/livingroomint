@@ -9,6 +9,7 @@ use App\Models\Giving;
 use App\Models\GivingType;
 use App\Models\PaymentGateway;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
@@ -83,6 +84,8 @@ class Form extends Component
         $this->setPaymentGateway();
 
         $giving = $this->storeGivingRecord();
+
+        Log::info("[GIVINGS][FORM] Storing new giving record with ID: {$giving->id}");
 
         redirect()->route('donaciones.redirect', $giving);
     }

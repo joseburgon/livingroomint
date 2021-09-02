@@ -24,6 +24,7 @@ class CreateGivingsTable extends Migration
             $table->unsignedBigInteger('giving_type_id');
             $table->unsignedBigInteger('payment_gateway_id')->nullable();
             $table->unsignedBigInteger('payment_method_id')->nullable();
+            $table->string('transaction_id')->nullable();
             $table->string('extra_info')->nullable();
             $table->timestamps();
         });

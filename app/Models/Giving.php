@@ -16,6 +16,11 @@ class Giving extends Model
     public const STATUS_DECLINED = 3;
     public const STATUS_EXPIRED = 4;
 
+    public function scopeReference($query, $reference)
+    {
+        return $query->where('reference', $reference);
+    }
+
     public function giver()
     {
         return $this->belongsTo(Giver::class);

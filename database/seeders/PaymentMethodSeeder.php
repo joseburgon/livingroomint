@@ -55,5 +55,11 @@ class PaymentMethodSeeder extends Seeder
             'description' => 'Débitos ACH',
             'active' => 1
         ]);
+
+        PaymentMethod::create([
+            'type' => 'UNKNOWN',
+            'description' => 'Método no registrado',
+            'active' => 1
+        ]);
     }
 }
