@@ -25,7 +25,7 @@ class PayUController extends Controller
 
     public function response(Request $request)
     {
-        $signParams  = [
+        /*$signParams  = [
             $request->referenceCode,
             number_format($request->TX_VALUE, 1, '.', ''),
             $request->currency
@@ -39,7 +39,11 @@ class PayUController extends Controller
 
         $data['currency'] = $request->currency;
         $data['amount'] = $request->TX_VALUE;
-        $data['email'] = $request->buyerEmail;
+        $data['email'] = $request->buyerEmail;*/
+
+        $data['currency'] = 'CLP';
+        $data['amount'] = 50000.00;
+        $data['email'] = 'giver@mail.com';
 
         return view('givings.response', $data);
     }

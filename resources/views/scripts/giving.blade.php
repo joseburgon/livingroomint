@@ -16,6 +16,23 @@
 
     const amountInput = document.getElementById('amount_input');
 
+    function toggleNavBackground() {
+        const nav = document.getElementById('nav');
+
+        window.addEventListener('scroll', () => {
+            let yPosition = window.scrollY;
+
+            if (yPosition > 100) {
+                nav.classList.remove('bg-transparent');
+                nav.classList.add('bg-black');
+            }
+            else {
+                nav.classList.remove('bg-black');
+                nav.classList.add('bg-transparent');
+            }
+        });
+    }
+
     function handleAmountInputChange() {
         const minSize = 5;
         const maxSize = 14;
@@ -91,5 +108,7 @@
         amountInput.setSelectionRange(1, 1);
 
         handleAmountInputChange();
+
+        toggleNavBackground();
     });
 </script>
