@@ -25,8 +25,8 @@ class Form extends Component
     public $amount, $giving_type_id, $first_name, $last_name, $document_type_id, $document, $email, $phone, $country, $currency;
 
     protected $rules = [
-        'first_name' => ['required', 'string'],
-        'last_name' => ['required', 'string'],
+        'first_name' => ['required', 'regex:/^[ a-zA-ZÀ-ÿ]*$/'],
+        'last_name' => ['required', 'regex:/^[ a-zA-ZÀ-ÿ]*$/'],
         'document_type_id' => ['required', 'integer'],
         'document' => ['required', 'string'],
         'email' => ['required', 'email'],

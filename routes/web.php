@@ -16,7 +16,7 @@ use App\Http\Controllers\GivingController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('emails.thanks');
 });
 
 Route::prefix('donaciones')->name('donaciones.')->group(function () {

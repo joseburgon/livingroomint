@@ -16,6 +16,16 @@ class Giving extends Model
     public const STATUS_DECLINED = 3;
     public const STATUS_EXPIRED = 4;
 
+    public function getShortDateAttribute()
+    {
+        return $this->created_at->format('F j, Y');
+    }
+
+    public function getLongDateAttribute()
+    {
+        return $this->created_at->format('l, j \d\e F \d\e Y');
+    }
+
     public function scopeReference($query, $reference)
     {
         return $query->where('reference', $reference);
@@ -24,6 +34,16 @@ class Giving extends Model
     public function giver()
     {
         return $this->belongsTo(Giver::class);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(GivingType::class);
+    }
+
+    public function method()
+    {
+        return $this->belongsTo(PaymentMethod::class);
     }
 
     public function paymentGateway()
