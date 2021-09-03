@@ -16,6 +16,10 @@ use App\Http\Controllers\GivingController;
 */
 
 Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/email', function () {
     return view('emails.thanks');
 });
 
