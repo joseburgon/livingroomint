@@ -15,8 +15,8 @@
                                     @click="currency='COP'"
                                     wire:click="updateCurrency('COP')"
                                     type="button"
-                                    :class="{ 'bg-white text-black' : currency === 'COP' }"
-                                    class="w-full inline-flex justify-center items-center transition-colors duration-300 ease-in focus:outline-none hover:text-black focus:text-black rounded-l p-4"
+                                    :class="{ 'bg-black text-white' : currency === 'COP' }"
+                                    class="w-full inline-flex justify-center items-center transition-colors duration-300 ease-in focus:outline-none hover:text-black focus:text-white rounded-l p-2 lg:p-4"
                                     id="COP">
                                     <span>Peso Colombiano (COP)</span>
                                 </button>
@@ -24,8 +24,8 @@
                                     @click="currency='USD'"
                                     wire:click="updateCurrency('USD')"
                                     type="button"
-                                    :class="{ 'bg-white text-black' : currency === 'USD' }"
-                                    class="w-full inline-flex justify-center items-center transition-colors duration-300 ease-in focus:outline-none hover:text-black focus:text-black rounded-r px-4 py-2"
+                                    :class="{ 'bg-black text-white' : currency === 'USD' }"
+                                    class="w-full inline-flex justify-center items-center transition-colors duration-300 ease-in focus:outline-none hover:text-black focus:text-white rounded-r p-2 lg:p-4"
                                     id="USD">
                                     <span>Dólar Americano (USD)</span>
                                 </button>

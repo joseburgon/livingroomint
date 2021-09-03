@@ -18,7 +18,7 @@
 
     function handleAmountInputChange() {
         const minSize = 5;
-        const maxSize = 19;
+        const maxSize = 14;
         const factor = factors[browserInfo.name] ?? factors['Other'];
 
         const originalLength = amountInput.value.length;
