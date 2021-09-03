@@ -85,7 +85,7 @@ class PayU implements PaymentGatewayInterface
 
     public function signature(array $params): string
     {
-        $signature = $this->apiKey . '~' . $this->merchantId . '~';
+        $signature = $this->apiKey . '~' . $this->merchantId;
 
         foreach ($params as $param) {
             $signature .= '~' . $param;
