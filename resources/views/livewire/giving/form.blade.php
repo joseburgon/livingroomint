@@ -124,7 +124,7 @@
                             <div class="mb-2">
                                 <label for="type" class="text-gray-700">¿Desde donde estás donando?</label>
                             </div>
-                            <div class="flex flex-wrap items-stretch">
+                            <div class="flex items-stretch">
                                 <div class="flex">
 									<span
                                         class="flex items-center leading-normal bg-grey-lighter border-1 rounded-r-none shadow-lg border border-r-0 border-gray-100 px-3 whitespace-no-wrap text-grey-dark text-sm w-12 h-10 bg-gray-100 justify-center items-center text-xl rounded-lg text-white">
@@ -137,7 +137,7 @@
                                     x-model="country"
                                     name="country"
                                     id="country"
-                                    class="form-select appearance-none flex-shrink flex-grow flex-auto px-5 py-2 border-gray-200 border-l-0 rounded-lg rounded-l-none bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
+                                    class="form-select appearance-none overflow-x-hidden flex-shrink flex-grow flex-auto px-5 py-2 border-gray-200 border-l-0 rounded-lg rounded-l-none bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
                                 >
                                     @foreach($countries as $code => $name)
                                         <option value="{{ $code }}">{{ $name }}</option>

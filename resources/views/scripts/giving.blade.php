@@ -4,7 +4,7 @@
     let isMobile = false;
 
     const factors = {
-        'Google Chrome': 1,
+        'Google Chrome': -1,
         'Mozilla Firefox': -4,
         'Microsoft Edge': 1,
         'Safari': 0,

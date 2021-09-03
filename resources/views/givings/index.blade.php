@@ -25,7 +25,7 @@
                         <div class="flex flex-col items-center relative">
                             <input
                                 x-model="amount"
-                                @keyup="handleAmountInputChange" type="text" id="amount_input" name="amount_input"
+                                @keyup="handleAmountInputChange" type="text" pattern="\d*" inputmode="numeric" id="amount_input" name="amount_input"
                                 size="5"
                                 class="appearance-none transition-all text-5xl lg:text-6xl max-w-full text-center text-white border-0 border-b-2 border-white focus:border-current focus:shadow-none focus:ring-0 relative px-0 pb-3 bg-transparent"
                             >
