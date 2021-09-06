@@ -22,7 +22,7 @@ Route::get('/email', function () {
 });
 
 Route::get('/email/send', function () {
-    $giving = \App\Models\Giving::find(1);
+    $giving = \App\Models\Giving::whereNotNull('transaction_id')->first();
 
     \Illuminate\Support\Facades\Mail::to('joseburgon9@gmail.com')->queue(new \App\Mail\GivingReceived($giving));
 
