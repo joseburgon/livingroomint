@@ -28,7 +28,8 @@ class PayUController extends Controller
         $signParams  = [
             $request->referenceCode,
             number_format($request->TX_VALUE, 1, '.', ''),
-            $request->currency
+            $request->currency,
+            $request->transactionState
         ];
 
         $signature = $this->paymentService->signature($signParams);
