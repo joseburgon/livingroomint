@@ -29,23 +29,23 @@ Route::get('/email/send', function () {
     return response('SENT', 200);
 });
 
-Route::prefix('donaciones')->name('donaciones.')->group(function () {
+Route::prefix('donaciones')->name('donaciones')->group(function () {
     Route::get('/', function () {
         return view('givings.index');
     });
 
     Route::get('/response', function () {
         return view('givings.response');
-    });
+    })->name('.response');
 
     Route::get('/{giving}/redirect', [GivingController::class, 'redirect'])
-        ->name('redirect');
+        ->name('.redirect');
 
     Route::get('/payu/response', [PayUController::class, 'response'])
-        ->name('payu.response');
+        ->name('.payu.response');
 
     Route::post('/payu/confirmation', [PayUController::class, 'confirmation'])
-        ->name('payu.confirmation');
+        ->name('.payu.confirmation');
 });
 
 Route::get('/dashboard', function () {

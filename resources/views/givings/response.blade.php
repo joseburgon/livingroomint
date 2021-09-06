@@ -34,7 +34,7 @@
                     <p class="font-normal text-base lg:text-xl">Recibirás una notificación en <strong>{{ $email }}</strong> cuando la donación
                         haya sido procesada.</p>
                     <div class="flex mt-8">
-                        <a href="#"
+                        <a href="{{ route('donaciones') }}"
                            class="bg-black text-white text-lg lg:text-xl px-6 py-2 rounded font-bold hover:bg-gray-800 transition duration-200 each-in-out">Hacer
                             otra donación</a>
                     </div>
