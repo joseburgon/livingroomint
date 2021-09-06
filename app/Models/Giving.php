@@ -18,12 +18,12 @@ class Giving extends Model
 
     public function getShortDateAttribute()
     {
-        return $this->created_at->format('F j, Y');
+        return ucfirst($this->created_at->isoFormat('MMMM D[,] Y'));
     }
 
     public function getLongDateAttribute()
     {
-        return $this->created_at->format('l, j \d\e F \d\e Y');
+        return $this->created_at->isoFormat('dddd[,] D [de] MMMM [de] Y');
     }
 
     public function scopeReference($query, $reference)

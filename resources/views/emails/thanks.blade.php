@@ -18,8 +18,8 @@
                             <tbody>
                             {{--LOGO--}}
                             <tr>
-                                <td style="color:#4d4d4d;font-family:'helvetica neue',helvetica,arial,sans-serif;font-size:18px;margin:0;padding:30px 0;text-align:center">
-                                    <img style="border:none" width="150" alt="Living Room"
+                                <td style="color:#4d4d4d;font-family:'helvetica neue',helvetica,arial,sans-serif;margin:0;padding:30px 0;text-align:center">
+                                    <img style="border:none" width="130" alt="Living Room logo"
                                          src="{{ asset('img/logo-livingroom-negro.png') }}">
                                 </td>
                             </tr>
@@ -38,7 +38,10 @@
                             <tr>
                                 <td style="color:#4d4d4d;font-family:'helvetica neue',helvetica,arial,sans-serif;font-size:18px;margin:0;padding:10px 0;text-align:center">
                                     <h3 style="color:#4d4d4d;font-family:'helvetica neue',helvetica,arial,sans-serif;font-size:16px;font-weight:normal;line-height:14px;margin:30px 0;margin-bottom:5px;margin-top:0px;text-align:center">
-                                        Carrera 53 No. 68b - 87 CC Gran Centro L-201A, Barrio El Prado
+                                        Carrera 53 No. 68B - 87
+                                    </h3>
+                                    <h3 style="color:#4d4d4d;font-family:'helvetica neue',helvetica,arial,sans-serif;font-size:16px;font-weight:normal;line-height:14px;margin:30px 0;margin-bottom:5px;margin-top:0px;text-align:center">
+                                        CC Gran Centro L-201A, Barrio El Prado
                                     </h3>
                                     <h3 style="color:#4d4d4d;font-family:'helvetica neue',helvetica,arial,sans-serif;font-size:16px;font-weight:normal;line-height:14px;margin:30px 0;margin-bottom:5px;margin-top:0px;text-align:center">
                                         Barranquilla, Colombia
@@ -58,12 +61,12 @@
                             <tr>
                                 {{--DATE--}}
                                 <td style="border-right:1px solid #dddddd;color:#4d4d4d;font-family:'helvetica neue',helvetica,arial,sans-serif;font-size:16px;margin:0;padding:10px 0;padding-bottom:8px;padding-right:10px;padding-top:4px;text-align:right;width:50%">
-                                    September 1, 2021
+                                    {{ $dateOne }}
                                 </td>
                                 {{--END DATE--}}
                                 {{--REFERENCE CODE--}}
                                 <td style="color:#4d4d4d;font-family:'helvetica neue',helvetica,arial,sans-serif;font-size:16px;margin:0;padding:10px 0;padding-bottom:8px;padding-left:10px;padding-top:4px;text-align:left;width:50%">
-                                    #89987546001
+                                    Donación Online
                                 </td>
                                 {{--END REFERENCE CODE--}}
                             </tr>
@@ -85,12 +88,12 @@
                         <td style="color:#4d4d4d;font-family:'helvetica neue',helvetica,arial,sans-serif;font-size:18px;margin:0;padding:10px 0;text-align:center">
                             {{--GIVER NAME--}}
                             <h1 style="color:#4d4d4d;font-family:'helvetica neue',helvetica,arial,sans-serif;font-size:24px;font-weight:normal;margin:30px 0;text-align:center">
-                                Hi Maria Fernanda Marchena,
+                                Hola {{ $giver }},
                             </h1>
                             {{--END GIVER NAME--}}
                             {{--MAIN TEXT--}}
                             <p style="color:#4d4d4d;font-family:'helvetica neue',helvetica,arial,sans-serif;font-size:18px;line-height:25px;margin:30px 0;text-align:center">
-                                El <strong>Miércoles, 1 de Septiembre de 2021</strong> tu donación a Living Room se
+                                El <strong>{{ $dateTwo }}</strong> tu donación a Living Room se
                                 realizó exitosamente.
                             </p>
                             <p style="color:#4d4d4d;font-family:'helvetica neue',helvetica,arial,sans-serif;font-size:18px;line-height:25px;margin:30px 0;text-align:center">
@@ -111,7 +114,7 @@
                                 <tr>
                                     <td style="background:white;border-bottom:1px solid #e5e5e6;color:#4d4d4d;font-family:'helvetica neue',helvetica,arial,sans-serif;font-size:20px;font-weight:normal;margin:0;padding:24px 0px 28px 0px;padding-left:0;text-align:center"
                                         colspan="2">
-                                        El monto de tu donación fue <span><strong>COP $500.000.00</strong></span>
+                                        El monto de tu donación fue <span><strong>{{ $currency.' $'.$amount }}</strong></span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -119,7 +122,7 @@
                                         No. Transacción
                                     </th>
                                     <td style="color:#4d4d4d;font-family:'helvetica neue',helvetica,arial,sans-serif;font-size:16px;margin:0;padding:15px 65px;padding-left:0;padding-top:27px;text-align:left">
-                                        6026878959
+                                        {{ $transaction }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -133,7 +136,7 @@
                                         Tipo de donación
                                     </th>
                                     <td style="color:#4d4d4d;font-family:'helvetica neue',helvetica,arial,sans-serif;font-size:16px;margin:0;padding:15px 65px;padding-left:0;text-align:left">
-                                        Campus Barranquilla
+                                        {{ $type }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -147,7 +150,7 @@
                                         Método de donación
                                     </th>
                                     <td style="color:#4d4d4d;font-family:'helvetica neue',helvetica,arial,sans-serif;font-size:16px;margin:0;padding:15px 65px;padding-left:0;text-align:left">
-                                        Tarjeta de Crédito
+                                        {{ $method }}
                                     </td>
                                 </tr>
                                 </tbody>
@@ -159,7 +162,7 @@
                                     Lucas 10:42 (RVC)
                                 </h4>
                                 <div style="margin:0;padding:0">
-                                    <p style="color:#4d4d4d;font-family:'helvetica neue',helvetica,arial,sans-serif;font-size:15px;line-height:24px;margin:30px 0;margin-top:10px;text-align:center">
+                                    <p style="color:#4d4d4d;font-family:'helvetica neue',helvetica,arial,sans-serif;font-size:15px;line-height:24px;margin:30px 0;margin-top:5px;text-align:center">
                                         Pero una sola cosa es necesaria. María ha escogido la mejor parte, y nadie
                                         se la quitará.
                                     </p>

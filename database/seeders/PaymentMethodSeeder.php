@@ -16,19 +16,19 @@ class PaymentMethodSeeder extends Seeder
     {
         PaymentMethod::create([
             'type' => 'CREDIT_CARD',
-            'description' => 'Tarjetas de Crédito',
+            'description' => 'Tarjeta de Crédito',
             'active' => 1
         ]);
 
         PaymentMethod::create([
             'type' => 'DEBIT_CARD',
-            'description' => 'Tarjetas débito',
+            'description' => 'Tarjeta débito',
             'active' => 1
         ]);
 
         PaymentMethod::create([
             'type' => 'PSE',
-            'description' => 'Transferencias bancarias PSE',
+            'description' => 'Transferencia bancarias PSE',
             'active' => 1
         ]);
 
@@ -40,7 +40,7 @@ class PaymentMethodSeeder extends Seeder
 
         PaymentMethod::create([
             'type' => 'BANK_TRANSFER',
-            'description' => 'Transferencias bancarias',
+            'description' => 'Transferencia bancarias',
             'active' => 1
         ]);
 

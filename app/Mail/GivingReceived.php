@@ -38,10 +38,10 @@ class GivingReceived extends Mailable
                 'reference' => $this->giving->reference,
                 'giver' => $this->giving->giver->full_name,
                 'currency' => $this->giving->currency,
-                'amount' => $this->giving->amount,
+                'amount' => number_format($this->giving->amount, 0, ',', '.'),
                 'transaction' => $this->giving->transaction_id,
                 'type' => $this->giving->type->name,
-                'method' => $this->giving->method->name,
+                'method' => $this->giving->method->description,
             ]);
     }
 }
