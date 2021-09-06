@@ -21,6 +21,14 @@ Route::get('/email', function () {
     return view('emails.thanks');
 });
 
+Route::get('/email/send', function () {
+    $giving = \App\Models\Giving::find(1);
+
+    \Illuminate\Support\Facades\Mail::to('joseburgon9@gmail.com')->send(new \App\Mail\GivingReceived($giving));
+
+    return response('SENT', 200);
+});
+
 Route::prefix('donaciones')->name('donaciones.')->group(function () {
     Route::get('/', function () {
         return view('givings.index');

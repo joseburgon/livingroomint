@@ -38,12 +38,12 @@ class Giving extends Model
 
     public function type()
     {
-        return $this->belongsTo(GivingType::class);
+        return $this->belongsTo(GivingType::class, 'giving_type_id', 'id');
     }
 
     public function method()
     {
-        return $this->belongsTo(PaymentMethod::class);
+        return $this->belongsTo(PaymentMethod::class, 'payment_method_id', 'id');
     }
 
     public function paymentGateway()

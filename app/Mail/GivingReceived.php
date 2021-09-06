@@ -21,7 +21,7 @@ class GivingReceived extends Mailable
      */
     public function __construct(Giving $giving)
     {
-        $this->giving = $giving;
+        $this->giving = $giving->load('giver', 'type', 'method');
     }
 
     /**
