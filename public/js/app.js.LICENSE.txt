@@ -1,0 +1,7 @@
+/*!
+ * @module browser-dtector
+ * @description A Javascript library to detect browser, version and platform
+ * @version 3.1.2
+ * @link https://github.com/sibiraj-s/browser-dtector.git
+ * @licence MIT License, https://opensource.org/licenses/MIT
+ */

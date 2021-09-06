@@ -15,9 +15,7 @@ use App\Http\Controllers\GivingController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', 'donaciones');
 
 Route::get('/email', function () {
     return view('emails.thanks');

@@ -185,7 +185,7 @@
                     </tr>
                     <tr>
                         <td style="color:#999999;font-family:'helvetica neue',helvetica,arial,sans-serif;font-size:11px;margin:0;padding:10px 0;text-align:center">
-                            No se entregaron bienes o servicios a cambio de la contribución enumerada, excepto los beneficios religiosos intangibles.
+                            No se entregaron bienes o servicios a cambio de la contribución enumerada, excepto los beneficios espirituales intangibles.
                         </td>
                     </tr>
                     <tr>
