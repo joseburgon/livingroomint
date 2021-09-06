@@ -24,7 +24,7 @@ Route::get('/email', function () {
 Route::get('/email/send', function () {
     $giving = \App\Models\Giving::find(1);
 
-    \Illuminate\Support\Facades\Mail::to('joseburgon9@gmail.com')->send(new \App\Mail\GivingReceived($giving));
+    \Illuminate\Support\Facades\Mail::to('joseburgon9@gmail.com')->queue(new \App\Mail\GivingReceived($giving));
 
     return response('SENT', 200);
 });

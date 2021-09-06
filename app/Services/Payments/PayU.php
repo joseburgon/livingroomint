@@ -3,10 +3,12 @@
 namespace App\Services\Payments;
 
 use App\Contracts\PaymentGatewayInterface;
+use App\Mail\GivingReceived;
 use App\Models\Giving;
 use App\Models\PaymentMethod;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class PayU implements PaymentGatewayInterface
 {
@@ -113,6 +115,8 @@ class PayU implements PaymentGatewayInterface
             ]);
 
             Log::info("{$this->logTag}[CONFIRMATION] Giving updated. PayU Transaction ID: {$params['transaction_id']}");
+
+            Mail::to($giving->giver->email)->queue(new GivingReceived($giving));
         } catch (\Exception $e) {
             Log::error("{$this->logTag}[CONFIRMATION] {$e->getMessage()}");
         }
