@@ -114,7 +114,8 @@
                                 <tr>
                                     <td style="background:white;border-bottom:1px solid #e5e5e6;color:#4d4d4d;font-family:'helvetica neue',helvetica,arial,sans-serif;font-size:20px;font-weight:normal;margin:0;padding:24px 0px 28px 0px;padding-left:0;text-align:center"
                                         colspan="2">
-                                        El monto de tu donación fue <span><strong>{{ $currency.' $'.$amount }}</strong></span>
+                                        El monto de tu donación fue <br>
+                                        <span><strong>{{ $currency.' $'.$amount }}</strong></span>
                                     </td>
                                 </tr>
                                 <tr>
