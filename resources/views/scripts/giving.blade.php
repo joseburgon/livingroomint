@@ -4,7 +4,7 @@
     let isMobile = false;
 
     const factors = {
-        'Google Chrome': -1,
+        'Google Chrome': 0,
         'Mozilla Firefox': -4,
         'Microsoft Edge': 1,
         'Safari': 0,
@@ -35,7 +35,7 @@
 
     function handleAmountInputChange() {
         const minSize = 5;
-        const maxSize = 14;
+        const maxSize = 16;
         const factor = factors[browserInfo.name] ?? factors['Other'];
 
         const originalLength = amountInput.value.length;

@@ -13,7 +13,7 @@
             </div>
         </nav>
 
-        <header id="up" class="bg-center bg-fixed bg-no-repeat bg-center bg-cover w-full" style="background-position: center; background-image: url({{ asset('img/header_photo_1.jpeg') }});">
+        <header id="up" class="bg-center bg-no-repeat bg-center bg-cover w-full" style="background-image: url({{ asset('img/givings_header_1.jpeg') }});">
             <!-- Overlay Background + Center Control -->
             <div class="h-72 lg:h-96 bg-opacity-50 bg-black flex items-center justify-center"
                  style="background:rgba(0,0,0,0.5);">
