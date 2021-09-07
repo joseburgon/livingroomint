@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class GivingReceived extends Mailable
 {
@@ -33,6 +34,8 @@ class GivingReceived extends Mailable
      */
     public function build()
     {
+        Log::info("[GIVINGS][EMAIL] Sending thanks email for giver: {$this->giving->giver->email}");
+
         return $this->view('emails.thanks')
             ->with([
                 'dateOne' => $this->giving->short_date,
