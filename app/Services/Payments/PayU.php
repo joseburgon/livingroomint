@@ -133,7 +133,9 @@ class PayU implements PaymentGatewayInterface
 
             Log::info("{$this->logTag}[CONFIRMATION] Giving updated. PayU Transaction ID: {$params['transaction_id']}");
 
-            Mail::to($giving->giver->email)->queue(new GivingReceived($giving));
+            if ($giving->status == Giving::STATUS_APPROVED) {
+                Mail::to($giving->giver->email)->queue(new GivingReceived($giving));
+            }
         } catch (\Exception $e) {
             Log::error("{$this->logTag}[CONFIRMATION] {$e->getMessage()}");
         }
