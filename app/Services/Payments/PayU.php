@@ -102,6 +102,8 @@ class PayU implements PaymentGatewayInterface
     {
         $signature = $this->apiKey . '~' . $this->merchantId;
 
+        Log::info("{$this->logTag}[SIGNATURE METHOD] Params received", $params);
+
         foreach ($params as $param) {
             $signature .= '~' . $param;
         }
