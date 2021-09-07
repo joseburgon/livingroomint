@@ -95,6 +95,8 @@ class PayU implements PaymentGatewayInterface
             $signature .= '~' . $param;
         }
 
+        Log::info("{$this->logTag}[SIGNATURE METHOD] signature before MD5:", $signature);
+
         return md5($signature);
     }
 
