@@ -34,13 +34,13 @@ class PayUController extends Controller
 
         $signature = $this->paymentService->signature($signParams);
 
-        if (strtoupper($request->signature) !== strtoupper($signature)) {
-            return view('givings.error');
-        }
-
         $data['currency'] = $request->currency;
         $data['amount'] = $request->TX_VALUE;
         $data['email'] = $request->buyerEmail;
+
+        if (strtoupper($request->signature) !== strtoupper($signature)) {
+            return view('givings.error', $data);
+        }
 
         /*$data['currency'] = 'CLP';
         $data['amount'] = 50000.00;
