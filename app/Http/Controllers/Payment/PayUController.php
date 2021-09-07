@@ -62,7 +62,7 @@ class PayUController extends Controller
         ];
 
         $signature = $this->paymentService->signature($signParams);
-        Log::info("{$this->logTag}[CONFIRMATION] My generated signature:", $signature);
+        Log::info("{$this->logTag}[CONFIRMATION] My generated signature: {$signature}");
 
         if (strtoupper($request->sign) !== strtoupper($signature)) {
             Log::error("{$this->logTag}[CONFIRMATION] Invalid Signature received.", $request->input());
