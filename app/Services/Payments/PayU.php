@@ -87,6 +87,17 @@ class PayU implements PaymentGatewayInterface
         return $this->checkoutUrl;
     }
 
+    public function getResponseView($state)
+    {
+        return collect([
+            4 => 'givings.success',
+            5 => 'givings.error',
+            6 => 'givings.error',
+            7 => 'givings.pending',
+            104 => 'givings.error',
+        ])->get($state, 'givings.pending');
+    }
+
     public function signature(array $params): string
     {
         $signature = $this->apiKey . '~' . $this->merchantId;
@@ -95,7 +106,7 @@ class PayU implements PaymentGatewayInterface
             $signature .= '~' . $param;
         }
 
-        Log::info("{$this->logTag}[SIGNATURE METHOD] signature before MD5:", $signature);
+        Log::info("{$this->logTag}[SIGNATURE METHOD] signature before MD5: ${$signature}");
 
         return md5($signature);
     }

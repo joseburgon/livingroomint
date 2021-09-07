@@ -38,15 +38,16 @@ class PayUController extends Controller
             return view('givings.error');
         }
 
-        $data['currency'] = $request->currency;
+        /*$data['currency'] = $request->currency;
         $data['amount'] = $request->TX_VALUE;
         $data['email'] = $request->buyerEmail;
+        $data['state'] = $request->transactionState;*/
 
-        /*$data['currency'] = 'CLP';
+        $data['currency'] = 'CLP';
         $data['amount'] = 50000.00;
-        $data['email'] = 'giver@mail.com';*/
+        $data['email'] = 'giver@mail.com';
 
-        return view('givings.response', $data);
+        return view($this->paymentService->getResponseView(7), $data);
     }
 
     public function confirmation(Request $request)
