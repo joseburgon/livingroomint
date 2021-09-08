@@ -74,13 +74,13 @@
                             </div>
                         </div>
                         {{--DOCUMENT--}}
-                        <div class="my-3 flex">
-                            <div class="grid lg:grid-cols-2 gap-2 w-full">
+                        <div class="my-3">
+                            <div class="grid lg:grid-cols-2 gap-2">
                                 <select
                                     name="document_type_id"
                                     wire:model="document_type_id"
                                     id="document_type"
-                                    class="form-select appearance-none flex-shrink flex-grow flex-auto px-5 py-2 border-gray-200 rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
+                                    class="form-select appearance-none flex-shrink flex-grow flex-auto w-full py-2 border-gray-200 rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
                                 >
                                     @foreach($documentTypes as $documentTypeId => $documentTypeName)
                                         <option value="{{ $documentTypeId }}">{{ $documentTypeName }}</option>
@@ -91,7 +91,7 @@
                                     wire:model="document"
                                     name="document"
                                     id="document"
-                                    class="block w-full px-5 py-2 border-gray-200 rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
+                                    class="block w-full py-2 border-gray-200 rounded-lg bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
                                     placeholder="Documento de Identidad"
                                     maxlength="50"
                                 />
@@ -137,7 +137,7 @@
                                     x-model="country"
                                     name="country"
                                     id="country"
-                                    class="form-select appearance-none overflow-x-hidden flex-shrink flex-grow flex-auto px-5 py-2 border-gray-200 border-l-0 rounded-lg rounded-l-none bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
+                                    class="form-select appearance-none overflow-x-hidden w-full flex-shrink flex-grow flex-auto px-5 py-2 border-gray-200 border-l-0 rounded-lg rounded-l-none bg-white shadow-lg placeholder-gray-400 text-gray-700 focus:border-transparent focus:ring-2 focus:ring-gray-400"
                                 >
                                     @foreach($countries as $code => $name)
                                         <option value="{{ $code }}">{{ $name }}</option>
