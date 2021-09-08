@@ -17,6 +17,18 @@ use App\Http\Controllers\GivingController;
 
 Route::redirect('/', 'donaciones');
 
+Route::get('/email', function () {
+    return view('emails.thanks');
+});
+
+Route::get('/email/send', function () {
+    $giving = \App\Models\Giving::whereNotNull('transaction_id')->first();
+
+    \Illuminate\Support\Facades\Mail::to('joseburgon9@gmail.com')->queue(new \App\Mail\GivingReceived($giving));
+
+    return response('SENT', 200);
+});
+
 Route::prefix('donaciones')->name('donaciones')->group(function () {
     Route::get('/', function () {
         return view('givings.index');

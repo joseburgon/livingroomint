@@ -15,7 +15,7 @@ class GivingReceived extends Mailable
 
     protected $giving;
 
-    public $subject = 'Donación recibida | Living Room';
+    public $subject = 'Donación recibida | Fundación LVR Global';
 
     /**
      * Create a new message instance.
