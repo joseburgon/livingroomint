@@ -34,10 +34,6 @@
     }
 
     function handleAmountInputChange() {
-        const minSize = 5;
-        const maxSize = 16;
-        const factor = factors[browserInfo.name] ?? factors['Other'];
-
         const originalLength = amountInput.value.length;
 
         let caretPosition = amountInput.selectionStart;
@@ -52,39 +48,43 @@
 
         amountInput.value = new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(currentAmount);
 
+        amountInput.style.width = getElementWidth(amountInput);
+
         const updatedLength = amountInput.value.length;
 
         caretPosition = updatedLength - originalLength + caretPosition;
 
         amountInput.setSelectionRange(caretPosition, caretPosition);
 
-        let newSize = minSize;
-
-        if (updatedLength >= newSize) {
-            if (factor >= 0) {
-                newSize = (updatedLength + factor);
-            } else {
-                newSize = (updatedLength - Math.abs(factor));
+        if (updatedLength > 10 && isMobile) {
+            if (amountInput.classList.contains('text-5xl')) {
+                amountInput.classList.remove('text-5xl');
+                amountInput.classList.add('text-4xl');
+                amountInput.style.width = getElementWidth(amountInput, '36px');
             }
-
-            newSize += (isMobile ? 1 : 0);
-
-            if (newSize >= 9 && isMobile) {
-                if (amountInput.classList.contains('text-5xl')) {
-                    amountInput.classList.remove('text-5xl');
-                    amountInput.classList.add('text-4xl', 'py-5');
-                }
-            } else {
-                amountInput.classList.remove('text-4xl', 'py-5');
+        } else {
+            if (amountInput.classList.contains('text-4xl')) {
+                amountInput.classList.remove('text-4xl');
                 amountInput.classList.add('text-5xl');
-            }
-
-            if (newSize >= maxSize) {
-                return;
+                amountInput.style.width = getElementWidth(amountInput, '48px');
             }
         }
+    }
 
-        amountInput.setAttribute('size', newSize);
+    function getElementWidth(input, fontSize = '') {
+        const canvas = document.createElement("canvas");
+
+        let context = canvas.getContext("2d");
+
+        if (fontSize) {
+            context.font = `${fontSize} ${getComputedStyle(input).fontFamily}`;
+        } else {
+            context.font = `${getComputedStyle(input).fontSize} ${getComputedStyle(input).fontFamily}`;
+        }
+
+        const width = context.measureText(input.value).width;
+
+        return Math.ceil(width) + "px";
     }
 
     function parseCurrency(currency) {
