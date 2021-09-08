@@ -8,6 +8,7 @@ use App\Models\Giver;
 use App\Models\Giving;
 use App\Models\GivingType;
 use App\Models\PaymentGateway;
+use App\Rules\GivingAmount;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -24,16 +25,20 @@ class Form extends Component
 
     public $amount, $giving_type_id, $first_name, $last_name, $document_type_id, $document, $email, $phone, $country, $currency;
 
-    protected $rules = [
-        'first_name' => ['required', 'regex:/^[ a-zA-ZÀ-ÿ]*$/'],
-        'last_name' => ['required', 'regex:/^[ a-zA-ZÀ-ÿ]*$/'],
-        'document_type_id' => ['required', 'integer'],
-        'document' => ['required', 'string'],
-        'email' => ['required', 'email'],
-        'phone' => ['required', 'string'],
-    ];
+    protected function rules(): array
+    {
+        return [
+            'first_name' => ['required', 'regex:/^[ a-zA-ZÀ-ÿ]*$/'],
+            'last_name' => ['required', 'regex:/^[ a-zA-ZÀ-ÿ]*$/'],
+            'document_type_id' => ['required', 'integer'],
+            'document' => ['required', 'string'],
+            'email' => ['required', 'email'],
+            'phone' => ['required', 'string'],
+            'amount' => ['required', 'numeric', new GivingAmount($this->currency ?? 'COP')]
+        ];
+    }
 
-    protected $listeners = ['amountChanged' => 'updateAmount'];
+    protected $listeners = ['amountChanged' => 'amountChanged'];
 
     public function mount()
     {
@@ -67,14 +72,22 @@ class Form extends Component
         $this->validateOnly($propertyName);
     }
 
-    public function updateAmount($value)
+    public function amountChanged($value)
     {
         $this->amount = $value;
+
+        if ($this->amount > 0) {
+            $this->validateOnly('amount');
+        }
     }
 
-    public function updateCurrency($value)
+    public function currencyChanged($value)
     {
         $this->currency = $value;
+
+        if ($this->amount > 0) {
+            $this->validateOnly('amount');
+        }
     }
 
     public function give()
@@ -117,7 +130,7 @@ class Form extends Component
 
         return Giver::updateOrCreate(
             ['email' => $validatedData['email']],
-            Arr::except($validatedData, ['email'])
+            Arr::except($validatedData, ['email', 'amount'])
         );
     }
 

@@ -13,7 +13,7 @@
                                 class="w-full bg-gray-200 text-sm text-gray-500 leading-none border-2 border-gray-200 rounded inline-flex">
                                 <button
                                     @click="currency='COP'"
-                                    wire:click="updateCurrency('COP')"
+                                    wire:click="currencyChanged('COP')"
                                     type="button"
                                     :class="{ 'bg-black text-white' : currency === 'COP' }"
                                     class="w-full inline-flex justify-center items-center transition-colors duration-300 ease-in focus:outline-none focus:text-white rounded-l p-2 lg:p-4"
@@ -22,7 +22,7 @@
                                 </button>
                                 <button
                                     @click="currency='USD'"
-                                    wire:click="updateCurrency('USD')"
+                                    wire:click="currencyChanged('USD')"
                                     type="button"
                                     :class="{ 'bg-black text-white' : currency === 'USD' }"
                                     class="w-full inline-flex justify-center items-center transition-colors duration-300 ease-in focus:outline-none focus:text-white rounded-r p-2 lg:p-4"
