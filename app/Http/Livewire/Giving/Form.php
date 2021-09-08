@@ -128,9 +128,13 @@ class Form extends Component
 
         $validatedData['country_id'] = $this->getCountryId();
 
+        $validatedData = collect($validatedData)->map(function ($value) {
+            return Str::of($value)->trim();
+        });
+
         return Giver::updateOrCreate(
-            ['email' => $validatedData['email']],
-            Arr::except($validatedData, ['email', 'amount'])
+            ['email' => $validatedData->get('email')],
+            $validatedData->except(['email', 'amount'])->all()
         );
     }
 
