@@ -3,7 +3,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@iconscout/unicons@3.0.6/css/line.css">
     @endsection
 
-    <div class="flex flex-col h-screen">
+    <div class="flex flex-col min-h-screen">
         <div class="w-full h-1/3 bg-white flex items-center lg:justify-start p-4 lg:p-20">
             <div class="max-w-screen-md mx-auto w-full">
                 <div class="flex flex-row items-center">
@@ -25,13 +25,15 @@
                 </div>
             </div>
         </div>
-        <div class="w-full h-1/2 bg-gray-100 border-t border-b border-gray-300">
+        <div class="w-full min-h-full bg-gray-100 border-t border-b border-gray-300">
             <div class="max-w-screen-md mx-auto">
                 <div class="flex flex-col py-10 px-4 lg:px-0 lg:py-16">
                     <h2 class="font-bold text-2xl lg:text-3xl mb-8">¡Gracias! Hemos recibido tu donación.</h2>
-                    <p class="font-normal text-base lg:text-xl">Has realizado una donación por un valor de <strong>{{ $currency }} ${{ $amount }}</strong> a nuestra
+                    <p class="font-normal text-base lg:text-xl">Has realizado una donación por un valor de
+                        <strong>{{ $currency }} ${{ $amount }}</strong> a nuestra
                         comunidad.</p>
-                    <p class="font-normal text-base lg:text-xl">Recibirás una notificación en <strong>{{ $email }}</strong> cuando la donación
+                    <p class="font-normal text-base lg:text-xl">Recibirás una notificación en
+                        <strong>{{ $email }}</strong> cuando la donación
                         haya sido procesada.</p>
                     <div class="flex mt-8">
                         <a href="{{ route('donaciones') }}"
@@ -41,9 +43,9 @@
                 </div>
             </div>
         </div>
-        <div class="w-full h-1/4 bg-white">
+        <div class="w-full h-52 lg:h-64 bg-white">
             <div class="max-w-screen-md mx-auto">
-                <x-footer bgColor="bg-white" />
+                <x-footer bgColor="bg-white"/>
             </div>
         </div>
     </div>

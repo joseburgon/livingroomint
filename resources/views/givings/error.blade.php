@@ -3,8 +3,8 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@iconscout/unicons@3.0.6/css/line.css">
     @endsection
 
-    <div class="flex flex-col h-screen">
-        <div class="w-full h-1/3 bg-white flex items-center lg:justify-start p-4 lg:p-20">
+    <div class="flex flex-col min-h-screen">
+        <div class="w-full h-52 lg:h-64 bg-white flex items-center lg:justify-start p-4 lg:p-20">
             <div class="max-w-screen-md mx-auto w-full">
                 <div class="flex flex-row items-center">
                     <div class="text-red-500 mr-5 lg:mr-10">
@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-        <div class="w-full h-1/2 bg-gray-100 border-t border-b border-gray-300">
+        <div class="w-full min-h-full bg-gray-100 border-t border-b border-gray-300">
             <div class="max-w-screen-md mx-auto">
                 <div class="flex flex-col py-10 px-4 lg:px-0 lg:py-16">
                     <h2 class="font-bold text-2xl lg:text-3xl mb-8">Ocurrió un error con tu donación</h2>
@@ -35,7 +35,7 @@
                 </div>
             </div>
         </div>
-        <div class="w-full h-1/4 bg-white">
+        <div class="w-full h-52 lg:h-64 bg-white">
             <div class="max-w-screen-md mx-auto">
                 <x-footer bgColor="bg-white"/>
             </div>
