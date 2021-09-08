@@ -8,7 +8,7 @@
         <nav id="nav" class="fixed inset-x-0 top-0 flex flex-row justify-center z-10 text-white bg-transparent">
             <div class="p-4">
                 <a href="https://www.livingroomint.org/">
-                    <img class="w-40" src="{{ asset('img/logo-livingroom-blanco.svg') }}" alt="Logo Living Room">
+                    <img class="w-28" src="{{ asset('img/logo-livingroom-blanco.svg') }}" alt="Logo Living Room">
                 </a>
             </div>
         </nav>

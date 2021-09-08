@@ -167,7 +167,7 @@
                                                 </svg>
                                             </div>
                                             <span
-                                                class="text-red-700 font-medium text-sm ml-3">{{ $error }}</span>
+                                                class="text-red-700 font-medium text-sm text-left ml-3">{{ $error }}</span>
                                         </li>
                                     @endforeach
                                 </ul>
