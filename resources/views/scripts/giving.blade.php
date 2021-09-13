@@ -3,17 +3,6 @@
 
     let isMobile = false;
 
-    const factors = {
-        'Google Chrome': 0,
-        'Mozilla Firefox': -4,
-        'Microsoft Edge': 1,
-        'Safari': 0,
-        'Brave Browser': 1,
-        'Samsung Browser': 1,
-        'Opera': 1,
-        'Other': 1
-    }
-
     const amountInput = document.getElementById('amount_input');
 
     function toggleNavBackground() {
@@ -33,12 +22,50 @@
         });
     }
 
-    function handleAmountInputChange() {
+    function handleInputKeyDown(event) {
+        const allowedKeys = ['Backspace', 'Delete', 'ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft' , 'Home', 'End'];
+
+        if (!allowedKeys.includes(event.key)) {
+            event.preventDefault();
+        }
+    }
+
+    function handleAmountInputChange(event = null) {
+        let numberEntered = '';
+
+        if (event) {
+            numberEntered = isNumber(event.key) ? event.key : '';
+        }
+
         const originalLength = amountInput.value.length;
 
         let caretPosition = amountInput.selectionStart;
 
-        let currentAmount = parseCurrency(amountInput.value);
+        // console.log(`caretPos`, caretPosition);
+
+        // console.log(`initial value`, amountInput.value);
+        let valueString = amountInput.value.toString();
+        // console.log(`valueString`, valueString);
+
+        let valueArray = Array.from(valueString);
+        // console.log(`valueArray`, valueArray);
+
+        valueArray.splice(caretPosition, 0, numberEntered);
+
+        valueString = valueArray.join('');
+        // console.log(`midway`, valueString);
+
+        valueString = valueString.replace('.', '').replace(',', '');
+
+        valueString = valueString.slice(0, valueString.length - 2) + '.' + valueString.slice(valueString.length - 2, valueString.length);
+
+        if (valueString.length > 3 && valueString.slice(0, 2) === '00') {
+            valueString = valueString.slice(1);
+        }
+
+        // console.log(`valueString after`, valueString);
+
+        let currentAmount = parseCurrency(valueString);
 
         if (isNaN(currentAmount)) {
             currentAmount = 0;
@@ -46,7 +73,10 @@
 
         Livewire.emit('amountChanged', currentAmount);
 
-        amountInput.value = new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(currentAmount);
+        amountInput.value = new Intl.NumberFormat('en-US', {
+            maximumFractionDigits: 2,
+            minimumFractionDigits: 2,
+        }).format(currentAmount);
 
         amountInput.style.width = getElementWidth(amountInput);
 
@@ -91,6 +121,10 @@
         return Number(currency.replace(/[^0-9.-]+/g, ""));
     }
 
+    function isNumber(n) {
+        return /^-?[\d.]+(?:e-?\d+)?$/.test(n);
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
         browserInfo = BrowserDetector.parseUserAgent();
 
@@ -99,13 +133,13 @@
         console.log(browserInfo);
 
         amountInput.value = new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD'
-        }).format(parseFloat(amountInput.value));
+            maximumFractionDigits: 2,
+            minimumFractionDigits: 2,
+        }).format(amountInput.value);
 
         amountInput.focus();
 
-        amountInput.setSelectionRange(1, 1);
+        amountInput.setSelectionRange(4, 4);
 
         handleAmountInputChange();
 

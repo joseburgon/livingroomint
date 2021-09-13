@@ -30,10 +30,10 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('css/app.css?v=2.2') }}">
+        <link rel="stylesheet" href="{{ asset('css/app.css?v=2.3') }}">
 
         <!-- Scripts -->
-        <script src="{{ asset('js/app.js?v=1.7') }}" defer></script>
+        <script src="{{ asset('js/app.js?v=1.8') }}" defer></script>
 
         @livewireStyles
 

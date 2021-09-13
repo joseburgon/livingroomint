@@ -3,7 +3,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@iconscout/unicons@3.0.6/css/line.css">
     @endsection
 
-    <div x-data="{ amount: 0, country: 'CO', currency: 'COP' }"
+    <div x-data="{ amount: 0.00, country: 'CO', currency: 'COP' }"
          class="flex flex-col justify-center items-center w-full h-full">
         <nav id="nav" class="fixed inset-x-0 top-0 flex flex-row justify-center z-10 text-white bg-transparent">
             <div class="p-4">
@@ -21,10 +21,12 @@
                     <h1 class="text-gray-100 text-xl lg:text-3xl mb-4">
                         Donar en línea
                     </h1>
-                    <div class="mb-4">
-                        <div class="flex flex-col items-center relative">
+                    <div class="flex justify-center mb-4">
+                        <div class="relative max-w-lg">
+                            <span class="text-white absolute inline-block text-lg font-bold top-3 -left-3" aria-hidden="true" role="presentation">$</span>
                             <input
                                 x-model="amount"
+                                @keydown="handleInputKeyDown"
                                 @keyup="handleAmountInputChange" type="text" pattern="\d*" inputmode="numeric" maxlength="14" id="amount_input" name="amount_input"
                                 class="appearance-none transition-all text-5xl lg:text-6xl max-w-full h-20 lg:h-24 text-center text-white border-0 border-b border-white focus:border-current focus:shadow-none focus:ring-0 relative px-0 pb-3 bg-transparent"
                             >
