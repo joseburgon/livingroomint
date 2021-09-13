@@ -23,11 +23,11 @@
                     </h1>
                     <div class="flex justify-center mb-4">
                         <div class="relative max-w-lg">
-                            <span class="text-white absolute inline-block text-lg font-bold top-3 -left-3" aria-hidden="true" role="presentation">$</span>
+                            <span class="text-white absolute inline-block text-lg top-3 -left-5" aria-hidden="true" role="presentation">$</span>
                             <input
                                 x-model="amount"
                                 @keydown="handleInputKeyDown"
-                                @keyup="handleAmountInputChange" type="text" pattern="\d*" inputmode="numeric" maxlength="14" id="amount_input" name="amount_input"
+                                @keyup="handleAmountInputChange" type="text" pattern="\d*" inputmode="numeric" id="amount_input" name="amount_input"
                                 class="appearance-none transition-all text-5xl lg:text-6xl max-w-full h-20 lg:h-24 text-center text-white border-0 border-b border-white focus:border-current focus:shadow-none focus:ring-0 relative px-0 pb-3 bg-transparent"
                             >
                         </div>

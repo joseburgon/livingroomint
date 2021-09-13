@@ -8,11 +8,8 @@ module.exports = {
             './resources/views/**/*.blade.php',
         ],
         safelist: [
-            'text-success-500',
-            'text-red-500',
-            'text-yellow-500',
-            'w-28',
-            'fill-current'
+            'fill-current',
+            '-left-5'
         ]
     },
 

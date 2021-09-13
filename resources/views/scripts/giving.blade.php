@@ -31,29 +31,29 @@
     }
 
     function handleAmountInputChange(event = null) {
+        const maxLength = 13;
+
+        const originalLength = amountInput.value.length;
+
+        if (originalLength >= maxLength) {
+            return;
+        }
+
         let numberEntered = '';
 
         if (event) {
             numberEntered = isNumber(event.key) ? event.key : '';
         }
 
-        const originalLength = amountInput.value.length;
-
         let caretPosition = amountInput.selectionStart;
 
-        // console.log(`caretPos`, caretPosition);
-
-        // console.log(`initial value`, amountInput.value);
         let valueString = amountInput.value.toString();
-        // console.log(`valueString`, valueString);
 
         let valueArray = Array.from(valueString);
-        // console.log(`valueArray`, valueArray);
 
         valueArray.splice(caretPosition, 0, numberEntered);
 
         valueString = valueArray.join('');
-        // console.log(`midway`, valueString);
 
         valueString = valueString.replace('.', '').replace(',', '');
 
@@ -62,8 +62,6 @@
         if (valueString.length > 3 && valueString.slice(0, 2) === '00') {
             valueString = valueString.slice(1);
         }
-
-        // console.log(`valueString after`, valueString);
 
         let currentAmount = parseCurrency(valueString);
 
