@@ -42,10 +42,6 @@ class PayUController extends Controller
             return view('givings.error', $data);
         }
 
-        /*$data['currency'] = 'CLP';
-        $data['amount'] = 50000.00;
-        $data['email'] = 'giver@mail.com';*/
-
         return view($this->paymentService->getResponseView($request->transactionState), $data);
     }
 
@@ -61,7 +57,6 @@ class PayUController extends Controller
         ];
 
         $signature = $this->paymentService->signature($signParams);
-        Log::info("{$this->logTag}[CONFIRMATION] My generated signature: {$signature}");
 
         if (strtoupper($request->sign) !== strtoupper($signature)) {
             Log::error("{$this->logTag}[CONFIRMATION] Invalid Signature received.", $request->input());

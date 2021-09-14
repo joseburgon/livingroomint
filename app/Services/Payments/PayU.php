@@ -3,6 +3,7 @@
 namespace App\Services\Payments;
 
 use App\Contracts\PaymentGatewayInterface;
+use App\Mail\NotifyGiving;
 use App\Mail\GivingReceived;
 use App\Models\Giving;
 use App\Models\PaymentMethod;
@@ -76,7 +77,6 @@ class PayU implements PaymentGatewayInterface
                 'payerDocument' => $giving->giver->document,
                 'responseUrl' => $this->responseUrl,
                 'confirmationUrl' => $this->confirmationUrl,
-//                'test' => 0,
             ],
             'checkoutUrl' => $this->getCheckoutUrl()
         ];
@@ -102,13 +102,9 @@ class PayU implements PaymentGatewayInterface
     {
         $signature = $this->apiKey . '~' . $this->merchantId;
 
-        Log::info("{$this->logTag}[SIGNATURE METHOD] Params received", $params);
-
         foreach ($params as $param) {
             $signature .= '~' . $param;
         }
-
-        Log::info("{$this->logTag}[SIGNATURE METHOD] signature before MD5: {$signature}");
 
         return md5($signature);
     }
@@ -135,6 +131,8 @@ class PayU implements PaymentGatewayInterface
 
             if ($giving->status == Giving::STATUS_APPROVED) {
                 Mail::to($giving->giver->email)->queue(new GivingReceived($giving));
+
+                Mail::to(config('givings.notify_email'))->queue(new NotifyGiving($giving));
             }
         } catch (\Exception $e) {
             Log::error("{$this->logTag}[CONFIRMATION] {$e->getMessage()}");

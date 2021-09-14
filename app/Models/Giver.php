@@ -20,4 +20,9 @@ class Giver extends Model
     {
         return $this->belongsTo(DocumentType::class);
     }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
 }

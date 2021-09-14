@@ -17,14 +17,10 @@ use App\Http\Controllers\GivingController;
 
 Route::redirect('/', 'donaciones');
 
-Route::get('/email', function () {
-    return view('emails.thanks');
-});
+Route::get('/email/test/send', function () {
+    $giving = \App\Models\Giving::whereNotNull('transaction_id')->latest()->first();
 
-Route::get('/email/send', function () {
-    $giving = \App\Models\Giving::whereNotNull('transaction_id')->first();
-
-    \Illuminate\Support\Facades\Mail::to('joseburgon9@gmail.com')->queue(new \App\Mail\GivingReceived($giving));
+    \Illuminate\Support\Facades\Mail::to('joseburgon9@gmail.com')->queue(new \App\Mail\NotifyGiving($giving));
 
     return response('SENT', 200);
 });
