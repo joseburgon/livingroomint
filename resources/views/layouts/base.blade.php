@@ -24,7 +24,7 @@
         <meta name="theme-color" content="#ffffff">
         {{--End Favicon Stuff--}}
 
-        <title>Donaciones | Living Room</title>
+        <title>LIVING ROOM | DONACIONES</title>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
