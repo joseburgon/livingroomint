@@ -1,5 +1,5 @@
 <?php
 
 return [
-  'notify_email' => env('GIVINGS_NOTIFY_EMAIL', 'administracion@livingroomint.org')
+  'notify_email' => env('GIVINGS_NOTIFY_EMAIL', 'notificaciones@app.livingroomint.com')
 ];
