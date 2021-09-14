@@ -20,7 +20,7 @@ Route::redirect('/', 'donaciones');
 Route::get('/email/test/send', function () {
     $giving = \App\Models\Giving::whereNotNull('transaction_id')->latest()->first();
 
-    \Illuminate\Support\Facades\Mail::to('joseburgon9@gmail.com')->queue(new \App\Mail\NotifyGiving($giving));
+    \Illuminate\Support\Facades\Mail::to(config('givings.notify_email'))->queue(new \App\Mail\NotifyGiving($giving));
 
     return response('SENT', 200);
 });
