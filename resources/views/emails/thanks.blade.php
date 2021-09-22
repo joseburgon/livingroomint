@@ -101,10 +101,10 @@
                                 comprometido con Living Room.
                             </p>
                             <p style="color:#4d4d4d;font-family:'helvetica neue',helvetica,arial,sans-serif;font-size:18px;line-height:25px;margin:30px 0;text-align:center">
-                                En caso requerir tu certificado de donante puedes enviar los comprobantes de las
+                                En caso de requerir tu certificado de donación, puedes enviar los comprobantes de las
                                 transacciones al correo
-                                <strong>info@livingroomint.org</strong> y en la brevedad estaremos dando respuesta a
-                                tu solicitud.
+                                <strong>info@livingroomint.org</strong> y en breve estaremos dando respuesta a tu
+                                solicitud.
                             </p>
                             {{--END MAIN TEXT--}}
                             {{--TRANSACTION TABLE--}}
