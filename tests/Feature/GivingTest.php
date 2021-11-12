@@ -42,19 +42,4 @@ class GivingTest extends TestCase
 
         $this->assertTrue(Giving::where('giver_id', $giver->first()->id)->exists());
     }
-
-    /** @test */
-    public function can_store_a_giver()
-    {
-        Livewire::test('giving.form')
-            ->set('first_name', 'John')
-            ->set('first_name', 'John')
-            ->set('last_name', 'Doe')
-            ->set('document', '1140555632')
-            ->set('email', 'john@doe.com')
-            ->set('phone', '3104407896')
-            ->call('give');
-
-        $this->assertTrue(Giver::where('document', '1140555632')->exists());
-    }
 }

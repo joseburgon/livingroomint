@@ -9,7 +9,6 @@ use App\Models\Giving;
 use App\Models\GivingType;
 use App\Models\PaymentGateway;
 use App\Rules\GivingAmount;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -21,6 +20,7 @@ class Form extends Component
     public $countries;
 
     private $giver;
+    private $givingType;
     private $paymentGateway;
 
     public $amount, $giving_type_id, $first_name, $last_name, $document_type_id, $document, $email, $phone, $country, $currency;
@@ -94,6 +94,8 @@ class Form extends Component
     {
         $this->giver = $this->storeGiver();
 
+        $this->setGivingType();
+
         $this->setPaymentGateway();
 
         $giving = $this->storeGivingRecord();
@@ -106,7 +108,7 @@ class Form extends Component
     private function storeGivingRecord()
     {
         return Giving::create([
-            'reference' => Str::uuid(),
+            'reference' => $this->reference(),
             'amount' => $this->amount,
             'currency' => $this->currency,
             'description' => $this->description(),
@@ -117,9 +119,16 @@ class Form extends Component
         ]);
     }
 
+    private function reference(): string
+    {
+        return bin2hex(random_bytes(5))
+            . '_'
+            . Str::upper(Str::snake($this->givingType->name));
+    }
+
     private function description(): string
     {
-        return "Donación: " . GivingType::find($this->giving_type_id)->name;
+        return "Donación: " . $this->givingType->name;
     }
 
     private function storeGiver()
@@ -136,6 +145,11 @@ class Form extends Component
             ['email' => $validatedData->get('email')],
             $validatedData->except(['email', 'amount'])->all()
         );
+    }
+
+    private function setGivingType()
+    {
+        $this->givingType = GivingType::find($this->giving_type_id);
     }
 
     private function setPaymentGateway()
