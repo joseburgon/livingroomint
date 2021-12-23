@@ -28,7 +28,7 @@
                                 x-model="amount"
                                 @keydown="handleInputKeyDown"
                                 @keyup="handleAmountInputChange" type="text" pattern="\d*" inputmode="numeric" id="amount_input" name="amount_input"
-                                class="appearance-none transition-all text-5xl lg:text-6xl max-w-full h-20 lg:h-24 text-center text-white border-0 border-b border-white focus:border-current focus:shadow-none focus:ring-0 relative px-0 pb-3 bg-transparent"
+                                class="appearance-none transition-all text-5xl lg:text-6xl max-w-full h-20 lg:h-24 text-center text-white border-0 border-b border-white focus:border-white focus:shadow-none focus:ring-0 relative px-0 pb-3 bg-transparent"
                             >
                         </div>
                     </div>
