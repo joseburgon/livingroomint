@@ -27,13 +27,15 @@
 
     <script src="{{ asset('js/charts-lines.js') }}" defer></script>
     <script src="{{ asset('js/charts-pie.js') }}" defer></script>
+
+    @livewireStyles
 </head>
 <body>
 <div
     class="flex h-screen bg-gray-50 dark:bg-gray-900"
     :class="{ 'overflow-hidden': isSideMenuOpen }"
 >
-    <x-dashboard.sidebar />
+    <x-dashboard.sidebar/>
 
     <div class="flex flex-col flex-1 w-full">
         <x-dashboard.header/>
@@ -43,5 +45,7 @@
         </main>
     </div>
 </div>
+
+@livewireScripts
 </body>
 </html>
