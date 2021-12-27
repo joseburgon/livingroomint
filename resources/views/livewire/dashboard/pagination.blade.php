@@ -12,7 +12,7 @@
             <!-- Pagination -->
             <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
             <nav aria-label="Table navigation">
-            <ul class="inline-flex items-center">
+            <ul class="inline-flex items-center nightwind-prevent-block">
               <li>
                   @if ($paginator->onFirstPage())
                       <button
