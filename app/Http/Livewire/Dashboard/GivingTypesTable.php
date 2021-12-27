@@ -6,7 +6,7 @@ use App\Models\GivingType;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class GivingTypeTable extends Component
+class GivingTypesTable extends Component
 {
     use WithPagination;
 
