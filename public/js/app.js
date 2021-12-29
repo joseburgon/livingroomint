@@ -3217,17 +3217,6 @@ function setThemeToLocalStorage(value) {
     isPagesMenuOpen: false,
     togglePagesMenu: function togglePagesMenu() {
       this.isPagesMenuOpen = !this.isPagesMenuOpen;
-    },
-    // Modal
-    isModalOpen: false,
-    trapCleanup: null,
-    openModal: function openModal() {
-      this.isModalOpen = true;
-      this.trapCleanup = focusTrap(document.querySelector('#modal'));
-    },
-    closeModal: function closeModal() {
-      this.isModalOpen = false;
-      this.trapCleanup();
     }
   };
 });

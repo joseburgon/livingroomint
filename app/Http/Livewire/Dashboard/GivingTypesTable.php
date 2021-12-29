@@ -15,6 +15,8 @@ class GivingTypesTable extends Component
     public $sortAsc = true;
     protected $queryString = ['search', 'sortAsc', 'sortField'];
 
+    protected $listeners = ['givingTypeAdded' => '$refresh'];
+
     public function render()
     {
         return view('livewire.dashboard.giving-types-table', [
@@ -22,7 +24,7 @@ class GivingTypesTable extends Component
                 ->when($this->sortField, function ($query) {
                     $query->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc');
                 })
-                ->paginate(5)
+                ->paginate(10)
         ]);
     }
 

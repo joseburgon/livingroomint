@@ -39,7 +39,7 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::resource('giving-types', GivingTypeController::class);
+    Route::resource('giving-types', GivingTypeController::class)->only(['index']);
 });
 
 require __DIR__ . '/auth.php';

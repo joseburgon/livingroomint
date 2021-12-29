@@ -2,46 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GivingTypeRequest;
 use App\Models\GivingType;
 use Illuminate\Http\Request;
 
 class GivingTypeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('dashboard.givingTypes.index');
-    }
-
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-
-    public function edit($id)
-    {
-        //
-    }
-
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-
-    public function destroy($id)
-    {
-        //
+        return view('dashboard.givingTypes.index', [
+            'message' => $request->has('message') ? $request->message : ''
+        ]);
     }
 }
