@@ -26,7 +26,7 @@
                     <p
                         class="text-lg font-semibold text-gray-700 dark:text-gray-200"
                     >
-                        6389
+                        {{ $totalGivers }}
                     </p>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                     <p
                         class="text-lg font-semibold text-gray-700 dark:text-gray-200"
                     >
-                        $ 46,760.89
+                        {{ '$' . number_format($givingsAmount, 0, ',', '.') }}
                     </p>
                 </div>
             </div>
@@ -80,7 +80,7 @@
                     <p
                         class="text-lg font-semibold text-gray-700 dark:text-gray-200"
                     >
-                        376
+                        {{ $successfulGivings }}
                     </p>
                 </div>
             </div>
@@ -108,7 +108,7 @@
                     <p
                         class="text-lg font-semibold text-gray-700 dark:text-gray-200"
                     >
-                        35
+                        {{ $failedGivings }}
                     </p>
                 </div>
             </div>

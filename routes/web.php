@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GivingTypeController;
 use App\Http\Controllers\Payment\PayUController;
 use Illuminate\Support\Facades\Route;
@@ -35,9 +36,7 @@ Route::prefix('donaciones')->name('donaciones')->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
     Route::resource('giving-types', GivingTypeController::class)->only(['index']);
 });

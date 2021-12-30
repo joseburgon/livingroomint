@@ -31,6 +31,21 @@ class Giving extends Model
         return $query->where('reference', $reference);
     }
 
+    public function scopeApproved($query)
+    {
+        return $query->where('status', self::STATUS_APPROVED);
+    }
+
+    public function scopeFailed($query)
+    {
+        return $query->where('status', self::STATUS_DECLINED)->orWhere('status', self::STATUS_EXPIRED);
+    }
+
+    public function scopeThisMonth($query)
+    {
+        return $query->whereMonth('created_at', now()->format('m'));
+    }
+
     public function giver()
     {
         return $this->belongsTo(Giver::class);
