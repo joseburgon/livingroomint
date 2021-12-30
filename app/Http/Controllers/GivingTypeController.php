@@ -10,8 +10,6 @@ class GivingTypeController extends Controller
 {
     public function index(Request $request)
     {
-        return view('dashboard.givingTypes.index', [
-            'message' => $request->has('message') ? $request->message : ''
-        ]);
+        return view('dashboard.givingTypes.index');
     }
 }

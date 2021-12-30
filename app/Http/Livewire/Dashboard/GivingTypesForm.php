@@ -31,6 +31,8 @@ class GivingTypesForm extends Component
             'active' => $this->active,
         ]);
 
-        return redirect()->route('giving-types.index', ['message' => "Nuevo tipo de donación creado: {$type->name}"]);
+        session()->flash('message', "Nuevo tipo de donación creado: {$type->name}");
+
+        return redirect()->route('giving-types.index');
     }
 }
