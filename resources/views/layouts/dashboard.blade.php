@@ -25,9 +25,6 @@
         defer
     ></script>
 
-{{--    <script src="{{ asset('js/charts-lines.js') }}" defer></script>--}}
-{{--    <script src="{{ asset('js/charts-pie.js') }}" defer></script>--}}
-
     @livewireStyles
 </head>
 <body>
