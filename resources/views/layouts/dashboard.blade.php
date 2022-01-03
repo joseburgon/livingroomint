@@ -11,10 +11,10 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/app.css?v=1.3') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css?v=1.5') }}">
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js?v=2.3') }}" defer></script>
+    <script src="{{ asset('js/app.js?v=2.5') }}" defer></script>
 
     <link
         rel="stylesheet"
