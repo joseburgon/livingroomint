@@ -42,7 +42,8 @@
                                             class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase dark:border-gray-700 dark:text-gray-400">
                                         ID
                                     </button>
-                                    <x-dashboard.sort-icon field="id" :sortField="$sortField" :sortAsc="$sortAsc" class="text-gray-500 bg-gray-50 nightwind-prevent-block"/>
+                                    <x-dashboard.sort-icon field="id" :sortField="$sortField" :sortAsc="$sortAsc"
+                                                           class="text-gray-500 bg-gray-50 nightwind-prevent-block"/>
                                 </div>
                             </th>
                             <th class="px-4 py-3">
@@ -51,7 +52,8 @@
                                             class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase dark:border-gray-700 dark:text-gray-400">
                                         Nombre
                                     </button>
-                                    <x-dashboard.sort-icon field="name" :sortField="$sortField" :sortAsc="$sortAsc" class="text-gray-500 bg-gray-50 nightwind-prevent-block"/>
+                                    <x-dashboard.sort-icon field="name" :sortField="$sortField" :sortAsc="$sortAsc"
+                                                           class="text-gray-500 bg-gray-50 nightwind-prevent-block"/>
                                 </div>
                             </th>
                             <th class="px-4 py-3">
@@ -60,7 +62,8 @@
                                             class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase dark:border-gray-700 dark:text-gray-400">
                                         ¿Activo?
                                     </button>
-                                    <x-dashboard.sort-icon field="active" :sortField="$sortField" :sortAsc="$sortAsc" class="text-gray-500 bg-gray-50 nightwind-prevent-block"/>
+                                    <x-dashboard.sort-icon field="active" :sortField="$sortField" :sortAsc="$sortAsc"
+                                                           class="text-gray-500 bg-gray-50 nightwind-prevent-block"/>
                                 </div>
                             </th>
                         </tr>
@@ -88,7 +91,7 @@
                         </tbody>
                     </table>
                 </div>
-                {{ $types->links() }}
+                {{ $types->links('livewire.dashboard.pagination') }}
             </div>
         </div>
     </div>

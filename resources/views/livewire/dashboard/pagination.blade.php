@@ -12,11 +12,12 @@
             <!-- Pagination -->
             <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
             <nav aria-label="Table navigation">
-            <ul class="inline-flex items-center nightwind-prevent-block">
+            <ul class="inline-flex items-center">
               <li>
                   @if ($paginator->onFirstPage())
                       <button
                           class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"
+                          aria-disabled="true"
                           aria-label="{{ __('pagination.previous') }}">
                         <svg
                             class="w-4 h-4 fill-current"
@@ -41,32 +42,41 @@
                             aria-hidden="true"
                             viewBox="0 0 20 20"
                         >
-                    <path
-                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                        clip-rule="evenodd"
-                        fill-rule="evenodd"
-                    ></path>
-                  </svg>
+                            <path
+                                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                clip-rule="evenodd"
+                                fill-rule="evenodd"
+                            ></path>
+                        </svg>
                       </button>
                   @endif
               </li>
                 {{-- Pagination Elements --}}
                 @foreach ($elements as $element)
+                    {{-- "Three Dots" Separator --}}
+                    @if (is_string($element))
+                        <span aria-disabled="true">
+                                    <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 cursor-default leading-5">{{ $element }}</span>
+                                </span>
+                    @endif
+
                     {{-- Array Of Links --}}
                     @if (is_array($element))
                         @foreach ($element as $page => $url)
-                            <li>
+                            <li wire:key="paginator-{{ $paginator->getPageName() }}-{{ $this->numberOfPaginatorsRendered[$paginator->getPageName()] }}-page{{ $page }}">
                                 @if ($page == $paginator->currentPage())
                                     <button
-                                        class="px-3 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple">
-                                  {{ $page }}
-                                </button>
+                                        class="px-3 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple"
+                                    >
+                                        {{ $page }}
+                                    </button>
                                 @else
                                     <button wire:click="gotoPage({{ $page }}, '{{ $paginator->getPageName() }}')"
+                                            class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
                                             aria-label="{{ __('Go to page :page', ['page' => $page]) }}"
-                                            class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
-                                  {{ $page }}
-                                </button>
+                                    >
+                                        {{ $page }}
+                                    </button>
                                 @endif
                             </li>
                         @endforeach
@@ -96,6 +106,7 @@
                       <button
                           class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
                           aria-label="Next"
+                          aria-disabled="true"
                       >
                           <svg
                               class="w-4 h-4 fill-current"

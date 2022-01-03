@@ -28,11 +28,6 @@ class GivingTypesTable extends Component
         ]);
     }
 
-    public function paginationView(): string
-    {
-        return 'livewire.dashboard.pagination';
-    }
-
     public function sortBy($field)
     {
         if ($this->sortField === $field) {

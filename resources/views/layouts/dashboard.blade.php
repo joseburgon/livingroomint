@@ -11,19 +11,10 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/app.css?v=1.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css?v=1.6') }}">
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js?v=2.5') }}" defer></script>
-
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"
-    />
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
-        defer
-    ></script>
+    <script src="{{ asset('js/app.js?v=2.6') }}" defer></script>
 
     @livewireStyles
 </head>
