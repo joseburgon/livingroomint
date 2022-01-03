@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use ConsoleTVs\Charts\Registrar as Charts;
+use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,8 +23,12 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(Charts $charts)
+    public function boot(UrlGenerator $url, Charts $charts)
     {
+        if (env('APP_ENV') === 'production') {
+            $url->forceScheme('https');
+        }
+
         $charts->register([
             \App\Charts\GivingsTypesChart::class
         ]);
