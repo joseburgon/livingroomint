@@ -19,4 +19,9 @@ class GivingType extends Model
     {
         return $query->where('active', self::ACTIVE);
     }
+
+    public function givings()
+    {
+        return $this->hasMany(Giving::class);
+    }
 }

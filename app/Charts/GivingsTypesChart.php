@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Charts;
 
+use App\Models\GivingType;
 use Chartisan\PHP\Chartisan;
 use ConsoleTVs\Charts\BaseChart;
 use Illuminate\Http\Request;
@@ -23,8 +24,10 @@ class GivingsTypesChart extends BaseChart
      */
     public function handler(Request $request): Chartisan
     {
+        $types = GivingType::active()->withCount('givings')->get();
+
         return Chartisan::build()
-            ->labels(['First', 'Second', 'Third'])
-            ->dataset('Sample', [1, 2, 3]);
+            ->labels($types->pluck('name')->toArray())
+            ->dataset('Givings', $types->pluck('givings_count')->toArray());
     }
 }

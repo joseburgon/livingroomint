@@ -143,7 +143,7 @@
             url: "@chart('givings_types_chart')",
             hooks: new ChartisanHooks()
                 .datasets('doughnut')
-                .pieColors(['#0694a2', '#1c64f2', '#7e3af2'])
+                .pieColors(['#0694a2', '#1c64f2', '#7e3af2', '#4B5563', '#F59E0B', '#EC4899', '#6EE7B7', '#7F1D1D', '#a16207'])
                 .responsive(true)
         });
     </script>
