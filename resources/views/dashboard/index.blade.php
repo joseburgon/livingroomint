@@ -121,7 +121,7 @@
             Analytics
         </h2>
         <div
-            class="w-full p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+            class="p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
         >
             <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
                 Donaciones según tipo en el último mes
