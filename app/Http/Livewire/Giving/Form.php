@@ -42,7 +42,7 @@ class Form extends Component
 
     public function mount()
     {
-        $this->givingTypes = GivingType::active()->get();
+        $this->givingTypes = GivingType::active()->orderBy('name')->get();
 
         $this->documentTypes = DocumentType::active()->pluck('name', 'id');
 
