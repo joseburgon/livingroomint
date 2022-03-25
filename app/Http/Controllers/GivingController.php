@@ -20,6 +20,10 @@ class GivingController extends Controller
 
         $serviceParams = $paymentService->prepare($giving);
 
+        if ($serviceParams['method'] === 'GET') {
+            return redirect()->away($serviceParams['checkoutUrl']);
+        }
+
         return view('givings.redirect', $serviceParams);
     }
 }

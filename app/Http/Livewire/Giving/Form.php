@@ -154,8 +154,10 @@ class Form extends Component
 
     private function setPaymentGateway()
     {
+        $gateway = $this->currency !== 'BTC' ? 'PayU' : 'ForgingBlock';
+
         $this->paymentGateway = PaymentGateway::active()
-            ->where('name', 'PayU')
+            ->where('name', $gateway)
             ->first();
     }
 

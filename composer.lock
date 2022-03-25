@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0917ae8a888f9b03a7c9783c3155bfd4",
+    "content-hash": "f7939cadf7373c5638160491f4f2cf04",
     "packages": [
         {
             "name": "arcanedev/log-viewer",
@@ -736,6 +736,42 @@
                 }
             ],
             "time": "2020-12-29T14:50:06+00:00"
+        },
+        {
+            "name": "forgingblock/forgingblock-php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/forgingblock/ForgingBlock-php-lib.git",
+                "reference": "adfdbebae1e2460b2dc9a68bd1b3c777ad6f2223"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/forgingblock/ForgingBlock-php-lib/zipball/adfdbebae1e2460b2dc9a68bd1b3c777ad6f2223",
+                "reference": "adfdbebae1e2460b2dc9a68bd1b3c777ad6f2223",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.9",
+                "rmccue/requests": "^1.8"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Forgingblock\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "ForgingBlock Crypto Payment Gateway PHP API library",
+            "support": {
+                "issues": "https://github.com/forgingblock/ForgingBlock-php-lib/issues",
+                "source": "https://github.com/forgingblock/ForgingBlock-php-lib/tree/master"
+            },
+            "time": "2021-12-01T06:51:57+00:00"
         },
         {
             "name": "fruitcake/laravel-cors",
@@ -3093,6 +3129,66 @@
                 }
             ],
             "time": "2021-09-25T23:10:38+00:00"
+        },
+        {
+            "name": "rmccue/requests",
+            "version": "v1.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/WordPress/Requests.git",
+                "reference": "82e6936366eac3af4d836c18b9d8c31028fe4cd5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/WordPress/Requests/zipball/82e6936366eac3af4d836c18b9d8c31028fe4cd5",
+                "reference": "82e6936366eac3af4d836c18b9d8c31028fe4cd5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
+                "php-parallel-lint/php-console-highlighter": "^0.5.0",
+                "php-parallel-lint/php-parallel-lint": "^1.3",
+                "phpcompatibility/php-compatibility": "^9.0",
+                "phpunit/phpunit": "^4.8 || ^5.7 || ^6.5 || ^7.5",
+                "requests/test-server": "dev-master",
+                "squizlabs/php_codesniffer": "^3.5",
+                "wp-coding-standards/wpcs": "^2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Requests": "library/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "ISC"
+            ],
+            "authors": [
+                {
+                    "name": "Ryan McCue",
+                    "homepage": "http://ryanmccue.info"
+                }
+            ],
+            "description": "A HTTP library written in PHP, for human beings.",
+            "homepage": "http://github.com/WordPress/Requests",
+            "keywords": [
+                "curl",
+                "fsockopen",
+                "http",
+                "idna",
+                "ipv6",
+                "iri",
+                "sockets"
+            ],
+            "support": {
+                "issues": "https://github.com/WordPress/Requests/issues",
+                "source": "https://github.com/WordPress/Requests/tree/v1.8.1"
+            },
+            "time": "2021-06-04T09:56:25+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -9630,11 +9726,13 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "forgingblock/forgingblock-php": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.3|^8.0"
+        "php": "7.4"
     },
     "platform-dev": [],
     "plugin-api-version": "2.2.0"

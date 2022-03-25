@@ -33,6 +33,12 @@ Route::prefix('donaciones')->name('donaciones')->group(function () {
 
     Route::post('/payu/confirmation', [PayUController::class, 'confirmation'])
         ->name('.payu.confirmation');
+
+    Route::get('/forging-block/return', [PayUController::class, 'response'])
+        ->name('.forging-block.response');
+
+    Route::post('/forging-block/notify', [PayUController::class, 'confirmation'])
+        ->name('.forging-block.confirmation');
 });
 
 Route::middleware(['auth'])->group(function () {

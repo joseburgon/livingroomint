@@ -40,4 +40,11 @@ return [
         'confirmation_url' => env('PAYU_CONFIRMATION_URL'),
     ],
 
+    'forging_block' => [
+        'mode' => env('FORGING_BLOCK_MODE'),
+        'token' => env('FORGING_BLOCK_TOKEN'),
+        'trade' => env('FORGING_BLOCK_TRADE'),
+        'return_url' => env('FORGING_BLOCK_RETURN_URL'),
+        'notify_url' => env('FORGING_BLOCK_NOTIFY_URL')
+    ]
 ];

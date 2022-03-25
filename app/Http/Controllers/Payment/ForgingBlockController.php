@@ -1,0 +1,71 @@
+<?php
+
+namespace App\Http\Controllers\Payment;
+
+use App\Http\Controllers\Controller;
+use App\Registries\PaymentGatewayRegistry;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
+class ForgingBlockController extends Controller
+{
+    public $name = 'ForgingBlock';
+
+    private $gatewayRegistry;
+
+    private $paymentService;
+
+    private $logTag = '[GIVINGS][CONTROLLER][FORGING_BLOCK]';
+
+    public function __construct (PaymentGatewayRegistry $registry) {
+        $this->gatewayRegistry = $registry;
+
+        $this->paymentService = $this->gatewayRegistry->get($this->name);
+    }
+
+    public function response(Request $request)
+    {
+        $signParams  = [
+            $request->referenceCode,
+            number_format($request->TX_VALUE, 1, '.', ''),
+            $request->currency,
+            $request->transactionState
+        ];
+
+        $signature = $this->paymentService->signature($signParams);
+
+        $data['currency'] = $request->currency;
+        $data['amount'] = $request->TX_VALUE;
+        $data['email'] = $request->buyerEmail;
+
+        if (strtoupper($request->signature) !== strtoupper($signature)) {
+            return view('givings.error', $data);
+        }
+
+        return view($this->paymentService->getResponseView($request->transactionState), $data);
+    }
+
+    public function confirmation(Request $request)
+    {
+        Log::info("{$this->logTag}[CONFIRMATION] Receiving new confirmation request.");
+
+        $signParams  = [
+            $request->reference_sale,
+            substr($request->value, -1) == 0 ? substr($request->value, 0, -1) : $request->value,
+            $request->currency,
+            $request->state_pol,
+        ];
+
+        $signature = $this->paymentService->signature($signParams);
+
+        if (strtoupper($request->sign) !== strtoupper($signature)) {
+            Log::error("{$this->logTag}[CONFIRMATION] Invalid Signature received.", $request->input());
+
+            return response('Invalid Signature', 406);
+        }
+
+        $this->paymentService->handleConfirmation($request->input());
+
+        return response('OK', 200);
+    }
+}
