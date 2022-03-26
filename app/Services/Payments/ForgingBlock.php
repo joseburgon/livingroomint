@@ -36,10 +36,14 @@ class ForgingBlock implements PaymentGatewayInterface
         try {
             $forgingBlock = $this->createInvoice($giving->reference, $giving->amount);
 
+            // TODO: Send the available currencies in params
             return [
-                'params' => [],
-                'checkoutUrl' => $forgingBlock->GetInvoiceURL(),
-                'method' => 'GET'
+                'params' => [
+                    'giving' => $giving,
+                    'invoice' => $forgingBlock->GetInvoiceID(),
+                ],
+                'route' => 'donaciones.crypto',
+                'redirectType' => 'local'
             ];
         } catch (\Exception $e) {
             Log::error("{$this->logTag}[PREPARE] Error getting invoice URL: /n {$e->getMessage()}");
@@ -53,13 +57,19 @@ class ForgingBlock implements PaymentGatewayInterface
 
     public function getResponseView(int $state)
     {
-        // TODO: Implement getResponseView() method.
+        return collect([
+            4 => 'givings.success',
+            5 => 'givings.error',
+            6 => 'givings.error',
+            7 => 'givings.pending',
+            104 => 'givings.error',
+        ])->get($state, 'givings.pending');
     }
 
     private function createInvoice(string $order, float $amount): ApiClient
     {
         $forgingBlock = new ApiClient($this->mode);
-        $forgingBlock->SetValue('trade',  $this->trade);
+        $forgingBlock->SetValue('trade', $this->trade);
         $forgingBlock->SetValue('token', $this->token);
         $forgingBlock->SetValue('amount', round($amount, 2));
         $forgingBlock->SetValue('currency', 'USD');

@@ -79,7 +79,7 @@ class PayU implements PaymentGatewayInterface
                 'confirmationUrl' => $this->confirmationUrl,
             ],
             'checkoutUrl' => $this->getCheckoutUrl(),
-            'method' => 'POST'
+            'redirectType' => 'away'
         ];
     }
 

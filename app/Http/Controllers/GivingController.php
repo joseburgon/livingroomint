@@ -18,12 +18,27 @@ class GivingController extends Controller
     {
         $paymentService = $this->gatewayRegistry->get($giving->paymentGateway->name);
 
-        $serviceParams = $paymentService->prepare($giving);
+        $service = $paymentService->prepare($giving);
 
-        if ($serviceParams['method'] === 'GET') {
-            return redirect()->away($serviceParams['checkoutUrl']);
+        if ($service['redirectType'] === 'local') {
+            return redirect()->route($service['route'], $service['params']);
         }
 
-        return view('givings.redirect', $serviceParams);
+        return view('givings.redirect', $service);
+    }
+
+    public function crypto(Giving $giving, Request $request)
+    {
+        return view('givings.crypto', [
+            'invoice' => $request->get('invoice'),
+            'giving' => $giving,
+            'currencies' => [
+                'BTC' => 'Bitcoin',
+                'ETH' => 'Ethereum',
+                'USDT' => 'USDT (ERC20)',
+                'DAI' => 'Dai Stablecoin',
+                'BUSD' => 'BUSD (BSC)'
+            ]
+        ]);
     }
 }

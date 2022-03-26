@@ -5,7 +5,7 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "7.4",
+        "php": ">=7.4",
         "arcanedev/log-viewer": "~8.0",
         "consoletvs/charts": "^7.2",
         "forgingblock/forgingblock-php": "dev-master",

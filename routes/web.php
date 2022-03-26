@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GivingTypeController;
+use App\Http\Controllers\Payment\ForgingBlockController;
 use App\Http\Controllers\Payment\PayUController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GivingController;
@@ -28,17 +29,20 @@ Route::prefix('donaciones')->name('donaciones')->group(function () {
     Route::get('/{giving}/redirect', [GivingController::class, 'redirect'])
         ->name('.redirect');
 
+    Route::get('/{giving}/crypto', [GivingController::class, 'crypto'])
+        ->name('.crypto');
+
     Route::get('/payu/response', [PayUController::class, 'response'])
         ->name('.payu.response');
 
     Route::post('/payu/confirmation', [PayUController::class, 'confirmation'])
         ->name('.payu.confirmation');
 
-    Route::get('/forging-block/return', [PayUController::class, 'response'])
+    Route::get('/forging-block/return', [ForgingBlockController::class, 'response'])
         ->name('.forging-block.response');
 
-    Route::post('/forging-block/notify', [PayUController::class, 'confirmation'])
-        ->name('.forging-block.confirmation');
+    Route::post('/forging-block/notify', [ForgingBlockController::class, 'notify'])
+        ->name('.forging-block.notify');
 });
 
 Route::middleware(['auth'])->group(function () {
