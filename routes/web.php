@@ -25,7 +25,7 @@ Route::prefix('donaciones')->name('donaciones')->group(function () {
 
     Route::get('/new', function () {
         return view('givings.index');
-    });
+    })->name('.new');
 
     Route::get('/response', function () {
         return view('givings.response');
