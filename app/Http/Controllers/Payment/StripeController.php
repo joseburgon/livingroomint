@@ -7,10 +7,14 @@ use App\Registries\PaymentGatewayRegistry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Stripe\Checkout\Session;
+use Stripe\Exception\SignatureVerificationException;
+use Stripe\Webhook;
 
 class StripeController extends Controller
 {
     public $name = 'Stripe';
+
+    private const EVENT_SESSION_COMPLETED = 'checkout.session.completed';
 
     private $gatewayRegistry;
 
@@ -24,34 +28,38 @@ class StripeController extends Controller
         $this->paymentService = $this->gatewayRegistry->get($this->name);
     }
 
-    public function success(Request $request)
+    public function response(Request $request)
     {
         $session = Session::retrieve($request->get('session_id'));
-        dd($session);
 
-        return view('givings.success', []);
+        return view($this->paymentService->getResponseView($session->payment_status), [
+            'currency' => $session->currency,
+            'amount' => number_format(($session->amount_total / 100), 2, '.', ' '),
+            'email' => $session->customer_email
+        ]);
     }
 
-    public function confirmation(Request $request)
+    public function notify(Request $request)
     {
-        Log::info("{$this->logTag}[CONFIRMATION] Receiving new confirmation request.");
+        Log::info("{$this->logTag}[NOTIFY] Notification received - Event: {$request->get('type')}", $request->input());
 
-        $signParams  = [
-            $request->reference_sale,
-            substr($request->value, -1) == 0 ? substr($request->value, 0, -1) : $request->value,
-            $request->currency,
-            $request->state_pol,
-        ];
+        try {
+            $event = Webhook::constructEvent(
+                $request->getContent(), $request->header('stripe-signature'), config('services.stripe.endpoint_secret')
+            );
+        } catch(\UnexpectedValueException $e) {
+            Log::error("{$this->logTag}[NOTIFY] Invalid payload", $request->input());
 
-        $signature = $this->paymentService->signature($signParams);
+            return response('INVALID PAYLOAD', 400);
+        } catch(SignatureVerificationException $e) {
+            Log::error("{$this->logTag}[NOTIFY] Invalid signature", $request->input());
 
-        if (strtoupper($request->sign) !== strtoupper($signature)) {
-            Log::error("{$this->logTag}[CONFIRMATION] Invalid Signature received.", $request->input());
-
-            return response('Invalid Signature', 406);
+            return response('INVALID SIGNATURE', 400);
         }
 
-        $this->paymentService->handleConfirmation($request->input());
+        if ($event->type === self::EVENT_SESSION_COMPLETED) {
+            $this->paymentService->handleConfirmation($event->data->object);
+        }
 
         return response('OK', 200);
     }

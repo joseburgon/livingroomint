@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GivingTypeController;
 use App\Http\Controllers\Payment\ForgingBlockController;
 use App\Http\Controllers\Payment\PayUController;
+use App\Http\Controllers\Payment\StripeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GivingController;
 
@@ -41,6 +42,12 @@ Route::prefix('donaciones')->name('donaciones')->group(function () {
 
     Route::post('/payu/confirmation', [PayUController::class, 'confirmation'])
         ->name('.payu.confirmation');
+
+    Route::post('/stripe/response', [StripeController::class, 'response'])
+        ->name('.stripe.response');
+
+    Route::post('/stripe/notify', [StripeController::class, 'notify'])
+        ->name('.stripe.notify');
 
     Route::get('/forging-block/return', [ForgingBlockController::class, 'response'])
         ->name('.forging-block.response');

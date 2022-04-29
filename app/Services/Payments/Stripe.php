@@ -16,20 +16,19 @@ class Stripe implements PaymentGatewayInterface
     private $checkoutSession;
     private $successUrl;
     private $cancelUrl;
-    private $confirmationUrl;
 
     private $statuses = [
-        4 => Giving::STATUS_APPROVED,
-        5 => Giving::STATUS_DECLINED,
-        6 => Giving::STATUS_EXPIRED,
+        'paid' => Giving::STATUS_APPROVED,
+        'unpaid' => Giving::STATUS_DECLINED,
     ];
 
     private $paymentMethods = [
-        2 => 'CREDIT_CARD',
-        4 => 'PSE',
-        5 => 'ACH',
-        6 => 'DEBIT_CARD',
-        7 => 'CASH',
+        'card' => 'CREDIT_CARD',
+        'us_bank_account' => 'BANK_TRANSFER',
+        'sepa_debit' => 'BANK_TRANSFER',
+        'au_becs_debit' => 'DEBIT_CARD',
+        'acss_debit' => 'DEBIT_CARD',
+        'oxxo' => 'CASH',
     ];
 
     private $logTag = '[GIVINGS][SERVICE][STRIPE]';
@@ -40,7 +39,6 @@ class Stripe implements PaymentGatewayInterface
 
         $this->successUrl = config('services.stripe.success_url');
         $this->cancelUrl = config('services.stripe.cancel_url');
-        $this->confirmationUrl = config('services.stripe.confirmation_url');
     }
 
     public function pay()
@@ -62,7 +60,11 @@ class Stripe implements PaymentGatewayInterface
                 ],
                 'quantity' => 1
             ]],
+            'customer_email' => $giving->giver->email,
             'mode' => 'payment',
+            'metadata' => [
+                'giving_id' => $giving->id
+            ],
             'success_url' => $this->successUrl,
             'cancel_url' => $this->cancelUrl,
         ]);
@@ -81,33 +83,29 @@ class Stripe implements PaymentGatewayInterface
     public function getResponseView($state)
     {
         return collect([
-            4 => 'givings.success',
-            5 => 'givings.error',
-            6 => 'givings.error',
-            7 => 'givings.pending',
-            104 => 'givings.error',
+            'paid' => 'givings.success',
+            'unpaid' => 'givings.pending',
         ])->get($state, 'givings.pending');
     }
 
-    public function handleConfirmation(array $params)
+    public function handleConfirmation(object $data)
     {
         try {
-            $giving = Giving::reference($params['reference_sale'])->first();
+            $giving = Giving::findOrFail($data->metadata->giving_id);
 
             Log::info("{$this->logTag}[CONFIRMATION] Giving ID: {$giving->id}");
 
-            $method = Arr::get($this->paymentMethods, $params['payment_method_id'], 'UNKNOWN');
+            $method = Arr::get($this->paymentMethods, $data->payment_method_types[0], 'UNKNOWN');
 
             $paymentMethod = PaymentMethod::type($method)->first();
 
             $giving->update([
-                'status' => $this->statuses[$params['state_pol']],
-                'transaction_id' => $params['transaction_id'],
+                'status' => $this->statuses[$data->payment_status],
+                'transaction_id' => $data->payment_intent,
                 'payment_method_id' => $paymentMethod->id,
-                'extra_info' => $params['response_message_pol'],
             ]);
 
-            Log::info("{$this->logTag}[CONFIRMATION] Giving updated. PayU Transaction ID: {$params['transaction_id']}");
+            Log::info("{$this->logTag}[CONFIRMATION] Giving updated. Stripe Transaction ID: {$data->payment_intent}");
 
             if ($giving->status == Giving::STATUS_APPROVED) {
                 Mail::to($giving->giver->email)->queue(new GivingReceived($giving));
@@ -117,6 +115,5 @@ class Stripe implements PaymentGatewayInterface
         } catch (\Exception $e) {
             Log::error("{$this->logTag}[CONFIRMATION] {$e->getMessage()}");
         }
-
     }
 }

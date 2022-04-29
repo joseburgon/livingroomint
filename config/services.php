@@ -45,6 +45,7 @@ return [
         'success_url' => env('STRIPE_SUCCESS_URL'),
         'cancel_url' => env('STRIPE_CANCEL_URL'),
         'confirmation_url' => env('STRIPE_CONFIRMATION_URL'),
+        'endpoint_secret' => env('STRIPE_ENDPOINT_SECRET'),
     ],
 
     'forging_block' => [
