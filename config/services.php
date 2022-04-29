@@ -40,4 +40,19 @@ return [
         'confirmation_url' => env('PAYU_CONFIRMATION_URL'),
     ],
 
+    'stripe' => [
+        'key' => env('STRIPE_API_KEY'),
+        'success_url' => env('STRIPE_SUCCESS_URL'),
+        'cancel_url' => env('STRIPE_CANCEL_URL'),
+        'confirmation_url' => env('STRIPE_CONFIRMATION_URL'),
+        'endpoint_secret' => env('STRIPE_ENDPOINT_SECRET'),
+    ],
+
+    'forging_block' => [
+        'mode' => env('FORGING_BLOCK_MODE'),
+        'token' => env('FORGING_BLOCK_TOKEN'),
+        'trade' => env('FORGING_BLOCK_TRADE'),
+        'return_url' => env('FORGING_BLOCK_RETURN_URL'),
+        'notify_url' => env('FORGING_BLOCK_NOTIFY_URL')
+    ]
 ];

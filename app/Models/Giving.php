@@ -26,6 +26,11 @@ class Giving extends Model
         return $this->created_at->isoFormat('dddd[,] D [de] MMMM [de] Y');
     }
 
+    public function getCentsAmountAttribute()
+    {
+        return (integer) $this->amount * 100;
+    }
+
     public function scopeReference($query, $reference)
     {
         return $query->where('reference', $reference);

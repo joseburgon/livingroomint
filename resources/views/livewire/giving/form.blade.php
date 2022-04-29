@@ -25,9 +25,18 @@
                                     wire:click="currencyChanged('USD')"
                                     type="button"
                                     :class="{ 'bg-black text-white' : currency === 'USD' }"
-                                    class="w-full inline-flex justify-center items-center transition-colors duration-300 ease-in focus:outline-none focus:text-white rounded-r p-2 lg:p-4"
+                                    class="w-full inline-flex justify-center items-center transition-colors duration-300 ease-in focus:outline-none focus:text-white p-2 lg:p-4"
                                     id="USD">
                                     <span>Dólar Americano (USD)</span>
+                                </button>
+                                <button
+                                    @click="currency='BTC'"
+                                    wire:click="currencyChanged('BTC')"
+                                    type="button"
+                                    :class="{ 'bg-black text-white' : currency === 'BTC' }"
+                                    class="w-full inline-flex justify-center items-center transition-colors duration-300 ease-in focus:outline-none focus:text-white rounded-r p-2 lg:p-4"
+                                    id="USD">
+                                    <span>Bitcoin (USD/BTC)</span>
                                 </button>
                             </div>
                         </div>

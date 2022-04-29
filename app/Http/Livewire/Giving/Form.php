@@ -22,6 +22,11 @@ class Form extends Component
     private $giver;
     private $givingType;
     private $paymentGateway;
+    private $gateways = [
+        'COP' => 'PayU',
+        'USD' => 'Stripe',
+        'BTC' => 'ForgingBlock',
+    ];
 
     public $amount, $giving_type_id, $first_name, $last_name, $document_type_id, $document, $email, $phone, $country, $currency;
 
@@ -155,7 +160,7 @@ class Form extends Component
     private function setPaymentGateway()
     {
         $this->paymentGateway = PaymentGateway::active()
-            ->where('name', 'PayU')
+            ->where('name', $this->gateways[$this->currency])
             ->first();
     }
 
