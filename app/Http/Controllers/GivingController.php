@@ -20,11 +20,15 @@ class GivingController extends Controller
 
         $service = $paymentService->prepare($giving);
 
-        if ($service['redirectType'] === 'local') {
-            return redirect()->route($service['route'], $service['params']);
+        if ($service['redirectType'] === 'form') {
+            return view('givings.redirect', $service);
         }
 
-        return view('givings.redirect', $service);
+        if ($service['redirectType'] === 'away') {
+            return redirect()->away($service['checkoutUrl']);
+        }
+
+        return redirect()->route($service['route'], $service['params']);
     }
 
     public function crypto(Giving $giving, Request $request)

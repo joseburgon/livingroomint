@@ -40,6 +40,13 @@ return [
         'confirmation_url' => env('PAYU_CONFIRMATION_URL'),
     ],
 
+    'stripe' => [
+        'key' => env('STRIPE_API_KEY'),
+        'success_url' => env('STRIPE_SUCCESS_URL'),
+        'cancel_url' => env('STRIPE_CANCEL_URL'),
+        'confirmation_url' => env('STRIPE_CONFIRMATION_URL'),
+    ],
+
     'forging_block' => [
         'mode' => env('FORGING_BLOCK_MODE'),
         'token' => env('FORGING_BLOCK_TOKEN'),

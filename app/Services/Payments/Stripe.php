@@ -11,13 +11,11 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
-class PayU implements PaymentGatewayInterface
+class Stripe implements PaymentGatewayInterface
 {
-    private $checkoutUrl;
-    private $apiKey;
-    private $merchantId;
-    private $accountId;
-    private $responseUrl;
+    private $checkoutSession;
+    private $successUrl;
+    private $cancelUrl;
     private $confirmationUrl;
 
     private $statuses = [
@@ -34,16 +32,15 @@ class PayU implements PaymentGatewayInterface
         7 => 'CASH',
     ];
 
-    private $logTag = '[GIVINGS][SERVICE][PAYU]';
+    private $logTag = '[GIVINGS][SERVICE][STRIPE]';
 
     public function __construct()
     {
-        $this->checkoutUrl = config('services.payu.url');
-        $this->apiKey = config('services.payu.key');
-        $this->merchantId = config('services.payu.merchant');
-        $this->accountId = config('services.payu.account');
-        $this->responseUrl = config('services.payu.response_url');
-        $this->confirmationUrl = config('services.payu.confirmation_url');
+        \Stripe\Stripe::setApiKey(config('services.stripe.key'));
+
+        $this->successUrl = config('services.stripe.success_url');
+        $this->cancelUrl = config('services.stripe.cancel_url');
+        $this->confirmationUrl = config('services.stripe.confirmation_url');
     }
 
     public function pay()
@@ -53,39 +50,32 @@ class PayU implements PaymentGatewayInterface
 
     public function prepare(Giving $giving): array
     {
-        $giving->load('giver.documentType');
-
-        $signParams = [$giving->reference, $giving->amount, $giving->currency];
+        $this->checkoutSession = \Stripe\Checkout\Session::create([
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => $giving->currency,
+                    'product_data' => [
+                        'name' => 'Donación en línea a Living Room',
+                        'description' => $giving->reference,
+                    ],
+                    'unit_amount_decimal' => $giving->centsAmount
+                ],
+                'quantity' => 1
+            ]],
+            'mode' => 'payment',
+            'success_url' => $this->successUrl,
+            'cancel_url' => $this->cancelUrl,
+        ]);
 
         return [
-            'params' => [
-                'merchantId' => $this->merchantId,
-                'accountId' => $this->accountId,
-                'referenceCode' => $giving->reference,
-                'description' => $giving->description,
-                'amount' => $giving->amount,
-                'tax' => 0,
-                'taxReturnBase' => 0,
-                'signature' => $this->signature($signParams),
-                'currency' => $giving->currency,
-                'buyerFullName' => $giving->giver->full_name,
-                'payerFullName' => $giving->giver->full_name,
-                'buyerEmail' => $giving->giver->email,
-                'payerEmail' => $giving->giver->email,
-                'mobilePhone' => $giving->giver->phone,
-                'payerMobilePhone' => $giving->giver->phone,
-                'payerDocument' => $giving->giver->document,
-                'responseUrl' => $this->responseUrl,
-                'confirmationUrl' => $this->confirmationUrl,
-            ],
             'checkoutUrl' => $this->getCheckoutUrl(),
-            'redirectType' => 'form'
+            'redirectType' => 'away'
         ];
     }
 
     public function getCheckoutUrl()
     {
-        return $this->checkoutUrl;
+        return $this->checkoutSession->url;
     }
 
     public function getResponseView($state)
@@ -97,17 +87,6 @@ class PayU implements PaymentGatewayInterface
             7 => 'givings.pending',
             104 => 'givings.error',
         ])->get($state, 'givings.pending');
-    }
-
-    public function signature(array $params): string
-    {
-        $signature = $this->apiKey . '~' . $this->merchantId;
-
-        foreach ($params as $param) {
-            $signature .= '~' . $param;
-        }
-
-        return md5($signature);
     }
 
     public function handleConfirmation(array $params)

@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Registries\PaymentGatewayRegistry;
 use App\Services\Payments\ForgingBlock;
 use App\Services\Payments\PayU;
+use App\Services\Payments\Stripe;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
 
@@ -30,6 +31,7 @@ class PaymentServiceProvider extends ServiceProvider
     {
         $this->app->make(PaymentGatewayRegistry::class)
             ->register('PayU', new PayU)
+            ->register('Stripe', new Stripe)
             ->register('ForgingBlock', new ForgingBlock);
     }
 }

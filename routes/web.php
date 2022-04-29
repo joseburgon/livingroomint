@@ -19,6 +19,10 @@ Route::get('/email/test/send', function () {
 
 Route::prefix('donaciones')->name('donaciones')->group(function () {
     Route::get('/', function () {
+        return view('givings.old-index');
+    });
+
+    Route::get('/new', function () {
         return view('givings.index');
     });
 
