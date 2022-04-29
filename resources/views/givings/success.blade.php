@@ -30,7 +30,7 @@
                 <div class="flex flex-col py-10 px-4 lg:px-0 lg:py-16">
                     <h2 class="font-bold text-2xl lg:text-3xl mb-8">¡Gracias! Hemos recibido tu donación.</h2>
                     <p class="font-normal text-base lg:text-xl">Has realizado una donación por un valor de
-                        <strong>{{ $currency }} ${{ $amount }}</strong> a nuestra
+                        <strong>{{ strtoupper($currency) }} ${{ $amount }}</strong> a nuestra
                         comunidad.</p>
                     <p class="font-normal text-base lg:text-xl">Recibirás una notificación en
                         <strong>{{ $email }}</strong> cuando la donación
