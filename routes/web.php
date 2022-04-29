@@ -43,7 +43,7 @@ Route::prefix('donaciones')->name('donaciones')->group(function () {
     Route::post('/payu/confirmation', [PayUController::class, 'confirmation'])
         ->name('.payu.confirmation');
 
-    Route::post('/stripe/response', [StripeController::class, 'response'])
+    Route::get('/stripe/response', [StripeController::class, 'response'])
         ->name('.stripe.response');
 
     Route::post('/stripe/notify', [StripeController::class, 'notify'])
