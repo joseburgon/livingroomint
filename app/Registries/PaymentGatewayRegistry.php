@@ -20,7 +20,6 @@ class PaymentGatewayRegistry
      * @throws Exception
      */
     function get($name) {
-//        dd($name);
         if (array_key_exists($name, $this->gateways)) {
             return $this->gateways[$name];
         } else {

@@ -34,15 +34,7 @@ class GivingController extends Controller
     public function crypto(Giving $giving, Request $request)
     {
         return view('givings.crypto', [
-            'invoice' => $request->get('invoice'),
             'giving' => $giving,
-            'currencies' => [
-                'BTC' => 'Bitcoin',
-                'ETH' => 'Ethereum',
-                'USDT' => 'USDT (ERC20)',
-                'DAI' => 'Dai Stablecoin',
-                'BUSD' => 'BUSD (BSC)'
-            ]
         ]);
     }
 }

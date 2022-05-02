@@ -9,21 +9,17 @@ use Illuminate\Support\Facades\Log;
 
 class ForgingBlock implements PaymentGatewayInterface
 {
-    private $mode;
-    private $token;
-    private $trade;
-    private $returnUrl;
-    private $notifyUrl;
+    private ApiClient $forgingBlock;
 
-    private $logTag = '[GIVINGS][SERVICE][FORGING_BLOCK]';
+    private string $logTag = '[GIVINGS][SERVICE][FORGING_BLOCK]';
 
     public function __construct()
     {
-        $this->mode = config('services.forging_block.mode');
-        $this->token = config('services.forging_block.token');
-        $this->trade = config('services.forging_block.trade');
-        $this->returnUrl = config('services.forging_block.return_url');
-        $this->notifyUrl = config('services.forging_block.notify_url');
+        $this->forgingBlock = new ApiClient(config('services.forging_block.mode'));
+        $this->forgingBlock->SetValue('trade', config('services.forging_block.trade'));
+        $this->forgingBlock->SetValue('token', config('services.forging_block.token'));
+        $this->forgingBlock->SetValue('link', config('services.forging_block.return_url'));
+        $this->forgingBlock->SetValue('notification', config('services.forging_block.notify_url'));
     }
 
     public function pay()
@@ -34,13 +30,11 @@ class ForgingBlock implements PaymentGatewayInterface
     public function prepare(Giving $giving): array
     {
         try {
-            $forgingBlock = $this->createInvoice($giving->reference, $giving->amount);
+//            $this->createInvoice($giving->reference, $giving->amount);
 
-            // TODO: Send the available currencies in params
             return [
                 'params' => [
-                    'giving' => $giving,
-                    'invoice' => $forgingBlock->GetInvoiceID(),
+                    'giving' => $giving->id,
                 ],
                 'route' => 'donaciones.crypto',
                 'redirectType' => 'local'
@@ -66,18 +60,19 @@ class ForgingBlock implements PaymentGatewayInterface
         ])->get($state, 'givings.pending');
     }
 
-    private function createInvoice(string $order, float $amount): ApiClient
+    public function getInvoiceDetails(string $invoiceId)
     {
-        $forgingBlock = new ApiClient($this->mode);
-        $forgingBlock->SetValue('trade', $this->trade);
-        $forgingBlock->SetValue('token', $this->token);
-        $forgingBlock->SetValue('amount', round($amount, 2));
-        $forgingBlock->SetValue('currency', 'USD');
-        $forgingBlock->SetValue('link', $this->returnUrl);
-        $forgingBlock->SetValue('notification', $this->notifyUrl);
-        $forgingBlock->SetValue('order', $order);
-        $forgingBlock->CreateInvoice();
+        $this->forgingBlock->SetValue('invoice',  $invoiceId);
 
-        return $forgingBlock;
+        return $this->forgingBlock->CheckInvoiceStatus();
+    }
+
+    public function createInvoice(string $order, float $amount): array
+    {
+        $this->forgingBlock->SetValue('amount', round($amount, 2));
+        $this->forgingBlock->SetValue('currency', 'USD');
+        $this->forgingBlock->SetValue('order', $order);
+
+        return $this->forgingBlock->CreateInvoice();
     }
 }
