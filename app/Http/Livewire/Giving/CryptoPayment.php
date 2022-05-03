@@ -2,18 +2,17 @@
 
 namespace App\Http\Livewire\Giving;
 
-use App\Contracts\PaymentGatewayInterface;
 use App\Models\Giving;
-use App\Registries\PaymentGatewayRegistry;
 use App\Services\Payments\ForgingBlock;
-use Forgingblock\ApiClient;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class CryptoPayment extends Component
 {
     public Giving $giving;
-    public array $invoice;
+    public string $invoiceId;
+    public Collection $invoice;
     public string $currentStep = 'method';
     public string $qrCode;
     public array $currencies = [
@@ -23,7 +22,7 @@ class CryptoPayment extends Component
         'DAI' => 'Dai Stablecoin',
         'BUSD' => 'BUSD (BSC)'
     ];
-    public string $paymentMethod = 'BTC';
+    public string $paymentMethod = '';
     public string $wallet = '';
     public string $error = '';
 
@@ -35,22 +34,33 @@ class CryptoPayment extends Component
     public function pay(ForgingBlock $service, string $coin)
     {
         try {
+            if ($this->paymentMethod === $coin) {
+                $this->currentStep = 'payment';
+
+                return;
+            }
+
             $this->paymentMethod = $coin;
 
-            $this->invoice = $service->createInvoice($this->giving->reference, $this->giving->amount);
+            $response = $service->getInvoiceStatus($this->invoiceId, $coin);
 
-            $this->setWallet();
+            if (! $response->get('status')) {
+                $this->error = $response->get('error');
+
+                return;
+            }
+
+            $this->error = '';
+
+            $this->invoice = $response->get('data');
+
+            $this->wallet = $this->invoice->get('btcAddress');
 
             $this->currentStep = 'payment';
 
-            $this->qrCode = QrCode::size(250)->format('svg')->generate($this->invoice['payUrl']);
+            $this->qrCode = QrCode::size(250)->format('svg')->generate($this->invoice->get('invoiceBitcoinUrlQR'));
         } catch (\Exception $e) {
             $this->error = $e->getMessage();
         }
-    }
-
-    public function setWallet()
-    {
-        $this->wallet = preg_replace('/(.*)?(.*):(.*)/s', '\2', $this->invoice['payUrl']);
     }
 }

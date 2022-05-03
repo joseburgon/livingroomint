@@ -35,6 +35,7 @@ class GivingController extends Controller
     {
         return view('givings.crypto', [
             'giving' => $giving,
+            'invoiceId' => $request->get('invoiceId')
         ]);
     }
 }
