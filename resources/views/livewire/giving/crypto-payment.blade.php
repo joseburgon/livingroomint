@@ -1,7 +1,7 @@
 <div class="bg-white w-full lg:w-5/12 -mt-8 lg:-mt-20 shadow-md rounded-lg overflow-hidden">
     <div class="items-center justify-between py-10 px-5 bg-white shadow-2xl rounded-lg mx-auto text-center">
         <div x-data="init()" class="px-2 -mt-6">
-            <form wire:loading.remove>
+            <form wire:loading.remove wire:target="pay">
                 <div class="text-center">
                     {{--Cripto Currencies--}}
                     <div x-show="current === 'method'" class="my-3">
@@ -40,7 +40,7 @@
                     </div>
                     {{--End Cripto Currencies--}}
                     {{--Payment--}}
-                    <div x-show="current === 'payment'" class="my-3">
+                    <div x-show="current === 'payment'" wire:poll.visible.5000ms="updateInvoiceStatus" class="my-3">
                         <div class="mb-2">
                             <label for="type" class="text-lg text-gray-700">Envía el pago</label>
                             <p class="text-sm mt-2">Para realizar un pago, envíe el pago utilizando el código QR o los
@@ -51,10 +51,10 @@
                                 {!! $qrCode !!}
                             </div>
                             <p class="text-sm text-gray-400 mb-8">{{ "Only send {$paymentMethod} to this address" }}</p>
-                            <div class="flex justify-between items-center py-2 px-4 rounded border">
+                            <div class="flex flex-col md:flex-row justify-between items-center py-2 px-4 rounded border">
                                 <div class="flex flex-col text-left">
                                     <p class="text-xs text-gray-400">{{ "{$paymentMethod} Address" }}</p>
-                                    <p class="">{{ $wallet }}</p>
+                                    <p class="text-xs md:text-base">{{ $wallet }}</p>
                                 </div>
                                 <div>
                                     <div class="relative sm:max-w-xl sm:mx-auto">
@@ -88,9 +88,11 @@
                         {{--End Waiting Bar--}}
                         <div class="mt-4">
                             <p>Esperando por el pago</p>
-                            <p>{{ $invoice['payUrl'] ?? '' }}</p>
                         </div>
-                        <div class="flex justify-end mt-16">
+                        <div class="flex justify-center mt-4">
+                            <div wire:ignore id="timer"></div>
+                        </div>
+                        <div class="flex justify-end mt-8">
                             <button
                                 @click="current='method'"
                                 type="button"
@@ -103,7 +105,7 @@
                 </div>
             </form>
             {{--Loading Spinner--}}
-            <div wire:loading class="flex items-center justify-center py-12 w-full h-full">
+            <div wire:loading wire:target="pay" class="flex items-center justify-center py-12 w-full h-full">
                 <div class="flex justify-center items-center space-x-1 text-lg text-gray-700">
                     <svg fill='none' class="w-6 h-6 animate-spin" viewBox="0 0 32 32"
                          xmlns='http://www.w3.org/2000/svg'>
@@ -121,11 +123,124 @@
 
 @section('scripts')
     <script>
+        const TIMER_CONTAINER = document.getElementById("timer")
+        const FULL_DASH_ARRAY = 283
+        const WARNING_THRESHOLD = 120
+        const ALERT_THRESHOLD = 60
+
+        const COLOR_CODES = {
+            info: {
+                color: "green"
+            },
+            warning: {
+                color: "orange",
+                threshold: WARNING_THRESHOLD
+            },
+            alert: {
+                color: "red",
+                threshold: ALERT_THRESHOLD
+            }
+        }
+
+        let timeLimit = 1800
+        let timePassed = 0
+        let timeLeft = timeLimit
+        let timerInterval = null
+        let remainingPathColor = COLOR_CODES.info.color
+
+        function onTimesUp() {
+            clearInterval(timerInterval);
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timePassed = timePassed += 1;
+                timeLeft = timeLimit - timePassed;
+                document.getElementById("base-timer-label").innerHTML = formatTime(timeLeft);
+                setCircleDasharray();
+                setRemainingPathColor(timeLeft);
+
+                if (timeLeft === 0) {
+                    onTimesUp();
+                }
+            }, 1000);
+        }
+
+        function formatTime(time) {
+            const minutes = Math.floor(time / 60);
+            let seconds = time % 60;
+
+            if (seconds < 10) {
+                seconds = `0${seconds}`;
+            }
+
+            return `${minutes}:${seconds}`;
+        }
+
+        function setRemainingPathColor(timeLeft) {
+            const {alert, warning, info} = COLOR_CODES;
+            if (timeLeft <= alert.threshold) {
+                document
+                    .getElementById("base-timer-path-remaining")
+                    .classList.remove(warning.color);
+                document
+                    .getElementById("base-timer-path-remaining")
+                    .classList.add(alert.color);
+            } else if (timeLeft <= warning.threshold) {
+                document
+                    .getElementById("base-timer-path-remaining")
+                    .classList.remove(info.color);
+                document
+                    .getElementById("base-timer-path-remaining")
+                    .classList.add(warning.color);
+            }
+        }
+
+        function calculateTimeFraction() {
+            const rawTimeFraction = timeLeft / timeLimit;
+            return rawTimeFraction - (1 / timeLimit) * (1 - rawTimeFraction);
+        }
+
+        function setCircleDasharray() {
+            const circleDasharray = `${(
+                calculateTimeFraction() * FULL_DASH_ARRAY
+            ).toFixed(0)} 283`;
+            document
+                .getElementById("base-timer-path-remaining")
+                .setAttribute("stroke-dasharray", circleDasharray);
+        }
+
+        function buildTimerElement() {
+            TIMER_CONTAINER.innerHTML = `
+                        <div class="base-timer">
+                          <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <g class="base-timer__circle">
+                              <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
+                              <path
+                                id="base-timer-path-remaining"
+                                stroke-dasharray="283"
+                                class="base-timer__path-remaining ${remainingPathColor}"
+                                d="
+                                  M 50, 50
+                                  m -45, 0
+                                  a 45,45 0 1,0 90,0
+                                  a 45,45 0 1,0 -90,0
+                                "
+                              ></path>
+                            </g>
+                          </svg>
+                          <span id="base-timer-label" class="base-timer__label">${formatTime(timeLeft)}</span>
+                        </div>`
+        }
+
         function init() {
             return {
                 current: @entangle('currentStep'),
                 wallet: @entangle('wallet'),
                 copyText: 'Copy to clipboard',
+                maxTime: @entangle('maxTime'),
+                expirationTime: @entangle('expirationTime'),
+                invoiceStatus: @entangle('status'),
                 copyWallet() {
                     window.navigator.clipboard.writeText(this.wallet)
 
@@ -135,6 +250,29 @@
                         this.copyText = 'Copy to clipboard'
                     }, 2000)
                 },
+                init() {
+                    this.$watch('current', (step) => {
+                        if (step === 'payment' && !timerInterval) {
+                            buildTimerElement()
+
+                            timeLimit = this.maxTime
+                            timePassed = this.maxTime - this.expirationTime
+
+                            startTimer()
+                        }
+                    })
+
+                    this.$watch('invoiceStatus', (status) => {
+                        console.log(`status checker`, status)
+                        if (status === 'paid' || status === 'expired') {
+                            clearInterval(statusInterval)
+
+                            onTimesUp()
+
+                            TIMER_CONTAINER.innerHTML = ''
+                        }
+                    })
+                }
             }
         }
     </script>
