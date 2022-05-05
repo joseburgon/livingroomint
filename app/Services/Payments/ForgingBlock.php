@@ -42,7 +42,7 @@ class ForgingBlock implements PaymentGatewayInterface
                 'redirectType' => 'local'
             ];
         } catch (\Exception $e) {
-            Log::error("{$this->logTag}[PREPARE] Error getting invoice URL: /n {$e->getMessage()}");
+            Log::error("{$this->logTag}[PREPARE] Error creating invoice: /n {$e->getMessage()}");
         }
     }
 

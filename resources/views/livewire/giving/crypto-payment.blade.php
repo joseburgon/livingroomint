@@ -50,33 +50,52 @@
                             <div class="flex justify-center mb-6">
                                 {!! $qrCode !!}
                             </div>
-                            <p class="text-sm text-gray-400 mb-8">{{ "Only send {$paymentMethod} to this address" }}</p>
-                            <div class="flex flex-col md:flex-row justify-between items-center py-2 px-4 rounded border">
-                                <div class="flex flex-col text-left">
-                                    <p class="text-xs text-gray-400">{{ "{$paymentMethod} Address" }}</p>
-                                    <p class="text-xs md:text-base">{{ $wallet }}</p>
-                                </div>
-                                <div>
-                                    <div class="relative sm:max-w-xl sm:mx-auto">
-                                        <div class="group cursor-pointer flex flex-col items-center">
-                                            <button
-                                                @click.prevent="copyWallet()"
-                                                type="button"
-                                                class="mx-2 my-2 bg-gray-100 transition duration-150 ease-in-out hover:bg-gray-200 rounded border border-gray-300 text-gray-600 px-6 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-gray-600"
-                                            >
-                                                Copy
-                                            </button>
-                                            <div
-                                                x-text="copyText"
-                                                class="opacity-0 w-40 bg-black text-white text-center text-xs rounded-lg py-2 absolute z-10 group-hover:opacity-100 bottom-full px-3 pointer-events-none"
-                                            >
-                                                <svg class="absolute text-black h-2 w-full left-0 top-full" x="0px"
-                                                     y="0px" viewBox="0 0 255 255" xml:space="preserve"><polygon
-                                                        class="fill-current" points="0,0 127.5,127.5 255,0"/></svg>
+                            <p class="text-sm text-gray-400 mb-8">{{ "Solo envíe {$paymentMethod} a esta dirección" }}</p>
+                            <div class="flex flex-col py-2 px-4 rounded border">
+                                <div class="flex flex-col md:flex-row justify-between md:items-center w-full mb-4">
+                                    {{--Wallet Address--}}
+                                    <div class="flex flex-col text-left mb-4 md:mb-0">
+                                        <p class="text-xs text-gray-400">{{ "{$paymentMethod} Address" }}</p>
+                                        <p class="text-xs md:text-base">{{ $wallet }}</p>
+                                    </div>
+                                    {{--End Wallet Address--}}
+                                    {{--Copy Wallet Button--}}
+                                    <div>
+                                        <div class="relative sm:max-w-xl sm:mx-auto">
+                                            <div class="group cursor-pointer flex flex-col items-center">
+                                                <button
+                                                    @click.prevent="copyWallet()"
+                                                    type="button"
+                                                    class="bg-gray-100 transition duration-150 ease-in-out hover:bg-gray-200 rounded border border-gray-300 text-gray-600 px-6 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-gray-600"
+                                                >
+                                                    Copiar
+                                                </button>
+                                                <div
+                                                    x-text="copyText"
+                                                    class="opacity-0 w-40 bg-black text-white text-center text-xs rounded-lg py-2 absolute z-10 group-hover:opacity-100 bottom-full px-3 pointer-events-none"
+                                                >
+                                                    <svg class="absolute text-black h-2 w-full left-0 top-full" x="0px"
+                                                         y="0px" viewBox="0 0 255 255" xml:space="preserve"><polygon
+                                                            class="fill-current" points="0,0 127.5,127.5 255,0"/></svg>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    {{--Copy Wallet Button--}}
                                 </div>
+                                @if($invoice)
+                                    <div class="flex flex-col md:flex-row justify-between md:items-center w-full">
+                                        {{--Order Amount--}}
+                                        <div class="flex flex-col text-left w-full">
+                                            <p class="text-xs text-gray-400">Monto (Por favor envíe la cantidad exacta)</p>
+                                            <div class="flex justify-between">
+                                                <p class="text-base md:text-lg">{{ $invoice->get('orderAmount') }}</p>
+                                                <p class="text-base md:text-lg">{{ $invoice->get('orderAmountFiat') }}</p>
+                                            </div>
+                                        </div>
+                                        {{--End Order Amount--}}
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         {{--Waiting Bar--}}
@@ -89,9 +108,11 @@
                         <div class="mt-4">
                             <p>Esperando por el pago</p>
                         </div>
+                        {{--Timer--}}
                         <div class="flex justify-center mt-4">
-                            <div wire:ignore id="timer"></div>
+                            @livewire('giving.timer')
                         </div>
+                        {{--End Timer--}}
                         <div class="flex justify-end mt-8">
                             <button
                                 @click="current='method'"
@@ -121,159 +142,22 @@
     </div>
 </div>
 
-@section('scripts')
+@prepend('scripts')
     <script>
-        const TIMER_CONTAINER = document.getElementById("timer")
-        const FULL_DASH_ARRAY = 283
-        const WARNING_THRESHOLD = 120
-        const ALERT_THRESHOLD = 60
-
-        const COLOR_CODES = {
-            info: {
-                color: "green"
-            },
-            warning: {
-                color: "orange",
-                threshold: WARNING_THRESHOLD
-            },
-            alert: {
-                color: "red",
-                threshold: ALERT_THRESHOLD
-            }
-        }
-
-        let timeLimit = 1800
-        let timePassed = 0
-        let timeLeft = timeLimit
-        let timerInterval = null
-        let remainingPathColor = COLOR_CODES.info.color
-
-        function onTimesUp() {
-            clearInterval(timerInterval);
-        }
-
-        function startTimer() {
-            timerInterval = setInterval(() => {
-                timePassed = timePassed += 1;
-                timeLeft = timeLimit - timePassed;
-                document.getElementById("base-timer-label").innerHTML = formatTime(timeLeft);
-                setCircleDasharray();
-                setRemainingPathColor(timeLeft);
-
-                if (timeLeft === 0) {
-                    onTimesUp();
-                }
-            }, 1000);
-        }
-
-        function formatTime(time) {
-            const minutes = Math.floor(time / 60);
-            let seconds = time % 60;
-
-            if (seconds < 10) {
-                seconds = `0${seconds}`;
-            }
-
-            return `${minutes}:${seconds}`;
-        }
-
-        function setRemainingPathColor(timeLeft) {
-            const {alert, warning, info} = COLOR_CODES;
-            if (timeLeft <= alert.threshold) {
-                document
-                    .getElementById("base-timer-path-remaining")
-                    .classList.remove(warning.color);
-                document
-                    .getElementById("base-timer-path-remaining")
-                    .classList.add(alert.color);
-            } else if (timeLeft <= warning.threshold) {
-                document
-                    .getElementById("base-timer-path-remaining")
-                    .classList.remove(info.color);
-                document
-                    .getElementById("base-timer-path-remaining")
-                    .classList.add(warning.color);
-            }
-        }
-
-        function calculateTimeFraction() {
-            const rawTimeFraction = timeLeft / timeLimit;
-            return rawTimeFraction - (1 / timeLimit) * (1 - rawTimeFraction);
-        }
-
-        function setCircleDasharray() {
-            const circleDasharray = `${(
-                calculateTimeFraction() * FULL_DASH_ARRAY
-            ).toFixed(0)} 283`;
-            document
-                .getElementById("base-timer-path-remaining")
-                .setAttribute("stroke-dasharray", circleDasharray);
-        }
-
-        function buildTimerElement() {
-            TIMER_CONTAINER.innerHTML = `
-                        <div class="base-timer">
-                          <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <g class="base-timer__circle">
-                              <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
-                              <path
-                                id="base-timer-path-remaining"
-                                stroke-dasharray="283"
-                                class="base-timer__path-remaining ${remainingPathColor}"
-                                d="
-                                  M 50, 50
-                                  m -45, 0
-                                  a 45,45 0 1,0 90,0
-                                  a 45,45 0 1,0 -90,0
-                                "
-                              ></path>
-                            </g>
-                          </svg>
-                          <span id="base-timer-label" class="base-timer__label">${formatTime(timeLeft)}</span>
-                        </div>`
-        }
-
         function init() {
             return {
                 current: @entangle('currentStep'),
-                wallet: @entangle('wallet'),
-                copyText: 'Copy to clipboard',
-                maxTime: @entangle('maxTime'),
-                expirationTime: @entangle('expirationTime'),
-                invoiceStatus: @entangle('status'),
+                copyText: 'Copiar al portapapeles',
                 copyWallet() {
                     window.navigator.clipboard.writeText(this.wallet)
 
-                    this.copyText = 'Copied!'
+                    this.copyText = 'Copiado!'
 
                     setTimeout(() => {
                         this.copyText = 'Copy to clipboard'
                     }, 2000)
                 },
-                init() {
-                    this.$watch('current', (step) => {
-                        if (step === 'payment' && !timerInterval) {
-                            buildTimerElement()
-
-                            timeLimit = this.maxTime
-                            timePassed = this.maxTime - this.expirationTime
-
-                            startTimer()
-                        }
-                    })
-
-                    this.$watch('invoiceStatus', (status) => {
-                        console.log(`status checker`, status)
-                        if (status === 'paid' || status === 'expired') {
-                            clearInterval(statusInterval)
-
-                            onTimesUp()
-
-                            TIMER_CONTAINER.innerHTML = ''
-                        }
-                    })
-                }
             }
         }
     </script>
-@endsection
+@endprepend

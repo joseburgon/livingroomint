@@ -16,6 +16,10 @@ class GivingController extends Controller
 
     public function redirect(Giving $giving)
     {
+        if ($giving->status !== Giving::STATUS_CREATED) {
+            return view('givings.invalid');
+        }
+
         $paymentService = $this->gatewayRegistry->get($giving->paymentGateway->name);
 
         $service = $paymentService->prepare($giving);
@@ -36,6 +40,28 @@ class GivingController extends Controller
         return view('givings.crypto', [
             'giving' => $giving,
             'invoiceId' => $request->get('invoiceId')
+        ]);
+    }
+
+    public function error(Giving $giving)
+    {
+        return view('givings.error', [
+            'currency' => $giving->currency,
+            'amount' => $giving->amount,
+            'email' => $giving->giver->email
+        ]);
+    }
+
+    public function success(Giving $giving)
+    {
+        if ($giving->status !== Giving::STATUS_APPROVED) {
+            return redirect()->route('donaciones.error', $giving);
+        }
+
+        return view('givings.success', [
+            'currency' => $giving->currency,
+            'amount' => $giving->amount,
+            'email' => $giving->giver->email
         ]);
     }
 }

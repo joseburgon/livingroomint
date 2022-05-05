@@ -5,18 +5,14 @@ use App\Http\Controllers\GivingTypeController;
 use App\Http\Controllers\Payment\ForgingBlockController;
 use App\Http\Controllers\Payment\PayUController;
 use App\Http\Controllers\Payment\StripeController;
+use App\Models\Giving;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GivingController;
 
 Route::redirect('/', 'donaciones');
 
-Route::get('/email/test/send', function () {
-    $giving = \App\Models\Giving::whereNotNull('transaction_id')->latest()->first();
-
-    \Illuminate\Support\Facades\Mail::to(config('givings.notify_email'))->queue(new \App\Mail\NotifyGiving($giving));
-
-    return response('SENT', 200);
-});
+Route::get('/timer', \App\Http\Livewire\Giving\Timer::class);
 
 Route::prefix('donaciones')->name('donaciones')->group(function () {
     Route::get('/', function () {
@@ -27,9 +23,11 @@ Route::prefix('donaciones')->name('donaciones')->group(function () {
         return view('givings.index');
     })->name('.new');
 
-    Route::get('/response', function () {
-        return view('givings.response');
-    })->name('.response');
+    Route::get('/{giving}/error', [GivingController::class, 'error'])
+        ->name('.error');
+
+    Route::get('/{giving}/success', [GivingController::class, 'success'])
+        ->name('.success');
 
     Route::get('/{giving}/redirect', [GivingController::class, 'redirect'])
         ->name('.redirect');
