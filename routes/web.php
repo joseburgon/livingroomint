@@ -12,11 +12,11 @@ Route::redirect('/', 'donaciones');
 
 Route::prefix('donaciones')->name('donaciones')->group(function () {
     Route::get('/', function () {
-        return view('givings.old-index');
+        return view('givings.index');
     });
 
-    Route::get('/new', function () {
-        return view('givings.index');
+    Route::get('/old', function () {
+        return view('givings.old-index');
     })->name('.new');
 
     Route::get('/{giving}/error', [GivingController::class, 'error'])
