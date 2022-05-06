@@ -25,19 +25,19 @@
                                     wire:click="currencyChanged('USD')"
                                     type="button"
                                     :class="{ 'bg-black text-white' : currency === 'USD' }"
-                                    class="w-full inline-flex justify-center items-center transition-colors duration-300 ease-in focus:outline-none focus:text-white p-2 lg:p-4"
+                                    class="w-full inline-flex justify-center items-center transition-colors duration-300 ease-in focus:outline-none focus:text-white rounded-r p-2 lg:p-4"
                                     id="USD">
                                     <span>Dólar Americano (USD)</span>
                                 </button>
-                                <button
-                                    @click="currency='BTC'"
-                                    wire:click="currencyChanged('BTC')"
-                                    type="button"
-                                    :class="{ 'bg-black text-white' : currency === 'BTC' }"
-                                    class="w-full inline-flex justify-center items-center transition-colors duration-300 ease-in focus:outline-none focus:text-white rounded-r p-2 lg:p-4"
-                                    id="USD">
-                                    <span>Bitcoin (USD/BTC)</span>
-                                </button>
+                                {{--<button--}}
+                                {{--@click="currency='BTC'"--}}
+                                {{--wire:click="currencyChanged('BTC')"--}}
+                                {{--type="button"--}}
+                                {{--:class="{ 'bg-black text-white' : currency === 'BTC' }"--}}
+                                {{--class="w-full inline-flex justify-center items-center transition-colors duration-300 ease-in focus:outline-none focus:text-white rounded-r p-2 lg:p-4"--}}
+                                {{--id="USD">--}}
+                                {{--<span>Bitcoin (USD/BTC)</span>--}}
+                                {{--</button>--}}
                             </div>
                         </div>
                         {{--TYPE--}}
@@ -185,11 +185,18 @@
 
                         {{--GIVE BUTTON--}}
                         <div class="mt-6">
-                            <input
+                            <button
+                                wire:loading.attr="disabled"
+                                wire:target="give"
                                 type="submit"
-                                class="px-4 py-3 rounded bg-black text-gray-200 hover:bg-gray-700 cursor-pointer focus:ring focus:outline-none w-full text-xl font-semibold transition-colors"
-                                value="Donar En Línea"
+                                class="flex justify-center items-center px-4 py-3 rounded bg-black text-gray-200 hover:bg-gray-700 disabled:opacity-50 cursor-pointer focus:ring focus:outline-none w-full text-xl font-semibold transition-colors"
                             >
+                                <svg wire:loading wire:target="give" class="-ml-1 mr-3 h-5 w-5 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                <span>Donar En Línea</span>
+                            </button>
                         </div>
                     </div>
                 </div>
