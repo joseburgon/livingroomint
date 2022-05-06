@@ -6,7 +6,8 @@
                 <path
                     id="base-timer-path-remaining"
                     stroke-dasharray="283"
-                    class="base-timer__path-remaining green"
+                    class="base-timer__path-remaining"
+                    :class="remainingPathColor"
                     d="
                                   M 50, 50
                                   m -45, 0
@@ -28,11 +29,11 @@
             },
             warning: {
                 color: "orange",
-                threshold: 120
+                threshold: 300
             },
             alert: {
                 color: "red",
-                threshold: 60
+                threshold: 120
             }
         };
 
@@ -70,21 +71,11 @@
                     return `${minutes}:${seconds}`;
                 },
                 setRemainingPathColor(timeLeft) {
-                    const {alert, warning, info} = COLOR_CODES;
+                    const {alert, warning} = COLOR_CODES;
                     if (timeLeft <= alert.threshold) {
-                        document
-                            .getElementById("base-timer-path-remaining")
-                            .classList.remove(warning.color);
-                        document
-                            .getElementById("base-timer-path-remaining")
-                            .classList.add(alert.color);
+                        this.remainingPathColor = alert.color
                     } else if (timeLeft <= warning.threshold) {
-                        document
-                            .getElementById("base-timer-path-remaining")
-                            .classList.remove(info.color);
-                        document
-                            .getElementById("base-timer-path-remaining")
-                            .classList.add(warning.color);
+                        this.remainingPathColor = warning.color
                     }
                 },
                 calculateTimeFraction() {

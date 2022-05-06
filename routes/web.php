@@ -5,14 +5,10 @@ use App\Http\Controllers\GivingTypeController;
 use App\Http\Controllers\Payment\ForgingBlockController;
 use App\Http\Controllers\Payment\PayUController;
 use App\Http\Controllers\Payment\StripeController;
-use App\Models\Giving;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GivingController;
 
 Route::redirect('/', 'donaciones');
-
-Route::get('/timer', \App\Http\Livewire\Giving\Timer::class);
 
 Route::prefix('donaciones')->name('donaciones')->group(function () {
     Route::get('/', function () {
