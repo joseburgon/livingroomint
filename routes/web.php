@@ -10,26 +10,20 @@ use App\Http\Controllers\GivingController;
 
 Route::redirect('/', 'donaciones');
 
-Route::get('/email/test/send', function () {
-    $giving = \App\Models\Giving::whereNotNull('transaction_id')->latest()->first();
-
-    \Illuminate\Support\Facades\Mail::to(config('givings.notify_email'))->queue(new \App\Mail\NotifyGiving($giving));
-
-    return response('SENT', 200);
-});
-
 Route::prefix('donaciones')->name('donaciones')->group(function () {
     Route::get('/', function () {
-        return view('givings.old-index');
+        return view('givings.index');
     });
 
-    Route::get('/new', function () {
-        return view('givings.index');
+    Route::get('/old', function () {
+        return view('givings.old-index');
     })->name('.new');
 
-    Route::get('/response', function () {
-        return view('givings.response');
-    })->name('.response');
+    Route::get('/{giving}/error', [GivingController::class, 'error'])
+        ->name('.error');
+
+    Route::get('/{giving}/success', [GivingController::class, 'success'])
+        ->name('.success');
 
     Route::get('/{giving}/redirect', [GivingController::class, 'redirect'])
         ->name('.redirect');

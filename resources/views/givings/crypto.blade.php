@@ -20,7 +20,7 @@
         </header>
 
         <!-- Form -->
-        @livewire('giving.crypto-payment', ['invoice' => $invoice])
+        @livewire('giving.crypto-payment', ['giving' => $giving, 'invoiceId' => $invoiceId])
         <!-- End Form -->
     </div>
 

@@ -47,7 +47,7 @@
         </div>
     </div>
 
-    @section('scripts')
+    @push('scripts')
         @include('scripts.giving')
-    @endsection
+    @endpush
 </x-base-layout>

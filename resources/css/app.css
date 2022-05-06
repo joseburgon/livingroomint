@@ -11,3 +11,81 @@
     @apply: bg-purple-400;
     background-color: #9061f9;
 }
+.shim-black {
+    position: relative;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.shim-black::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(
+        90deg,
+        rgba(233, 233, 233, 1) 0,
+        rgba(233, 233, 233, 0.9) 50%,
+        rgba(233, 233, 233, 0.8) 100%
+    );
+    animation: shimmer 2s ease-out infinite;
+    content: "";
+}
+@keyframes shimmer {
+    100% {
+        transform: translateX(0%);
+        opacity: 0;
+    }
+}
+.base-timer {
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+.base-timer__svg {
+    transform: scaleX(-1);
+}
+
+.base-timer__circle {
+    fill: none;
+    stroke: none;
+}
+
+.base-timer__path-elapsed {
+    stroke-width: 7px;
+    stroke: grey;
+}
+
+.base-timer__path-remaining {
+    stroke-width: 7px;
+    stroke-linecap: round;
+    transform: rotate(90deg);
+    transform-origin: center;
+    transition: 1s linear all;
+    fill-rule: nonzero;
+    stroke: currentColor;
+}
+
+.base-timer__path-remaining.green {
+    color: rgb(65, 184, 131);
+}
+
+.base-timer__path-remaining.orange {
+    color: orange;
+}
+
+.base-timer__path-remaining.red {
+    color: red;
+}
+
+.base-timer__label {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}

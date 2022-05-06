@@ -13,7 +13,8 @@
             </div>
         </nav>
 
-        <header id="up" class="bg-center bg-no-repeat bg-center bg-cover w-full" style="background-image: url({{ asset('img/givings_header_1.jpeg') }});">
+        <header id="up" class="bg-center bg-no-repeat bg-center bg-cover w-full"
+                style="background-image: url({{ asset('img/givings_header_1.jpeg') }});">
             <!-- Overlay Background + Center Control -->
             <div class="h-72 lg:h-96 bg-opacity-50 bg-black flex items-center justify-center"
                  style="background:rgba(0,0,0,0.5);">
@@ -23,11 +24,13 @@
                     </h1>
                     <div class="flex justify-center mb-4">
                         <div class="relative max-w-lg">
-                            <span class="text-white absolute inline-block text-lg top-3 -left-5" aria-hidden="true" role="presentation">$</span>
+                            <span class="text-white absolute inline-block text-lg top-3 -left-5" aria-hidden="true"
+                                  role="presentation">$</span>
                             <input
                                 x-model="amount"
                                 @keydown="handleInputKeyDown"
-                                @keyup="handleAmountInputChange" type="text" pattern="\d*" inputmode="numeric" id="amount_input" name="amount_input"
+                                @keyup="handleAmountInputChange" type="text" pattern="\d*" inputmode="numeric"
+                                id="amount_input" name="amount_input"
                                 class="appearance-none transition-all text-5xl lg:text-6xl max-w-full h-20 lg:h-24 text-center text-white border-0 border-b border-white focus:border-white focus:shadow-none focus:ring-0 relative px-0 pb-3 bg-transparent"
                             >
                         </div>
@@ -36,9 +39,22 @@
             </div>
         </header>
 
-        <!-- Form -->
         @livewire('giving.form')
-        <!-- End Form -->
+
+        @if (session('error'))
+            <div class="flex mt-8">
+                <div class="bg-red-200 text-red-700 rounded-full p-1 fill-current">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round" stroke-width="2"
+                              d="M6 18L18 6M6 6l12 12"/>
+
+                    </svg>
+                </div>
+                <span class="text-red-700 font-medium text-sm text-left ml-3">{{ session('error') }}</span>
+            </div>
+        @endif
     </div>
 
     <div class="flex flex-col justify-center items-center w-full">
@@ -47,7 +63,7 @@
         </div>
     </div>
 
-    @section('scripts')
+    @push('scripts')
         @include('scripts.giving')
-    @endsection
+    @endpush
 </x-base-layout>
